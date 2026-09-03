@@ -104,12 +104,6 @@
 
       <!-- Filtros de Seleção & Busca -->
       <div class="flex flex-wrap items-center gap-3">
-        <select id="objectiveFilter" onchange="applyFilters()" class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500">
-          <option value="all">Todos os Objetivos</option>
-          <option value="doacao">Doações / Leads</option>
-          <option value="evento">Eventos / Vendas / Tráfego</option>
-        </select>
-
         <select id="statusFilter" onchange="applyFilters()" class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500">
           <option value="all">Todos os Status</option>
           <option value="active">Ativas (active)</option>
@@ -246,13 +240,15 @@
           <tbody id="campaignTableBody" class="divide-y divide-slate-100 dark:divide-slate-700/40">
             <!-- Gerado via JS -->
           </tbody>
+          <tfoot id="campaignTableFoot" class="bg-slate-100/80 dark:bg-slate-900/80 font-bold border-t-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+            <!-- Gerado via JS -->
+          </tfoot>
         </table>
       </div>
     </section>
   </main>
 
   <script>
-    // As 7 campanhas do relatório com Impressões e Cliques no Link extraídos do relatório Meta Ads
     const rawCampaigns = [
       {
         id: 1,
@@ -384,17 +380,15 @@
     }
 
     function applyFilters() {
-      const objective = document.getElementById('objectiveFilter').value;
       const status = document.getElementById('statusFilter').value;
       const search = document.getElementById('searchInput').value.toLowerCase().trim();
 
       let filtered = rawCampaigns.filter(c => {
         const matchesDate = currentDateFilter === 'all' || c.month === currentDateFilter;
-        const matchesObj = objective === 'all' || c.objective === objective;
         const matchesStatus = status === 'all' || c.status === status;
         const matchesSearch = c.name.toLowerCase().includes(search) || c.cleanName.toLowerCase().includes(search);
         
-        return matchesDate && matchesObj && matchesStatus && matchesSearch;
+        return matchesDate && matchesStatus && matchesSearch;
       });
 
       if (selectedCampaignId) {
@@ -484,6 +478,7 @@
 
     function updateTable(data) {
       const tbody = document.getElementById('campaignTableBody');
+      const tfoot = document.getElementById('campaignTableFoot');
       document.getElementById('tableCount').textContent = `${data.length} campanhas`;
 
       if (data.length === 0) {
@@ -493,6 +488,7 @@
               Nenhuma campanha encontrada para os filtros selecionados.
             </td>
           </tr>`;
+        tfoot.innerHTML = '';
         return;
       }
 
@@ -526,6 +522,29 @@
           </tr>
         `;
       }).join('');
+
+      // Cálculo dos Totais das Colunas
+      const sumResults = data.reduce((acc, c) => acc + c.results, 0);
+      const sumImpressions = data.reduce((acc, c) => acc + c.impressions, 0);
+      const sumLinkClicks = data.reduce((acc, c) => acc + c.linkClicks, 0);
+      const sumReach = data.reduce((acc, c) => acc + c.reach, 0);
+      const avgFrequency = data.length > 0 ? (data.reduce((acc, c) => acc + c.frequency, 0) / data.length) : 0;
+      const sumInvestment = data.reduce((acc, c) => acc + c.investment, 0);
+      const avgCostPerResult = sumResults > 0 ? (sumInvestment / sumResults) : 0;
+
+      tfoot.innerHTML = `
+        <tr>
+          <td class="p-3.5 pl-5 font-extrabold uppercase tracking-wider text-slate-800 dark:text-white">Total / Média</td>
+          <td class="p-3.5 text-slate-400 font-normal">-</td>
+          <td class="p-3.5 font-extrabold text-emerald-600 dark:text-emerald-400">${formatNumber(sumResults)}</td>
+          <td class="p-3.5 font-extrabold text-slate-800 dark:text-slate-100">${formatNumber(sumImpressions)}</td>
+          <td class="p-3.5 font-extrabold text-slate-800 dark:text-slate-100">${formatNumber(sumLinkClicks)}</td>
+          <td class="p-3.5 font-extrabold text-slate-800 dark:text-slate-100">${formatNumber(sumReach)}</td>
+          <td class="p-3.5 font-extrabold text-slate-800 dark:text-slate-100">${avgFrequency.toFixed(2)}</td>
+          <td class="p-3.5 font-extrabold text-slate-800 dark:text-slate-100">${formatCurrency(avgCostPerResult)}</td>
+          <td class="p-3.5 pr-5 font-extrabold text-slate-800 dark:text-slate-100">${formatCurrency(sumInvestment)}</td>
+        </tr>
+      `;
     }
 
     function toggleSelectCampaign(id) {
