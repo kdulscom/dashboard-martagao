@@ -114,6 +114,7 @@
           <option value="all">Todos os Status</option>
           <option value="ativa">Ativas</option>
           <option value="concluida">Concluídas</option>
+          <option value="desativado">Desativadas / Rascunhos</option>
         </select>
 
         <div class="relative flex-1 sm:flex-initial">
@@ -129,7 +130,7 @@
         <div>
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">TOTAL INVESTIDO</span>
           <h2 id="kpiInvested" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">R$ 0,00</h2>
-          <span class="text-[10px] text-blue-600 dark:text-blue-400 font-medium">Verba total de Agosto/26</span>
+          <span class="text-[10px] text-blue-600 dark:text-blue-400 font-medium">Verba total no período</span>
         </div>
         <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg font-bold">
           $
@@ -223,7 +224,7 @@
       <div class="p-4 border-b border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
         <div>
           <h3 class="font-bold text-slate-800 dark:text-white text-sm">Detalhamento de Campanhas de Agosto/2026</h3>
-          <p class="text-xs text-slate-400">Exibindo apenas campanhas com veiculação no período</p>
+          <p class="text-xs text-slate-400">Selecione uma linha para isolar os dados no gráfico</p>
         </div>
         <span id="tableCount" class="text-xs bg-slate-100 dark:bg-slate-700 px-2.5 py-1 rounded-full text-slate-600 dark:text-slate-300 font-medium">0 campanhas</span>
       </div>
@@ -249,12 +250,12 @@
   </main>
 
   <script>
-    // Campanhas REAIS e EXCLUSIVAS do mês de Agosto/2026 extraídas do Meta Ads Manager
+    // Conjunto completo de campanhas de Agosto/2026 extraídas do Meta Ads Manager (com ativas, concluídas e desativadas)
     const rawCampaigns = [
       { 
         id: 1, 
         name: "[Martagão][MaisConv] - Aquisição de Doadores 2026", 
-        cleanName: "Aquisição de Doadores (Ativa)", 
+        cleanName: "Aquisição de Doadores 2026", 
         month: "ago", 
         status: "ativa", 
         objective: "doacao", 
@@ -302,6 +303,84 @@
         reach: 72054, 
         frequency: 1.02, 
         investment: 199.82 
+      },
+      { 
+        id: 5, 
+        name: "[Martagão][MaisConv] - Aquisição de Doadores 2 - Conversões", 
+        cleanName: "Aquisição de Doadores 2", 
+        month: "ago", 
+        status: "desativado", 
+        objective: "doacao", 
+        results: 0, 
+        resultType: "-",
+        reach: 0, 
+        frequency: 0, 
+        investment: 0.00 
+      },
+      { 
+        id: 6, 
+        name: "[Martagão][MaisConv] - IRPF 2026 - tráfego", 
+        cleanName: "IRPF 2026 - Tráfego", 
+        month: "ago", 
+        status: "desativado", 
+        objective: "evento", 
+        results: 0, 
+        resultType: "-",
+        reach: 0, 
+        frequency: 0, 
+        investment: 0.00 
+      },
+      { 
+        id: 7, 
+        name: "[Martagão][VMW] - Doe Agora 2026 - conversões", 
+        cleanName: "Doe Agora 2026 - Conversões", 
+        month: "ago", 
+        status: "concluida", 
+        objective: "doacao", 
+        results: 0, 
+        resultType: "Doação no site",
+        reach: 0, 
+        frequency: 0, 
+        investment: 0.00 
+      },
+      { 
+        id: 8, 
+        name: "[Martagão][MaisConv] - Aquisição de Doadores - f...", 
+        cleanName: "Aquisição de Doadores (Desativada)", 
+        month: "ago", 
+        status: "desativado", 
+        objective: "doacao", 
+        results: 0, 
+        resultType: "Lead",
+        reach: 0, 
+        frequency: 0, 
+        investment: 0.00 
+      },
+      { 
+        id: 9, 
+        name: "[Martagão][MaisConv] - MC Dia Feliz 2026 f1 - tráf...", 
+        cleanName: "MC Dia Feliz 2026 - Tráfego", 
+        month: "ago", 
+        status: "desativado", 
+        objective: "evento", 
+        results: 0, 
+        resultType: "Visualizações",
+        reach: 0, 
+        frequency: 0, 
+        investment: 0.00 
+      },
+      { 
+        id: 10, 
+        name: "[Martagão][MaisConv] - Jantar do Bem post 3 - en...", 
+        cleanName: "Jantar do Bem Post 3", 
+        month: "ago", 
+        status: "desativado", 
+        objective: "evento", 
+        results: 0, 
+        resultType: "Interação",
+        reach: 0, 
+        frequency: 0, 
+        investment: 0.00 
       }
     ];
 
@@ -333,13 +412,17 @@
       const search = document.getElementById('searchInput').value.toLowerCase().trim();
 
       let filtered = rawCampaigns.filter(c => {
-        const hasInvestment = c.investment > 0;
         const matchesDate = currentDateFilter === 'all' || c.month === currentDateFilter;
         const matchesObj = objective === 'all' || c.objective === objective;
-        const matchesStatus = status === 'all' || (status === 'ativa' && c.status === 'ativa') || (status === 'concluida' && c.status === 'concluida');
+        
+        let matchesStatus = true;
+        if (status === 'ativa') matchesStatus = c.status === 'ativa';
+        else if (status === 'concluida') matchesStatus = c.status === 'concluida';
+        else if (status === 'desativado') matchesStatus = c.status === 'desativado';
+
         const matchesSearch = c.name.toLowerCase().includes(search) || c.cleanName.toLowerCase().includes(search);
         
-        return hasInvestment && matchesDate && matchesObj && matchesStatus && matchesSearch;
+        return matchesDate && matchesObj && matchesStatus && matchesSearch;
       });
 
       if (selectedCampaignId) {
@@ -357,7 +440,8 @@
       const totalResults = data.reduce((acc, c) => acc + c.results, 0);
       const totalReach = data.reduce((acc, c) => acc + c.reach, 0);
       
-      const avgFreq = data.length > 0 ? (data.reduce((acc, c) => acc + c.frequency, 0) / data.length) : 0;
+      const activeWithReach = data.filter(c => c.reach > 0);
+      const avgFreq = activeWithReach.length > 0 ? (activeWithReach.reduce((acc, c) => acc + c.frequency, 0) / activeWithReach.length) : 0;
 
       document.getElementById('kpiInvested').textContent = formatCurrency(totalInvested);
       document.getElementById('kpiClicks').textContent = formatNumber(totalResults);
@@ -366,10 +450,13 @@
     }
 
     function updateVerticalChart(data) {
-      const categories = data.map(d => d.cleanName);
-      const investments = data.map(d => d.investment);
-      const results = data.map(d => d.results);
-      const reach = data.map(d => d.reach);
+      const chartData = data.filter(d => d.investment > 0 || d.reach > 0);
+      const displayData = chartData.length > 0 ? chartData : data;
+
+      const categories = displayData.map(d => d.cleanName);
+      const investments = displayData.map(d => d.investment);
+      const results = displayData.map(d => d.results);
+      const reach = displayData.map(d => d.reach);
 
       const textColor = isDarkMode ? '#94a3b8' : '#64748b';
       const gridColor = isDarkMode ? '#1e293b' : '#f1f5f9';
@@ -443,6 +530,10 @@
 
       tbody.innerHTML = data.map(c => {
         const isSelected = selectedCampaignId === c.id;
+        
+        let statusBadgeClass = 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300';
+        if (c.status === 'ativa') statusBadgeClass = 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300';
+        else if (c.status === 'concluida') statusBadgeClass = 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300';
 
         return `
           <tr onclick="toggleSelectCampaign(${c.id})" class="cursor-pointer transition-colors ${isSelected ? 'bg-blue-50/80 dark:bg-blue-900/30' : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'}">
@@ -451,15 +542,15 @@
               <span class="block text-[10px] text-slate-400 font-normal">${c.name}</span>
             </td>
             <td class="p-3.5">
-              <span class="px-2 py-0.5 rounded text-[10px] font-bold ${c.status === 'ativa' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300'}">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold ${statusBadgeClass}">
                 ${c.status.toUpperCase()}
               </span>
             </td>
             <td class="p-3.5 font-bold text-emerald-600 dark:text-emerald-400">
-              ${formatNumber(c.results)} <span class="text-[10px] font-normal text-slate-400">(${c.resultType})</span>
+              ${c.results > 0 ? formatNumber(c.results) : '-'} <span class="text-[10px] font-normal text-slate-400">${c.resultType !== '-' ? `(${c.resultType})` : ''}</span>
             </td>
-            <td class="p-3.5 text-slate-500 dark:text-slate-400">${formatNumber(c.reach)}</td>
-            <td class="p-3.5 text-slate-500 dark:text-slate-400">${c.frequency.toFixed(2)}</td>
+            <td class="p-3.5 text-slate-500 dark:text-slate-400">${c.reach > 0 ? formatNumber(c.reach) : '-'}</td>
+            <td class="p-3.5 text-slate-500 dark:text-slate-400">${c.frequency > 0 ? c.frequency.toFixed(2) : '-'}</td>
             <td class="p-3.5 pr-5 font-medium">${formatCurrency(c.investment)}</td>
           </tr>
         `;
@@ -482,12 +573,13 @@
       }
 
       const totalInvest = data.reduce((acc, c) => acc + c.investment, 0);
+      const activeCount = data.filter(c => c.status === 'ativa').length;
       const topInvest = [...data].sort((a, b) => b.investment - a.investment)[0];
 
       let insights = [
         `O investimento total veiculado no mês de Agosto/2026 foi de <strong>${formatCurrency(totalInvest)}</strong>.`,
-        topInvest ? `A campanha de maior investimento foi <strong>${topInvest.cleanName}</strong> com ${formatCurrency(topInvest.investment)} (178 Leads gerados).` : '',
-        `Todas as campanhas inativas e zeradas do período foram ocultadas para manter a leitura limpa.`
+        topInvest && topInvest.investment > 0 ? `A campanha de maior investimento foi <strong>${topInvest.cleanName}</strong> com ${formatCurrency(topInvest.investment)}.` : 'Exibindo campanhas filtradas.',
+        `Há <strong>${activeCount}</strong> campanha(s) ativas sendo veiculadas atualmente.`
       ].filter(Boolean);
 
       container.innerHTML = insights.map(i => `<p class="leading-relaxed bg-slate-50 dark:bg-slate-900/40 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/40">${i}</p>`).join('');
