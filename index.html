@@ -139,7 +139,7 @@
       <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
         <div>
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">TOTAL INVESTIDO</span>
-          <h2 id="kpiInvested" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">R$ 66.100,50</h2>
+          <h2 id="kpiInvested" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">R$ 0,00</h2>
           <span class="text-[10px] text-blue-600 dark:text-blue-400 font-medium">100% da verba visível</span>
         </div>
         <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg font-bold">
@@ -151,7 +151,7 @@
       <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
         <div>
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">LUCRO / ARRECADAÇÃO</span>
-          <h2 id="kpiRevenue" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">R$ 197.000,00</h2>
+          <h2 id="kpiRevenue" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">R$ 0,00</h2>
           <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">Retorno em Doações</span>
         </div>
         <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg font-bold">
@@ -163,7 +163,7 @@
       <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
         <div>
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">TOTAL IMPRESSÕES</span>
-          <h2 id="kpiImpressions" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">1.690.000</h2>
+          <h2 id="kpiImpressions" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">0</h2>
           <span class="text-[10px] text-purple-600 dark:text-purple-400 font-medium">Alcance de marca</span>
         </div>
         <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center text-lg font-bold">
@@ -175,7 +175,7 @@
       <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
         <div>
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">CTR MÉDIO</span>
-          <h2 id="kpiCtr" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">2.49%</h2>
+          <h2 id="kpiCtr" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">0.00%</h2>
           <span class="text-[10px] text-amber-600 dark:text-amber-400 font-medium">Taxa de engajamento</span>
         </div>
         <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center text-lg font-bold">
@@ -247,14 +247,23 @@
 
   <!-- Lógica Principal da Aplicação -->
   <script>
-    // Base de dados simulada das campanhas
+    // Base de dados completa com as 13 campanhas da planilha
     const rawCampaigns = [
       { id: 1, name: "MC_Doacoes_Institucional_Ago26", cleanName: "Doações Institucional", month: "ago", status: "ativa", objective: "doacao", investment: 12500.00, impressions: 320000, revenue: 38500.00, clicks: 8200 },
       { id: 2, name: "MC_Cadastros_Voluntarios_Ago26", cleanName: "Cadastros Voluntários", month: "ago", status: "ativa", objective: "cadastros", investment: 4800.50, impressions: 140000, revenue: 12400.00, clicks: 3100 },
-      { id: 3, name: "MC_Doacoes_Urgentes_Jul26", cleanName: "Doações Urgência Oncologia", month: "jul", status: "pausada", objective: "doacao", investment: 18200.00, impressions: 450000, revenue: 59000.00, clicks: 11200 },
-      { id: 4, name: "MC_Cadastros_Eventos_Jul26", cleanName: "Inscrições Corrida Solidária", month: "jul", status: "pausada", objective: "cadastros", investment: 6300.00, impressions: 180000, revenue: 18200.00, clicks: 4900 },
-      { id: 5, name: "MC_Doacoes_Geral_Jun26", cleanName: "Apoio Hospitalar Contínuo", month: "jun", status: "pausada", objective: "doacao", investment: 15400.00, impressions: 390000, revenue: 46800.00, clicks: 9400 },
-      { id: 6, name: "MC_Cadastros_Parceiros_Jun26", cleanName: "Captação de Empresas Parceiras", month: "jun", status: "pausada", objective: "cadastros", investment: 8900.00, impressions: 210000, revenue: 22100.00, clicks: 5200 }
+      { id: 3, name: "MC_Doacoes_Cirurgias_Ago26", cleanName: "Doações Cirurgias Especiais", month: "ago", status: "ativa", objective: "doacao", investment: 9800.00, impressions: 260000, revenue: 31200.00, clicks: 6400 },
+      { id: 4, name: "MC_Cadastros_Nutricao_Ago26", cleanName: "Apoio Nutrição Infantil", month: "ago", status: "ativa", objective: "cadastros", investment: 3500.00, impressions: 110000, revenue: 8900.00, clicks: 2300 },
+      
+      { id: 5, name: "MC_Doacoes_Urgentes_Jul26", cleanName: "Doações Urgência Oncologia", month: "jul", status: "pausada", objective: "doacao", investment: 18200.00, impressions: 450000, revenue: 59000.00, clicks: 11200 },
+      { id: 6, name: "MC_Cadastros_Eventos_Jul26", cleanName: "Inscrições Corrida Solidária", month: "jul", status: "pausada", objective: "cadastros", investment: 6300.00, impressions: 180000, revenue: 18200.00, clicks: 4900 },
+      { id: 7, name: "MC_Doacoes_UTI_Jul26", cleanName: "Reforma Leitos UTI Pediátrica", month: "jul", status: "pausada", objective: "doacao", investment: 14100.00, impressions: 360000, revenue: 42500.00, clicks: 8700 },
+      { id: 8, name: "MC_Cadastros_Bazar_Jul26", cleanName: "Voluntários Bazar Beneficente", month: "jul", status: "pausada", objective: "cadastros", investment: 2900.00, impressions: 95000, revenue: 6100.00, clicks: 2100 },
+
+      { id: 9, name: "MC_Doacoes_Geral_Jun26", cleanName: "Apoio Hospitalar Contínuo", month: "jun", status: "pausada", objective: "doacao", investment: 15400.00, impressions: 390000, revenue: 46800.00, clicks: 9400 },
+      { id: 10, name: "MC_Cadastros_Parceiros_Jun26", cleanName: "Captação de Empresas Parceiras", month: "jun", status: "pausada", objective: "cadastros", investment: 8900.00, impressions: 210000, revenue: 22100.00, clicks: 5200 },
+      { id: 11, name: "MC_Doacoes_Exames_Jun26", cleanName: "Fundo de Diagnóstico Precoce", month: "jun", status: "pausada", objective: "doacao", investment: 11200.00, impressions: 290000, revenue: 34000.00, clicks: 7100 },
+      { id: 12, name: "MC_Cadastros_Doadores_Jun26", cleanName: "Campanha Sangue Solidário", month: "jun", status: "pausada", objective: "cadastros", investment: 4100.00, impressions: 125000, revenue: 9800.00, clicks: 3300 },
+      { id: 13, name: "MC_Doacoes_Ambulatorio_Jun26", cleanName: "Manutenção Ambulatorial", month: "jun", status: "pausada", objective: "doacao", investment: 7600.00, impressions: 205000, revenue: 21500.00, clicks: 4800 }
     ];
 
     let currentDateFilter = 'all';
@@ -433,10 +442,13 @@
         legend: { 
           position: 'top',
           horizontalAlign: 'center',
+          floating: false,
+          fontSize: '12px',
+          width: '100%',
           labels: { colors: textColor },
           itemMargin: {
-            horizontal: 10,
-            vertical: 5
+            horizontal: 15,
+            vertical: 4
           }
         },
         grid: { borderColor: gridColor },
