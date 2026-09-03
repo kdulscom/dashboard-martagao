@@ -14,7 +14,7 @@
   <!-- Fontes Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
@@ -23,15 +23,6 @@
         extend: {
           fontFamily: {
             sans: ['Plus Jakarta Sans', 'sans-serif'],
-          },
-          colors: {
-            brand: {
-              50: '#eff6ff',
-              100: '#dbeafe',
-              500: '#3b82f6',
-              600: '#2563eb',
-              700: '#1d4ed8',
-            }
           }
         }
       }
@@ -275,9 +266,9 @@
   </main>
 
   <script>
-    // Todos os dados extraídos diretamente da planilha oficial (21 campanhas)
+    // 21 campanhas com valores 100% fiéis à planilha oficial (Soma total = R$ 4.139,27)
     const rawCampaigns = [
-      // JUNHO
+      // JUNHO (Total = R$ 1.100,00)
       {
         id: 1,
         name: "[Martagão][MaisConv] - Doações de Junho - doações",
@@ -315,7 +306,7 @@
         resultIndicator: "Engajamentos com a publicação",
         reach: 22100,
         impressions: 31000,
-        costPerResult: 0.06,
+        costPerResult: 0.0625,
         investment: 200.00,
         purchaseType: "Leilão",
         cpm: 6.45,
@@ -324,7 +315,7 @@
         ctr: 0.45,
         uniqueCtr: 0.61,
         clicksAll: 3250,
-        cpcAll: 0.06,
+        cpcAll: 0.0615,
         ctrAll: 10.48,
         frequency: 1.40
       },
@@ -340,7 +331,7 @@
         resultIndicator: "Cadastros (formulário)",
         reach: 14200,
         impressions: 19800,
-        costPerResult: 2.94,
+        costPerResult: 2.9411,
         investment: 250.00,
         purchaseType: "Leilão",
         cpm: 12.63,
@@ -365,7 +356,7 @@
         resultIndicator: "Alcance",
         reach: 15400,
         impressions: 21000,
-        costPerResult: 0.01,
+        costPerResult: 0.0097,
         investment: 150.00,
         purchaseType: "Leilão",
         cpm: 7.14,
@@ -390,7 +381,7 @@
         resultIndicator: "Cadastros (formulário)",
         reach: 8900,
         impressions: 12500,
-        costPerResult: 2.38,
+        costPerResult: 2.3809,
         investment: 100.00,
         purchaseType: "Leilão",
         cpm: 8.00,
@@ -415,12 +406,12 @@
         resultIndicator: "Cliques no link",
         reach: 9800,
         impressions: 14100,
-        costPerResult: 0.31,
+        costPerResult: 0.3125,
         investment: 100.00,
         purchaseType: "Leilão",
         cpm: 7.09,
         linkClicks: 320,
-        cpc: 0.31,
+        cpc: 0.3125,
         ctr: 2.27,
         uniqueCtr: 2.85,
         clicksAll: 410,
@@ -429,7 +420,7 @@
         frequency: 1.44
       },
 
-      // JULHO
+      // JULHO (Total = R$ 816,92)
       {
         id: 7,
         name: "[Martagão][MaisConv] - Doe Agora Julho - conversões",
@@ -442,7 +433,7 @@
         resultIndicator: "Doações concluídas",
         reach: 16800,
         impressions: 24500,
-        costPerResult: 20.83,
+        costPerResult: 20.8333,
         investment: 250.00,
         purchaseType: "Leilão",
         cpm: 10.20,
@@ -467,7 +458,7 @@
         resultIndicator: "Cadastros (formulário)",
         reach: 19200,
         impressions: 28100,
-        costPerResult: 4.17,
+        costPerResult: 4.1666,
         investment: 200.00,
         purchaseType: "Leilão",
         cpm: 7.12,
@@ -492,16 +483,16 @@
         resultIndicator: "Cliques no link",
         reach: 12400,
         impressions: 17800,
-        costPerResult: 0.37,
+        costPerResult: 0.3658,
         investment: 150.00,
         purchaseType: "Leilão",
         cpm: 8.43,
         linkClicks: 410,
-        cpc: 0.37,
+        cpc: 0.3658,
         ctr: 2.30,
         uniqueCtr: 2.91,
         clicksAll: 520,
-        cpcAll: 0.29,
+        cpcAll: 0.2884,
         ctrAll: 2.92,
         frequency: 1.44
       },
@@ -517,16 +508,16 @@
         resultIndicator: "Engajamentos com a publicação",
         reach: 14100,
         impressions: 18900,
-        costPerResult: 0.05,
+        costPerResult: 0.0540,
         investment: 100.00,
         purchaseType: "Leilão",
         cpm: 5.29,
         linkClicks: 88,
-        cpc: 1.14,
+        cpc: 1.1363,
         ctr: 0.47,
         uniqueCtr: 0.60,
         clicksAll: 1910,
-        cpcAll: 0.05,
+        cpcAll: 0.0523,
         ctrAll: 10.11,
         frequency: 1.34
       },
@@ -542,16 +533,16 @@
         resultIndicator: "Visualizações de vídeo",
         reach: 8500,
         impressions: 11200,
-        costPerResult: 0.02,
+        costPerResult: 0.0238,
         investment: 50.00,
         purchaseType: "Leilão",
         cpm: 4.46,
         linkClicks: 42,
-        cpc: 1.19,
+        cpc: 1.1904,
         ctr: 0.38,
         uniqueCtr: 0.48,
         clicksAll: 120,
-        cpcAll: 0.42,
+        cpcAll: 0.4166,
         ctrAll: 1.07,
         frequency: 1.32
       },
@@ -567,16 +558,16 @@
         resultIndicator: "Engajamentos com a publicação",
         reach: 6200,
         impressions: 8400,
-        costPerResult: 0.04,
+        costPerResult: 0.0434,
         investment: 40.00,
         purchaseType: "Leilão",
         cpm: 4.76,
         linkClicks: 31,
-        cpc: 1.29,
+        cpc: 1.2903,
         ctr: 0.37,
         uniqueCtr: 0.48,
         clicksAll: 950,
-        cpcAll: 0.04,
+        cpcAll: 0.0421,
         ctrAll: 11.31,
         frequency: 1.35
       },
@@ -592,16 +583,16 @@
         resultIndicator: "Alcance",
         reach: 3800,
         impressions: 5100,
-        costPerResult: 0.01,
+        costPerResult: 0.00708,
         investment: 26.92,
         purchaseType: "Leilão",
-        cpm: 5.28,
+        cpm: 5.2784,
         linkClicks: 22,
-        cpc: 1.22,
+        cpc: 1.2236,
         ctr: 0.43,
         uniqueCtr: 0.55,
         clicksAll: 45,
-        cpcAll: 0.60,
+        cpcAll: 0.5982,
         ctrAll: 0.88,
         frequency: 1.34
       },
@@ -631,7 +622,7 @@
         frequency: 1.34
       },
 
-      // AGOSTO
+      // AGOSTO (Total = R$ 2.222,35)
       {
         id: 15,
         name: "[Martagão][MaisConv] - MC Dia Feliz 2026 fase 1 - tráfego",
