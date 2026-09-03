@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Performance - Martagão Gesteira</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
+    .card { background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+  </style>
+</head>
+<body class="p-4 md:p-8">
+
+  <!-- Header -->
+  <div class="max-w-7xl mx-auto mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-900">Dashboard de Tráfego Pago</h1>
+      <p class="text-sm text-slate-500">Relatório de Performance e Resultados (Jun/2026 - Ago/2026)</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Dados Atualizados
+      </span>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="max-w-7xl mx-auto mb-8 card p-4 flex flex-wrap items-center gap-4">
+    <div class="flex flex-col gap-1 min-w-[200px]">
+      <label class="text-xs font-medium text-slate-500">Filtrar por Campanha</label>
+      <select id="campaignFilter" onchange="filterData()" class="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <option value="ALL">Todas as Campanhas</option>
+      </select>
+    </div>
+    <div class="flex flex-col gap-1 min-w-[160px]">
+      <label class="text-xs font-medium text-slate-500">Status</label>
+      <select id="statusFilter" onchange="filterData()" class="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <option value="ALL">Todos os Status</option>
+        <option value="Ativa">Ativas</option>
+        <option value="Concluída / Inativa">Inativas / Concluídas</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div class="card p-5">
+      <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Total Investido</span>
+      <div id="kpiSpend" class="text-2xl font-bold text-slate-900 mt-2">R$ 0,00</div>
+      <span class="text-xs text-slate-400 mt-1 block">Orçamento veiculado</span>
+    </div>
+    <div class="card p-5">
+      <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Total de Conversões</span>
+      <div id="kpiResults" class="text-2xl font-bold text-blue-600 mt-2">0</div>
+      <span class="text-xs text-slate-400 mt-1 block">Doações & Leads gerados</span>
+    </div>
+    <div class="card p-5">
+      <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Custo Por Resultado Médio</span>
+      <div id="kpiCpa" class="text-2xl font-bold text-slate-900 mt-2">R$ 0,00</div>
+      <span class="text-xs text-slate-400 mt-1 block">Custo por conversão efetiva</span>
+    </div>
+    <div class="card p-5">
+      <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">CTR Médio (Cliques/Impressões)</span>
+      <div id="kpiCtr" class="text-2xl font-bold text-emerald-600 mt-2">0.00%</div>
+      <span class="text-xs text-slate-400 mt-1 block">Taxa de engajamento do público</span>
+    </div>
+  </div>
+
+  <!-- Charts & Analysis Grid -->
+  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+    <!-- Chart -->
+    <div class="card p-6 lg:col-span-2">
+      <h3 class="text-base font-semibold text-slate-900 mb-4">Investimento × Conversões por Campanha</h3>
+      <div class="h-80">
+        <canvas id="performanceChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Insights Card -->
+    <div class="card p-6 flex flex-col justify-between">
+      <div>
+        <h3 class="text-base font-semibold text-slate-900 mb-3 flex items-center gap-2">
+          <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Análise Executiva
+        </h3>
+        <div class="space-y-3 text-sm text-slate-600 leading-relaxed">
+          <p>• <strong>Foco em Doações Direct:</strong> A campanha <span class="font-medium text-slate-800">Conversão para doação</span> concentrou o maior volume financeiro, gerando 129 doações a R$ 37,49 cada.</p>
+          <p>• <strong>Alta Eficiência em Leads:</strong> O formato <span class="font-medium text-slate-800">form leads</span> atingiu um CPA de R$ 3,80 com o maior CTR de link (3.41%), ideal para aquisição de novos contato.</p>
+          <p>• <strong>Topo de Funil:</strong> Tráfego pago gerou +870 acessos diretos com CPC de R$ 2,87, nutrindo o ecossistema do hospital.</p>
+        </div>
+      </div>
+      <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-400">
+        Fonte dos dados: Relatório de Anúncios Meta Ads (Jun-Ago 2026).
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="max-w-7xl mx-auto card overflow-hidden">
+    <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+      <h3 class="text-base font-semibold text-slate-900">Detalhamento das Campanhas</h3>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-sm text-slate-600">
+        <thead class="bg-slate-50 text-xs text-slate-500 uppercase tracking-wider border-b border-slate-100">
+          <tr>
+            <th class="p-4">Campanha</th>
+            <th class="p-4">Status</th>
+            <th class="p-4 text-right">Investimento</th>
+            <th class="p-4 text-right">Impressões</th>
+            <th class="p-4 text-right">Conversões</th>
+            <th class="p-4 text-right">Custo / Resultado</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody" class="divide-y divide-slate-100">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const rawData = [{"name": "[Martag\u00e3o][MaisConv] - Doe Agora Abril 2026 - convers\u00f5es", "status": "Conclu\u00edda / Inativa", "spend": 400.13, "impressions": 26587, "clicks": 109, "results": 11.0, "result_type": "conversions:donate_website", "cpr": 36.37545455, "ctr": 0.409975}, {"name": "[Martag\u00e3o][Mais Conv] - Jantar do Bem 2026 2 - convers\u00e3o", "status": "Conclu\u00edda / Inativa", "spend": 65.72, "impressions": 5323, "clicks": 178, "results": 0, "result_type": "N/A", "cpr": 0, "ctr": 3.343979}, {"name": "[Martag\u00e3o][MaisConv] - Jantar do Bem post 3 - engajamentos", "status": "Conclu\u00edda / Inativa", "spend": 66.11, "impressions": 7499, "clicks": 11, "results": 1065.0, "result_type": "actions:post_interaction_gross", "cpr": 0.06207512, "ctr": 0.146686}, {"name": "[Martag\u00e3o][MaisConv] - MC Dia Feliz 2026 f1 - tr\u00e1fego", "status": "Conclu\u00edda / Inativa", "spend": 78.37, "impressions": 15910, "clicks": 431, "results": 226.0, "result_type": "actions:omni_landing_page_view", "cpr": 0.34676991, "ctr": 2.708988}, {"name": "[Martag\u00e3o][MaisConv] - MC Dia Feliz 2026 fase 1 - tr\u00e1fego", "status": "Conclu\u00edda / Inativa", "spend": 690.02, "impressions": 115119, "clicks": 3019, "results": 1954.0, "result_type": "actions:omni_landing_page_view", "cpr": 0.35313204, "ctr": 2.622504}, {"name": "[Martag\u00e3o][MaisConv] - Corrida Colorida 26 pr\u00e9 - engajamentos", "status": "Conclu\u00edda / Inativa", "spend": 199.98, "impressions": 92679, "clicks": 0, "results": 1548.0, "result_type": "actions:post_interaction_gross", "cpr": 0.12918605, "ctr": 0}, {"name": "[Martag\u00e3o][MaisConv] - Sabores - engajamentos", "status": "Conclu\u00edda / Inativa", "spend": 198.23, "impressions": 13623, "clicks": 0, "results": 9610.0, "result_type": "video_thruplay_watched_actions", "cpr": 0.02062747, "ctr": 0}, {"name": "[Martag\u00e3o][MaisConv] - Institucional - engajamentos", "status": "Conclu\u00edda / Inativa", "spend": 312.98, "impressions": 137731, "clicks": 302, "results": 30320.0, "result_type": "video_thruplay_watched_actions", "cpr": 0.01032256, "ctr": 0.219268}, {"name": "[Martag\u00e3o][MaisConv] - Doe Agora Julho 2026 - convers\u00f5es", "status": "Conclu\u00edda / Inativa", "spend": 499.83, "impressions": 28613, "clicks": 478, "results": 12.0, "result_type": "conversions:donate_website", "cpr": 41.6525, "ctr": 1.670569}, {"name": "[Martag\u00e3o][MaisConv] - Aquisi\u00e7\u00e3o de Doadores - form leads", "status": "Conclu\u00edda / Inativa", "spend": 79.75, "impressions": 8009, "clicks": 273, "results": 21.0, "result_type": "actions:lead", "cpr": 3.79761905, "ctr": 3.408665}, {"name": "[Martag\u00e3o][MaisConv] - Aquisi\u00e7\u00e3o de Doadores 2 - form leads", "status": "Ativa", "spend": 1075.85, "impressions": 119085, "clicks": 2354, "results": 244.0, "result_type": "actions:lead", "cpr": 4.40922131, "ctr": 1.976739}, {"name": "[Martag\u00e3o][MaisConv] - Corrida Colorida 2026 AGO - convers\u00f5es", "status": "Ativa", "spend": 272.48, "impressions": 23495, "clicks": 1226, "results": 18.0, "result_type": "actions:offsite_conversion.fb_pixel_purchase", "cpr": 15.13777778, "ctr": 5.218132}, {"name": "[Martag\u00e3o][MaisConv] - MC Dia Feliz 2026 fase 2 - engajamento", "status": "Conclu\u00edda / Inativa", "spend": 199.82, "impressions": 73144, "clicks": 0, "results": 24829.0, "result_type": "video_thruplay_watched_actions", "cpr": 0.00804785, "ctr": 0}];
+
+    let chartInstance = null;
+
+    function init() {
+      const select = document.getElementById('campaignFilter');
+      rawData.forEach((item, index) => {
+        const opt = document.createElement('option');
+        opt.value = index;
+        opt.textContent = item.name;
+        select.appendChild(opt);
+      });
+      filterData();
+    }
+
+    function filterData() {
+      const selectedIndex = document.getElementById('campaignFilter').value;
+      const selectedStatus = document.getElementById('statusFilter').value;
+
+      let filtered = rawData;
+
+      if (selectedIndex !== "ALL") {
+        filtered = [rawData[selectedIndex]];
+      } else if (selectedStatus !== "ALL") {
+        filtered = filtered.filter(item => item.status === selectedStatus);
+      }
+
+      updateMetrics(filtered);
+      updateChart(filtered);
+      updateTable(filtered);
+    }
+
+    function updateMetrics(data) {
+      const totalSpend = data.reduce((acc, curr) => acc + curr.spend, 0);
+      const totalResults = data.reduce((acc, curr) => acc + curr.results, 0);
+      const avgCpr = totalResults > 0 ? (totalSpend / totalResults) : 0;
+      
+      const totalImpressions = data.reduce((acc, curr) => acc + curr.impressions, 0);
+      const totalClicks = data.reduce((acc, curr) => acc + curr.clicks, 0);
+      const avgCtr = totalImpressions > 0 ? ((totalClicks / totalImpressions) * 100) : 0;
+
+      document.getElementById('kpiSpend').textContent = 'R$ ' + totalSpend.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      document.getElementById('kpiResults').textContent = Math.round(totalResults).toLocaleString('pt-BR');
+      document.getElementById('kpiCpa').textContent = 'R$ ' + avgCpr.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      document.getElementById('kpiCtr').textContent = avgCtr.toFixed(2) + '%';
+    }
+
+    function updateChart(data) {
+      const ctx = document.getElementById('performanceChart').getContext('2d');
+      if (chartInstance) chartInstance.destroy();
+
+      const labels = data.map(d => d.name.length > 20 ? d.name.substring(0, 20) + '...' : d.name);
+      const spends = data.map(d => d.spend);
+      const results = data.map(d => d.results);
+
+      chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Investimento (R$)',
+              data: spends,
+              backgroundColor: '#3b82f6',
+              borderRadius: 6
+            },
+            {
+              label: 'Conversões',
+              data: results,
+              backgroundColor: '#10b981',
+              borderRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'top' }
+          },
+          scales: {
+            y: { beginAtZero: true, grid: { borderDash: [2, 4] } },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+    }
+
+    function updateTable(data) {
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+
+      data.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50/80 transition-colors';
+        tr.innerHTML = `
+          <td class="p-4 font-medium text-slate-800">${item.name}</td>
+          <td class="p-4">
+            <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${item.status === 'Ativa' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-600'}">
+              ${item.status}
+            </span>
+          </td>
+          <td class="p-4 text-right font-medium">R$ ${item.spend.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+          <td class="p-4 text-right">${item.impressions.toLocaleString('pt-BR')}</td>
+          <td class="p-4 text-right font-semibold text-blue-600">${Math.round(item.results)}</td>
+          <td class="p-4 text-right">R$ ${item.cpr.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
