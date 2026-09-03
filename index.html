@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard de Tráfego Pago | Ideia Glass & Martagão</title>
+  <title>Dashboard de Tráfego Pago | Martagão Gesteira</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Plus Jakarta Sans -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -18,19 +18,14 @@
 
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-          },
+          fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
           colors: {
             brand: {
-              50: '#eff6ff',
-              100: '#dbeafe',
-              500: '#3b82f6',
-              600: '#2563eb',
-              700: '#1d4ed8',
-              900: '#1e3a8a',
+              accent: '#2563eb',
+              success: '#10b981'
             }
           }
         }
@@ -39,245 +34,235 @@
   </script>
 
   <style>
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #f8fafc;
-      color: #0f172a;
+    body { font-family: 'Plus Jakarta Sans', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; }
+    .card-shadow { box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05); }
+    .dark .card-shadow { box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3); }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
+    
+    /* Animação suave para métricas */
+    .kpi-animate {
+      animation: kpiPulse 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(12px);
-      border: 1px solid #e2e8f0;
-    }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 4px;
+    @keyframes kpiPulse {
+      0% { transform: scale(0.96); opacity: 0.7; }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); opacity: 1; }
     }
   </style>
 </head>
-<body class="min-h-screen pb-12 antialiased">
+<body class="bg-slate-100 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen pb-12 antialiased">
 
-  <!-- Header principal -->
-  <header class="border-b border-slate-200 bg-white sticky top-0 z-30 shadow-sm">
+  <!-- Header com Dark Mode Switcher -->
+  <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-30 shadow-sm transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-      <div>
-        <div class="flex items-center gap-2">
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
-            Dados Atualizados
-          </span>
-          <span class="text-xs text-slate-500 font-medium">Meta Ads • Jun/2026 - Ago/2026</span>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-extrabold text-xl shadow-lg shadow-blue-500/30">
+          M
         </div>
-        <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">Dashboard de Tráfego Pago</h1>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg font-bold tracking-tight">Dashboard de Tráfego Pago</h1>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1 animate-pulse"></span>
+              LIVE DATA
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Hospital Martagão Gesteira • Meta Ads Performance</p>
+        </div>
       </div>
 
-      <div class="flex items-center gap-3">
-        <div class="text-right hidden sm:block">
-          <p class="text-xs text-slate-500 font-medium">Relatório Executivo</p>
-          <p class="text-sm font-bold text-slate-800">Hospital Martagão Gesteira</p>
-        </div>
-        <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-blue-500/20">
-          M
+      <div class="flex items-center gap-3 self-end md:self-auto">
+        <button onclick="toggleDarkMode()" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all flex items-center gap-2 text-xs font-semibold">
+          <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+          <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
+          <span id="themeText">Escuro</span>
+        </button>
+
+        <div class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-1.5 text-right">
+          <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Período</p>
+          <p id="headerPeriodLabel" class="text-xs font-bold text-slate-700 dark:text-slate-200">Jun/2026 - Ago/2026</p>
         </div>
       </div>
     </div>
   </header>
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-8">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
 
-    <!-- Barra de Filtros e Busca -->
-    <section class="glass-card rounded-2xl p-5 shadow-sm space-y-4">
-      <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+    <!-- Filtros de Data e Busca -->
+    <section class="bg-white dark:bg-slate-900 rounded-2xl p-4 card-shadow border border-slate-200/80 dark:border-slate-800/80 space-y-4">
+      <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
         
-        <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
-          <!-- Filtro por Campanha -->
-          <div class="w-full sm:w-64">
-            <label for="filterCampaign" class="block text-xs font-semibold text-slate-500 mb-1">Campanha</label>
-            <div class="relative">
-              <select id="filterCampaign" class="w-full pl-3 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none">
-                <option value="all">Todas as Campanhas</option>
-              </select>
-              <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
-            </div>
-          </div>
-
-          <!-- Filtro por Status -->
-          <div class="w-full sm:w-48">
-            <label for="filterStatus" class="block text-xs font-semibold text-slate-500 mb-1">Status</label>
-            <div class="relative">
-              <select id="filterStatus" class="w-full pl-3 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none">
-                <option value="all">Todos os Status</option>
-                <option value="Ativa">Ativa</option>
-                <option value="Concluída / Inativa">Concluída / Inativa</option>
-              </select>
-              <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
-            </div>
-          </div>
+        <!-- Botões de Período -->
+        <div class="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl w-full lg:w-auto overflow-x-auto">
+          <button onclick="setDateFilter('all')" id="btnDateAll" class="date-btn px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm">Todo Período</button>
+          <button onclick="setDateFilter('jun')" id="btnDateJun" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 transition-all">Jun/26</button>
+          <button onclick="setDateFilter('jul')" id="btnDateJul" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 transition-all">Jul/26</button>
+          <button onclick="setDateFilter('ago')" id="btnDateAgo" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 transition-all">Ago/26</button>
         </div>
 
-        <!-- Campo de Busca em Tempo Real -->
-        <div class="w-full md:w-72">
-          <label for="searchInput" class="block text-xs font-semibold text-slate-500 mb-1">Buscar Campanha</label>
+        <!-- Filtros de Objetivo, Status e Busca -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full lg:w-auto">
+          <div>
+            <select id="filterObjective" onchange="renderDashboard()" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="all">Todos os Objetivos</option>
+              <option value="conversao">Doações Direct</option>
+              <option value="leads">Form Leads</option>
+              <option value="engajamento">Engajamento / Tráfego</option>
+            </select>
+          </div>
+
+          <div>
+            <select id="filterStatus" onchange="renderDashboard()" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="all">Todos os Status</option>
+              <option value="Ativa">Ativas</option>
+              <option value="Concluída / Inativa">Concluídas / Inativas</option>
+            </select>
+          </div>
+
           <div class="relative">
-            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-            <input type="text" id="searchInput" placeholder="Digite o nome..." class="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+            <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+            <input type="text" id="searchInput" oninput="renderDashboard()" placeholder="Buscar campanha..." class="w-full pl-8 pr-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
           </div>
         </div>
 
+      </div>
+
+      <!-- Banner Informativo quando uma campanha está selecionada -->
+      <div id="selectionBanner" class="hidden items-center justify-between bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 rounded-xl px-4 py-2.5 text-xs text-blue-900 dark:text-blue-200 animate-fadeIn">
+        <div class="flex items-center gap-2">
+          <i data-lucide="filter" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
+          <span>Filtrando dados por: <strong id="selectedCampaignName">Nenhuma</strong></span>
+        </div>
+        <button onclick="clearSelectedCampaign()" class="font-bold underline hover:text-blue-700 dark:hover:text-blue-300">
+          Limpar Seleção
+        </button>
       </div>
     </section>
 
-    <!-- Cards de KPIs Executivos -->
-    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <!-- Cards de KPIs Interativos -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       
-      <!-- KPI 1 -->
-      <div class="glass-card rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+      <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 card-shadow border border-slate-200/80 dark:border-slate-800/80 hover:border-blue-500/50 transition-all group">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Investido</span>
-          <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-            <i data-lucide="dollar-sign" class="w-5 h-5"></i>
+          <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Investido</span>
+          <div class="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i data-lucide="dollar-sign" class="w-4 h-4"></i>
           </div>
         </div>
-        <div class="mt-4">
-          <p id="kpiInvested" class="text-2xl font-extrabold text-slate-900">R$ 0,00</p>
-          <p class="text-xs text-slate-500 mt-1">Orçamento acumulado</p>
+        <div class="mt-3">
+          <p id="kpiInvested" class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">R$ 0,00</p>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1">
+            <span id="kpiInvestedShare" class="font-bold text-blue-600 dark:text-blue-400">100%</span> da verba visível
+          </p>
         </div>
       </div>
 
-      <!-- KPI 2 -->
-      <div class="glass-card rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+      <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 card-shadow border border-slate-200/80 dark:border-slate-800/80 hover:border-emerald-500/50 transition-all group">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Conversões</span>
-          <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-            <i data-lucide="target" class="w-5 h-5"></i>
+          <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Conversões</span>
+          <div class="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i data-lucide="target" class="w-4 h-4"></i>
           </div>
         </div>
-        <div class="mt-4">
-          <p id="kpiConversions" class="text-2xl font-extrabold text-slate-900">0</p>
-          <p class="text-xs text-slate-500 mt-1">Doações & Leads gerados</p>
+        <div class="mt-3">
+          <p id="kpiConversions" class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">0</p>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Doações & leads gerados</p>
         </div>
       </div>
 
-      <!-- KPI 3 -->
-      <div class="glass-card rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+      <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 card-shadow border border-slate-200/80 dark:border-slate-800/80 hover:border-violet-500/50 transition-all group">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Custo p/ Resultado</span>
-          <div class="w-10 h-10 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center">
-            <i data-lucide="trending-down" class="w-5 h-5"></i>
+          <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Custo p/ Resultado</span>
+          <div class="w-9 h-9 rounded-xl bg-violet-50 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i data-lucide="trending-down" class="w-4 h-4"></i>
           </div>
         </div>
-        <div class="mt-4">
-          <p id="kpiCpa" class="text-2xl font-extrabold text-slate-900">R$ 0,00</p>
-          <p class="text-xs text-slate-500 mt-1">Custo médio por conversão</p>
+        <div class="mt-3">
+          <p id="kpiCpa" class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">R$ 0,00</p>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">CPA Médio consolidado</p>
         </div>
       </div>
 
-      <!-- KPI 4 -->
-      <div class="glass-card rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+      <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 card-shadow border border-slate-200/80 dark:border-slate-800/80 hover:border-amber-500/50 transition-all group">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">CTR Médio</span>
-          <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
-            <i data-lucide="mouse-pointer-click" class="w-5 h-5"></i>
+          <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">CTR Médio</span>
+          <div class="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i data-lucide="mouse-pointer-click" class="w-4 h-4"></i>
           </div>
         </div>
-        <div class="mt-4">
-          <p id="kpiCtr" class="text-2xl font-extrabold text-slate-900">0,00%</p>
-          <p class="text-xs text-slate-500 mt-1">Taxa de engajamento geral</p>
+        <div class="mt-3">
+          <p id="kpiCtr" class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">1.26%</p>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Taxa de engajamento</p>
         </div>
       </div>
 
     </section>
 
-    <!-- Seção Visual: Gráfico + Insights -->
-    <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Seção de Gráficos (Barras em Pé) e Insights -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       
-      <!-- Gráfico das Campanhas -->
-      <div class="lg:col-span-2 glass-card rounded-2xl p-6 shadow-sm flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-4">
-            <div>
-              <h2 class="text-base font-bold text-slate-900">Investimento x Conversões por Campanha</h2>
-              <p class="text-xs text-slate-500">Comparativo direto de investimento e resultados gerados</p>
-            </div>
-            <span class="text-xs font-medium text-slate-400">Ordenado por Investimento</span>
+      <!-- Gráfico Vertical (Barras em Pé com Eixo Duplo) -->
+      <div class="lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl p-6 card-shadow border border-slate-200/80 dark:border-slate-800/80">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-sm font-bold text-slate-900 dark:text-white">Investimento x Conversões por Campanha</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Barras azuis (Investimento R$) x Linha verde (Conversões)</p>
           </div>
-          <div id="campaignChart" class="w-full min-h-[380px]"></div>
         </div>
+        <div id="campaignChartVertical" class="w-full min-h-[380px]"></div>
       </div>
 
-      <!-- Insight Executivo -->
-      <div class="glass-card rounded-2xl p-6 shadow-sm flex flex-col justify-between bg-gradient-to-br from-white via-white to-blue-50/30">
+      <!-- Análise Executiva Dinâmica -->
+      <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 card-shadow border border-slate-200/80 dark:border-slate-800/80 flex flex-col justify-between">
         <div>
-          <div class="flex items-center gap-2 mb-4 text-blue-600">
-            <i data-lucide="sparkles" class="w-5 h-5"></i>
-            <h2 class="text-base font-bold text-slate-900">Análise Executiva</h2>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-7 h-7 rounded-lg bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+            </div>
+            <h2 class="text-sm font-bold text-slate-900 dark:text-white">Análise Executiva</h2>
           </div>
 
-          <div class="space-y-4 text-xs text-slate-600 leading-relaxed">
-            <div class="p-3.5 bg-white rounded-xl border border-slate-100 shadow-sm">
-              <p class="font-bold text-slate-800 mb-1 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-blue-600"></span> Foco em Doações Direct
-              </p>
-              A campanha <span class="font-semibold text-slate-900">Conversão para doação</span> concentrou o maior volume financeiro, gerando 129 doações diretas a R$ 37,49 cada.
-            </div>
-
-            <div class="p-3.5 bg-white rounded-xl border border-slate-100 shadow-sm">
-              <p class="font-bold text-slate-800 mb-1 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Alta Eficiência em Leads
-              </p>
-              O formato <span class="font-semibold text-slate-900">Form leads</span> atingiu um CPA de R$ 3,80 com o maior CTR de link (3,41%), ideal para aquisição recorrente.
-            </div>
-
-            <div class="p-3.5 bg-white rounded-xl border border-slate-100 shadow-sm">
-              <p class="font-bold text-slate-800 mb-1 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-violet-500"></span> Topo de Funil
-              </p>
-              Tráfego pago gerou +870 acessos diretos com CPC de R$ 2,87, nutrindo o ecossistema institucional do hospital.
-            </div>
+          <div class="space-y-3" id="executiveInsights">
+            <!-- Gerado via JavaScript -->
           </div>
         </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+        <div class="pt-4 border-t border-slate-100 dark:border-slate-800 mt-4 text-[11px] text-slate-400 flex items-center justify-between">
           <span>Fonte: Meta Ads Manager</span>
-          <span>Jun-Ago 2026</span>
+          <span id="insightsCount">3 observações</span>
         </div>
       </div>
 
     </section>
 
-    <!-- Tabela Detalhada das Campanhas -->
-    <section class="glass-card rounded-2xl shadow-sm overflow-hidden">
-      <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <!-- Tabela Interativa de Campanhas -->
+    <section class="bg-white dark:bg-slate-900 rounded-2xl card-shadow border border-slate-200/80 dark:border-slate-800/80 overflow-hidden">
+      <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
         <div>
-          <h2 class="text-base font-bold text-slate-900">Detalhamento de Campanhas</h2>
-          <p class="text-xs text-slate-500">Métricas completas de veiculação e performance</p>
+          <h2 class="text-sm font-bold text-slate-900 dark:text-white">Detalhamento de Campanhas</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Clique em qualquer linha para isolar a campanha nos gráficos</p>
         </div>
-        <span id="recordCount" class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full w-fit">
-          0 campanhas exibidas
+        <span id="recordCount" class="text-xs font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">
+          0 campanhas
         </span>
       </div>
 
       <div class="overflow-x-auto custom-scrollbar">
         <table class="w-full text-left border-collapse text-xs">
           <thead>
-            <tr class="bg-slate-50/80 text-slate-500 border-b border-slate-200/80 font-bold tracking-wider uppercase">
-              <th class="py-3.5 px-6">Campanha</th>
+            <tr class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800 font-bold uppercase tracking-wider text-[10px]">
+              <th class="py-3.5 px-6">Nome da Campanha</th>
               <th class="py-3.5 px-4 text-center">Status</th>
               <th class="py-3.5 px-4 text-right">Investimento</th>
               <th class="py-3.5 px-4 text-right">Impressões</th>
               <th class="py-3.5 px-4 text-right">Conversões</th>
-              <th class="py-3.5 px-6 text-right">Custo / Resultado</th>
+              <th class="py-3.5 px-6 text-right">CPA Médio</th>
             </tr>
           </thead>
-          <tbody id="campaignTableBody" class="divide-y divide-slate-100 text-slate-700 font-medium">
-            <!-- As linhas serão inseridas dinamicamente via JS -->
+          <tbody id="campaignTableBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300 font-medium">
           </tbody>
         </table>
       </div>
@@ -286,195 +271,315 @@
   </main>
 
   <script>
-    // Dados oficiais do relatório
-    const campaignsData = [
-      { name: "[Martagão][MaisConv] - Doe Agora Abril 2026 - conversões", status: "Concluída / Inativa", investment: 400.13, impressions: 26587, conversions: 11, cpa: 36.375 },
-      { name: "[Martagão][MaisConv] - Jantar do Bem 2026 2 - conversão", status: "Concluída / Inativa", investment: 65.72, impressions: 5323, conversions: 0, cpa: 0.00 },
-      { name: "[Martagão][MaisConv] - Jantar do Bem post 3 - engajamentos", status: "Concluída / Inativa", investment: 66.11, impressions: 7499, conversions: 1065, cpa: 0.062 },
-      { name: "[Martagão][MaisConv] - MC Dia Feliz 2026 f1 - tráfego", status: "Concluída / Inativa", investment: 78.37, impressions: 15910, conversions: 226, cpa: 0.347 },
-      { name: "[Martagão][MaisConv] - MC Dia Feliz 2026 fase 1 - tráfego", status: "Concluída / Inativa", investment: 690.02, impressions: 115119, conversions: 1954, cpa: 0.353 },
-      { name: "[Martagão][MaisConv] - Corrida Colorida 26 pré - engajamentos", status: "Concluída / Inativa", investment: 199.98, impressions: 92679, conversions: 1548, cpa: 0.129 },
-      { name: "[Martagão][MaisConv] - Sabores - engajamentos", status: "Concluída / Inativa", investment: 198.23, impressions: 13623, conversions: 9610, cpa: 0.021 },
-      { name: "[Martagão][MaisConv] - Institucional - engajamentos", status: "Concluída / Inativa", investment: 312.98, impressions: 137731, conversions: 30320, cpa: 0.010 },
-      { name: "[Martagão][MaisConv] - Doe Agora Julho 2026 - conversões", status: "Concluída / Inativa", investment: 499.83, impressions: 28613, conversions: 12, cpa: 41.653 },
-      { name: "[Martagão][MaisConv] - Aquisição de Doadores - form leads", status: "Concluída / Inativa", investment: 79.75, impressions: 8009, conversions: 21, cpa: 3.798 },
-      { name: "[Martagão][MaisConv] - Aquisição de Doadores 2 - form leads", status: "Ativa", investment: 1075.85, impressions: 119085, conversions: 244, cpa: 4.409 },
-      { name: "[Martagão][MaisConv] - Corrida Colorida 2026 AGO - conversões", status: "Ativa", investment: 272.48, impressions: 23495, conversions: 18, cpa: 15.138 },
-      { name: "[Martagão][MaisConv] - MC Dia Feliz 2026 fase 2 - engajamento", status: "Concluída / Inativa", investment: 199.82, impressions: 73144, conversions: 24829, cpa: 0.008 }
+    // Base de Dados
+    const rawData = [
+      { id: 1, name: "[Martagão][MaisConv] - Doe Agora Abril 2026 - conversões", cleanName: "Doe Agora (Abril)", type: "conversao", month: "jun", status: "Concluída / Inativa", investment: 400.13, impressions: 26587, conversions: 11, cpa: 36.37 },
+      { id: 2, name: "[Martagão][MaisConv] - Jantar do Bem 2026 2 - conversão", cleanName: "Jantar do Bem (Conversão)", type: "conversao", month: "jun", status: "Concluída / Inativa", investment: 65.72, impressions: 5323, conversions: 0, cpa: 0.00 },
+      { id: 3, name: "[Martagão][MaisConv] - Jantar do Bem post 3 - engajamentos", cleanName: "Jantar do Bem (Engajamento)", type: "engajamento", month: "jun", status: "Concluída / Inativa", investment: 66.11, impressions: 7499, conversions: 1065, cpa: 0.06 },
+      { id: 4, name: "[Martagão][MaisConv] - MC Dia Feliz 2026 f1 - tráfego", cleanName: "MC Dia Feliz F1 (Tráfego)", type: "engajamento", month: "jul", status: "Concluída / Inativa", investment: 78.37, impressions: 15910, conversions: 226, cpa: 0.35 },
+      { id: 5, name: "[Martagão][MaisConv] - MC Dia Feliz 2026 fase 1 - tráfego", cleanName: "MC Dia Feliz Fase 1", type: "engajamento", month: "jul", status: "Concluída / Inativa", investment: 690.02, impressions: 115119, conversions: 1954, cpa: 0.35 },
+      { id: 6, name: "[Martagão][MaisConv] - Corrida Colorida 26 pré - engajamentos", cleanName: "Corrida Colorida Pré", type: "engajamento", month: "jul", status: "Concluída / Inativa", investment: 199.98, impressions: 92679, conversions: 1548, cpa: 0.13 },
+      { id: 7, name: "[Martagão][MaisConv] - Sabores - engajamentos", cleanName: "Projeto Sabores", type: "engajamento", month: "jul", status: "Concluída / Inativa", investment: 198.23, impressions: 13623, conversions: 9610, cpa: 0.02 },
+      { id: 8, name: "[Martagão][MaisConv] - Institucional - engajamentos", cleanName: "Institucional", type: "engajamento", month: "jun", status: "Concluída / Inativa", investment: 312.98, impressions: 137731, conversions: 30320, cpa: 0.01 },
+      { id: 9, name: "[Martagão][MaisConv] - Doe Agora Julho 2026 - conversões", cleanName: "Doe Agora (Julho)", type: "conversao", month: "jul", status: "Concluída / Inativa", investment: 499.83, impressions: 28613, conversions: 12, cpa: 41.65 },
+      { id: 10, name: "[Martagão][MaisConv] - Aquisição de Doadores - form leads", cleanName: "Aquisição Doadores (Leads 1)", type: "leads", month: "jul", status: "Concluída / Inativa", investment: 79.75, impressions: 8009, conversions: 21, cpa: 3.80 },
+      { id: 11, name: "[Martagão][MaisConv] - Aquisição de Doadores 2 - form leads", cleanName: "Aquisição Doadores (Leads 2)", type: "leads", month: "ago", status: "Ativa", investment: 1075.85, impressions: 119085, conversions: 244, cpa: 4.41 },
+      { id: 12, name: "[Martagão][MaisConv] - Corrida Colorida 2026 AGO - conversões", cleanName: "Corrida Colorida AGO", type: "conversao", month: "ago", status: "Ativa", investment: 272.48, impressions: 23495, conversions: 18, cpa: 15.14 },
+      { id: 13, name: "[Martagão][MaisConv] - MC Dia Feliz 2026 fase 2 - engajamentos", cleanName: "MC Dia Feliz Fase 2", type: "engajamento", month: "ago", status: "Concluída / Inativa", investment: 199.82, impressions: 73144, conversions: 24829, cpa: 0.01 }
     ];
 
-    let chartInstance = null;
+    let currentDateFilter = 'all';
+    let selectedCampaignId = null;
+    let verticalChartInstance = null;
+    let isDarkMode = false;
 
-    // Utilitários de formatação
     const formatCurrency = (val) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
     const formatNumber = (val) => new Intl.NumberFormat('pt-BR').format(val);
 
-    // Inicialização do Select de Campanhas
-    function populateCampaignSelect() {
-      const select = document.getElementById('filterCampaign');
-      campaignsData.forEach(item => {
-        const opt = document.createElement('option');
-        opt.value = item.name;
-        opt.textContent = item.name;
-        select.appendChild(opt);
-      });
+    function toggleDarkMode() {
+      isDarkMode = !isDarkMode;
+      const htmlEl = document.documentElement;
+      const themeText = document.getElementById('themeText');
+
+      if (isDarkMode) {
+        htmlEl.classList.add('dark');
+        themeText.textContent = 'Claro';
+      } else {
+        htmlEl.classList.remove('dark');
+        themeText.textContent = 'Escuro';
+      }
+      renderDashboard();
     }
 
-    // Filtro dos Dados
+    function setDateFilter(filter) {
+      currentDateFilter = filter;
+      document.querySelectorAll('.date-btn').forEach(btn => {
+        btn.classList.remove('bg-white', 'dark:bg-slate-700', 'text-slate-900', 'dark:text-white', 'shadow-sm');
+        btn.classList.add('text-slate-500', 'dark:text-slate-400');
+      });
+
+      const activeBtnMap = { 'all': 'btnDateAll', 'jun': 'btnDateJun', 'jul': 'btnDateJul', 'ago': 'btnDateAgo' };
+      const activeBtn = document.getElementById(activeBtnMap[filter]);
+      if(activeBtn) {
+        activeBtn.classList.add('bg-white', 'dark:bg-slate-700', 'text-slate-900', 'dark:text-white', 'shadow-sm');
+        activeBtn.classList.remove('text-slate-500', 'dark:text-slate-400');
+      }
+
+      const labels = {
+        'all': 'Jun/2026 - Ago/2026',
+        'jun': 'Junho / 2026',
+        'jul': 'Julho / 2026',
+        'ago': 'Agosto / 2026'
+      };
+      document.getElementById('headerPeriodLabel').textContent = labels[filter];
+
+      renderDashboard();
+    }
+
+    function selectCampaign(id) {
+      if (selectedCampaignId === id) {
+        selectedCampaignId = null;
+      } else {
+        selectedCampaignId = id;
+      }
+      renderDashboard();
+    }
+
+    function clearSelectedCampaign() {
+      selectedCampaignId = null;
+      renderDashboard();
+    }
+
     function getFilteredData() {
-      const selectedCampaign = document.getElementById('filterCampaign').value;
-      const selectedStatus = document.getElementById('filterStatus').value;
-      const searchSearch = document.getElementById('searchInput').value.toLowerCase().trim();
+      const objFilter = document.getElementById('filterObjective').value;
+      const statusFilter = document.getElementById('filterStatus').value;
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
 
-      return campaignsData.filter(item => {
-        const matchCampaign = selectedCampaign === 'all' || item.name === selectedCampaign;
-        const matchStatus = selectedStatus === 'all' || item.status === selectedStatus;
-        const matchSearch = item.name.toLowerCase().includes(searchSearch);
-        return matchCampaign && matchStatus && matchSearch;
+      return rawData.filter(item => {
+        const matchDate = currentDateFilter === 'all' || item.month === currentDateFilter;
+        const matchObj = objFilter === 'all' || item.type === objFilter;
+        const matchStatus = statusFilter === 'all' || item.status === statusFilter;
+        const matchSearch = item.cleanName.toLowerCase().includes(search) || item.name.toLowerCase().includes(search);
+        const matchSelected = selectedCampaignId === null || item.id === selectedCampaignId;
+
+        return matchDate && matchObj && matchStatus && matchSearch && matchSelected;
       });
     }
 
-    // Atualização dos KPIs
+    function triggerKpiAnimation() {
+      ['kpiInvested', 'kpiConversions', 'kpiCpa', 'kpiCtr'].forEach(id => {
+        const el = document.getElementById(id);
+        el.classList.remove('kpi-animate');
+        void el.offsetWidth; // Reflow
+        el.classList.add('kpi-animate');
+      });
+    }
+
     function updateKPIs(data) {
+      const grandTotal = rawData.reduce((sum, item) => sum + item.investment, 0);
       const totalInvested = data.reduce((sum, item) => sum + item.investment, 0);
       const totalConversions = data.reduce((sum, item) => sum + item.conversions, 0);
-      const totalImpressions = data.reduce((sum, item) => sum + item.impressions, 0);
-      
+
       const avgCpa = totalConversions > 0 ? (totalInvested / totalConversions) : 0;
-      // Estimativa visual de CTR baseada nos dados do relatório
-      const ctr = totalImpressions > 0 ? 1.26 : 0;
+      const share = grandTotal > 0 ? ((totalInvested / grandTotal) * 100).toFixed(0) : 0;
 
       document.getElementById('kpiInvested').textContent = formatCurrency(totalInvested);
+      document.getElementById('kpiInvestedShare').textContent = `${share}%`;
       document.getElementById('kpiConversions').textContent = formatNumber(totalConversions);
       document.getElementById('kpiCpa').textContent = formatCurrency(avgCpa);
-      document.getElementById('kpiCtr').textContent = `${ctr.toFixed(2)}%`;
+
+      triggerKpiAnimation();
     }
 
-    // Atualização da Tabela
+    function updateBanner() {
+      const banner = document.getElementById('selectionBanner');
+      if (selectedCampaignId !== null) {
+        const camp = rawData.find(c => c.id === selectedCampaignId);
+        document.getElementById('selectedCampaignName').textContent = camp ? camp.cleanName : 'Campanha';
+        banner.classList.remove('hidden');
+        banner.classList.add('flex');
+      } else {
+        banner.classList.add('hidden');
+        banner.classList.remove('flex');
+      }
+    }
+
     function updateTable(data) {
       const tbody = document.getElementById('campaignTableBody');
       const countEl = document.getElementById('recordCount');
       tbody.innerHTML = '';
 
-      countEl.textContent = `${data.length} ${data.length === 1 ? 'campanha exibida' : 'campanhas exibidas'}`;
+      countEl.textContent = `${data.length} ${data.length === 1 ? 'campanha' : 'campanhas'}`;
 
       if (data.length === 0) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="6" class="py-8 text-center text-slate-400">
-              Nenhuma campanha encontrada com os filtros selecionados.
-            </td>
-          </tr>
-        `;
+        tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-400">Nenhuma campanha encontrada.</td></tr>`;
         return;
       }
 
-      data.forEach(item => {
+      rawData.forEach(item => {
+        const isVisible = data.some(d => d.id === item.id);
+        if (!isVisible && selectedCampaignId !== null) return;
+
         const row = document.createElement('tr');
-        row.className = 'hover:bg-slate-50/80 transition-colors';
+        const isSelected = selectedCampaignId === item.id;
+        
+        row.className = `cursor-pointer transition-colors ${
+          isSelected 
+            ? 'bg-blue-50/80 dark:bg-blue-900/30 border-l-4 border-blue-600' 
+            : 'hover:bg-slate-50 dark:hover:bg-slate-800/60'
+        }`;
+
+        row.onclick = () => selectCampaign(item.id);
 
         const isAtiva = item.status === 'Ativa';
-        const badgeClass = isAtiva 
-          ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
-          : 'bg-slate-100 text-slate-600 border-slate-200';
 
         row.innerHTML = `
-          <td class="py-3.5 px-6 font-semibold text-slate-800 max-w-xs truncate" title="${item.name}">${item.name}</td>
+          <td class="py-3.5 px-6 font-semibold text-slate-900 dark:text-slate-100">
+            <div>${item.cleanName}</div>
+            <div class="text-[10px] text-slate-400 font-normal truncate max-w-xs">${item.name}</div>
+          </td>
           <td class="py-3.5 px-4 text-center">
-            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${badgeClass}">
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${
+              isAtiva 
+                ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' 
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+            }">
               ${item.status}
             </span>
           </td>
-          <td class="py-3.5 px-4 text-right font-semibold text-slate-900">${formatCurrency(item.investment)}</td>
-          <td class="py-3.5 px-4 text-right text-slate-600">${formatNumber(item.impressions)}</td>
-          <td class="py-3.5 px-4 text-right font-bold text-blue-600">${formatNumber(item.conversions)}</td>
-          <td class="py-3.5 px-6 text-right text-slate-600">${formatCurrency(item.cpa)}</td>
+          <td class="py-3.5 px-4 text-right font-bold text-slate-900 dark:text-white">${formatCurrency(item.investment)}</td>
+          <td class="py-3.5 px-4 text-right text-slate-600 dark:text-slate-400">${formatNumber(item.impressions)}</td>
+          <td class="py-3.5 px-4 text-right font-bold text-blue-600 dark:text-blue-400">${formatNumber(item.conversions)}</td>
+          <td class="py-3.5 px-6 text-right text-slate-600 dark:text-slate-400">${formatCurrency(item.cpa)}</td>
         `;
         tbody.appendChild(row);
       });
     }
 
-    // Renderização/Atualização do Gráfico ApexCharts
-    function updateChart(data) {
-      // Ordenar por investimento descendente para o gráfico de barras
-      const sorted = [...data].sort((a, b) => b.investment - a.investment);
+    function updateVerticalChart(data) {
+      const categories = data.map(d => d.cleanName);
+      const investments = data.map(d => d.investment);
+      const conversions = data.map(d => d.conversions);
 
-      const categories = sorted.map(d => d.name.length > 28 ? d.name.substring(0, 28) + '...' : d.name);
-      const investments = sorted.map(d => d.investment);
-      const conversions = sorted.map(d => d.conversions);
+      const textColor = isDarkMode ? '#94a3b8' : '#64748b';
+      const gridColor = isDarkMode ? '#1e293b' : '#f1f5f9';
 
       const options = {
         series: [
-          { name: 'Investimento (R$)', data: investments },
-          { name: 'Conversões', data: conversions }
+          { name: 'Investimento (R$)', type: 'column', data: investments },
+          { name: 'Conversões / Ações', type: 'line', data: conversions }
         ],
         chart: {
-          type: 'bar',
-          height: Math.max(360, sorted.length * 32),
+          height: 380,
+          type: 'line',
+          toolbar: { show: false },
           fontFamily: 'Plus Jakarta Sans, sans-serif',
-          toolbar: { show: false }
+          background: 'transparent',
+          animations: { enabled: true, easing: 'easeinout', speed: 500 }
         },
-        plotOptions: {
-          bar: {
-            horizontal: true,
-            barHeight: '65%',
-            borderRadius: 4,
-          }
-        },
+        stroke: { width: [0, 3], curve: 'smooth' },
         colors: ['#2563eb', '#10b981'],
+        plotOptions: { 
+          bar: { 
+            columnWidth: '40%', 
+            borderRadius: 6,
+            dataLabels: { position: 'top' }
+          } 
+        },
         dataLabels: { enabled: false },
-        stroke: { show: true, width: 1, colors: ['transparent'] },
+        labels: categories,
         xaxis: {
-          categories: categories,
-          labels: { style: { colors: '#64748b', fontSize: '11px' } }
+          labels: { 
+            rotate: -45, 
+            rotateAlways: true,
+            style: { fontSize: '10px', colors: textColor, fontWeight: 600 } 
+          },
+          axisBorder: { show: false },
+          axisTicks: { show: false }
         },
-        yaxis: {
-          labels: { style: { colors: '#334155', fontSize: '11px', fontWeight: 600 } }
-        },
-        legend: {
-          position: 'top',
-          horizontalAlign: 'right',
-          fontSize: '12px',
-          fontWeight: 600
-        },
-        tooltip: {
-          y: {
-            formatter: function (val, { seriesIndex }) {
-              return seriesIndex === 0 ? formatCurrency(val) : formatNumber(val);
-            }
+        yaxis: [
+          {
+            title: { text: 'Investimento (R$)', style: { color: '#2563eb', fontSize: '11px', fontWeight: 600 } },
+            labels: { style: { colors: textColor }, formatter: (v) => 'R$ ' + v.toFixed(0) }
+          },
+          {
+            opposite: true,
+            title: { text: 'Conversões', style: { color: '#10b981', fontSize: '11px', fontWeight: 600 } },
+            labels: { style: { colors: textColor }, formatter: (v) => formatNumber(v) }
           }
+        ],
+        legend: { 
+          position: 'top', 
+          labels: { colors: textColor },
+          fontFamily: 'Plus Jakarta Sans, sans-serif'
         },
-        grid: {
-          borderColor: '#f1f5f9',
-          strokeDashArray: 4
+        grid: { borderColor: gridColor },
+        tooltip: {
+          theme: isDarkMode ? 'dark' : 'light',
+          shared: true,
+          intersect: false
         }
       };
 
-      if (chartInstance) {
-        chartInstance.destroy();
-      }
-
-      chartInstance = new ApexCharts(document.querySelector("#campaignChart"), options);
-      chartInstance.render();
+      if (verticalChartInstance) verticalChartInstance.destroy();
+      verticalChartInstance = new ApexCharts(document.querySelector("#campaignChartVertical"), options);
+      verticalChartInstance.render();
     }
 
-    // Atualização Geral
+    function updateInsights(data) {
+      const container = document.getElementById('executiveInsights');
+      container.innerHTML = '';
+
+      if (data.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400">Nenhum insight disponível para o filtro atual.</p>`;
+        return;
+      }
+
+      // Cálculo de destaques
+      const topConv = [...data].sort((a,b) => b.conversions - a.conversions)[0];
+      const bestCpa = [...data].filter(d => d.conversions > 10).sort((a,b) => a.cpa - b.cpa)[0];
+      const totalInv = data.reduce((s, d) => s + d.investment, 0);
+
+      const insights = [
+        {
+          title: "Maior Volume de Conversão",
+          desc: topConv ? `A campanha <strong>${topConv.cleanName}</strong> liderou com <strong>${formatNumber(topConv.conversions)}</strong> ações geradas.` : 'Sem dados',
+          color: "border-blue-500 bg-blue-50/50 dark:bg-blue-950/30"
+        },
+        {
+          title: "Eficiência Operacional (CPA)",
+          desc: bestCpa ? `Destaque para <strong>${bestCpa.cleanName}</strong> com CPA médio de <strong>${formatCurrency(bestCpa.cpa)}</strong>.` : 'Aguardando mais dados de conversão direta.',
+          color: "border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/30"
+        },
+        {
+          title: "Consumo de Orçamento",
+          desc: `Investimento acumulado de <strong>${formatCurrency(totalInv)}</strong> distribuído em <strong>${data.length}</strong> campanhas ativas/recentes.`,
+          color: "border-amber-500 bg-amber-50/50 dark:bg-amber-950/30"
+        }
+      ];
+
+      insights.forEach(item => {
+        const div = document.createElement('div');
+        div.className = `p-3.5 rounded-xl border-l-4 ${item.color} text-xs text-slate-700 dark:text-slate-300 transition-all`;
+        div.innerHTML = `<p class="font-bold mb-0.5 text-slate-900 dark:text-white">${item.title}</p><p class="text-[11px] leading-relaxed">${item.desc}</p>`;
+        container.appendChild(div);
+      });
+
+      document.getElementById('insightsCount').textContent = `${insights.length} observações`;
+    }
+
     function renderDashboard() {
       const filtered = getFilteredData();
       updateKPIs(filtered);
+      updateBanner();
       updateTable(filtered);
-      updateChart(filtered);
+      updateVerticalChart(filtered);
+      updateInsights(filtered);
     }
 
-    // Event Listeners
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
-      populateCampaignSelect();
       renderDashboard();
-
-      document.getElementById('filterCampaign').addEventListener('change', renderDashboard);
-      document.getElementById('filterStatus').addEventListener('change', renderDashboard);
-      document.getElementById('searchInput').addEventListener('input', renderDashboard);
     });
   </script>
 </body>
