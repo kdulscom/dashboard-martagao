@@ -235,7 +235,8 @@
               <th class="p-3.5 pl-5">Nome da Campanha</th>
               <th class="p-3.5">Veiculação</th>
               <th class="p-3.5">Resultados</th>
-              <th class="p-3.5">Indicador de Resultados</th>
+              <th class="p-3.5">Impressões</th>
+              <th class="p-3.5">Cliques no Link</th>
               <th class="p-3.5">Alcance</th>
               <th class="p-3.5">Frequência</th>
               <th class="p-3.5">Custo/Resultado</th>
@@ -251,7 +252,7 @@
   </main>
 
   <script>
-    // Apenas as 7 campanhas exatas extraídas do print enviadas pelo usuário
+    // As 7 campanhas do relatório com Impressões e Cliques no Link extraídos do relatório Meta Ads
     const rawCampaigns = [
       {
         id: 1,
@@ -261,7 +262,8 @@
         status: "completed",
         objective: "evento",
         results: 1269,
-        resultIndicator: "actions:omni_landing_page_view",
+        impressions: 65080,
+        linkClicks: 1541,
         reach: 42846,
         frequency: 1.518928,
         costPerResult: 0.2977699,
@@ -275,7 +277,8 @@
         status: "completed",
         objective: "evento",
         results: 4290,
-        resultIndicator: "video_thruplay_watched_actions",
+        impressions: 4783,
+        linkClicks: 32,
         reach: 2003,
         frequency: 2.387918,
         costPerResult: 0.02014685,
@@ -289,7 +292,8 @@
         status: "completed",
         objective: "evento",
         results: 13891,
-        resultIndicator: "video_thruplay_watched_actions",
+        impressions: 62804,
+        linkClicks: 147,
         reach: 49520,
         frequency: 1.268255,
         costPerResult: 0.01007775,
@@ -303,7 +307,8 @@
         status: "completed",
         objective: "doacao",
         results: 7,
-        resultIndicator: "conversions:donate_website",
+        impressions: 11537,
+        linkClicks: 104,
         reach: 9224,
         frequency: 1.250759,
         costPerResult: 29.11,
@@ -317,7 +322,8 @@
         status: "active",
         objective: "doacao",
         results: 178,
-        resultIndicator: "actions:lead",
+        impressions: 88852,
+        linkClicks: 412,
         reach: 56891,
         frequency: 1.561794,
         costPerResult: 4.72898876,
@@ -331,7 +337,8 @@
         status: "active",
         objective: "evento",
         results: 18,
-        resultIndicator: "actions:offsite_conversion.fb_pixel_purchase",
+        impressions: 23495,
+        linkClicks: 289,
         reach: 10144,
         frequency: 2.316147,
         costPerResult: 15.13777778,
@@ -345,7 +352,8 @@
         status: "completed",
         objective: "evento",
         results: 24829,
-        resultIndicator: "video_thruplay_watched_actions",
+        impressions: 73144,
+        linkClicks: 215,
         reach: 72054,
         frequency: 1.015128,
         costPerResult: 0.00804785,
@@ -481,7 +489,7 @@
       if (data.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="8" class="text-center py-8 text-slate-400">
+            <td colspan="9" class="text-center py-8 text-slate-400">
               Nenhuma campanha encontrada para os filtros selecionados.
             </td>
           </tr>`;
@@ -509,7 +517,8 @@
             <td class="p-3.5 font-bold text-emerald-600 dark:text-emerald-400">
               ${formatNumber(c.results)}
             </td>
-            <td class="p-3.5 text-slate-500 dark:text-slate-400 text-[11px] font-mono">${c.resultIndicator}</td>
+            <td class="p-3.5 text-slate-600 dark:text-slate-300 font-medium">${formatNumber(c.impressions)}</td>
+            <td class="p-3.5 text-slate-600 dark:text-slate-300 font-medium">${formatNumber(c.linkClicks)}</td>
             <td class="p-3.5 text-slate-500 dark:text-slate-400">${formatNumber(c.reach)}</td>
             <td class="p-3.5 text-slate-500 dark:text-slate-400">${c.frequency.toFixed(2)}</td>
             <td class="p-3.5 text-slate-600 dark:text-slate-300 font-medium">${formatCurrency(c.costPerResult)}</td>
