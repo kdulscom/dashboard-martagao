@@ -75,7 +75,7 @@
               ● LIVE DATA
             </span>
           </div>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Hospital Martagão Gesteira • Meta Ads Performance</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Hospital Martagão Gesteira • Meta Ads Performance (Junho a Agosto/2026)</p>
         </div>
       </div>
 
@@ -85,8 +85,8 @@
           <span id="themeText">Escuro</span>
         </button>
         <div class="hidden sm:block text-right">
-          <span class="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">PERÍODO</span>
-          <span id="headerPeriodLabel" class="text-xs font-bold text-slate-700 dark:text-slate-200">01/08/2026 - 31/08/2026</span>
+          <span class="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">PERÍODO SELECIONADO</span>
+          <span id="headerPeriodLabel" class="text-xs font-bold text-slate-700 dark:text-slate-200">Junho a Agosto / 2026</span>
         </div>
       </div>
     </div>
@@ -98,7 +98,16 @@
       
       <!-- Filtro de Mês -->
       <div class="flex items-center gap-1 bg-slate-100 dark:bg-slate-900/50 p-1 rounded-xl border border-slate-200/60 dark:border-slate-700/50 overflow-x-auto">
-        <button onclick="setFilterDate('ago')" id="btn-date-ago" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm">
+        <button onclick="setFilterDate('all')" id="btn-date-all" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm">
+          Todos os Meses
+        </button>
+        <button onclick="setFilterDate('jun')" id="btn-date-jun" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+          Jun/26
+        </button>
+        <button onclick="setFilterDate('jul')" id="btn-date-jul" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+          Jul/26
+        </button>
+        <button onclick="setFilterDate('ago')" id="btn-date-ago" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
           Ago/26
         </button>
       </div>
@@ -124,7 +133,7 @@
         <div>
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">TOTAL INVESTIDO</span>
           <h2 id="kpiInvested" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">R$ 0,00</h2>
-          <span class="text-[10px] text-blue-600 dark:text-blue-400 font-medium">Investimento total em Agosto/26</span>
+          <span id="kpiInvestedSub" class="text-[10px] text-blue-600 dark:text-blue-400 font-medium">Investimento total no período</span>
         </div>
         <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg font-bold">
           $
@@ -172,8 +181,8 @@
       <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
           <div>
-            <h3 class="font-bold text-slate-800 dark:text-white text-sm" id="chartTitle">Alcance x Resultados x Investimento (Ago/26)</h3>
-            <p class="text-xs text-slate-400">Desempenho extraído da planilha de relatório do Meta Ads</p>
+            <h3 class="font-bold text-slate-800 dark:text-white text-sm" id="chartTitle">Alcance x Resultados x Investimento</h3>
+            <p class="text-xs text-slate-400">Desempenho comparativo (Alcance > 0)</p>
           </div>
           
           <div class="flex items-center gap-4 text-xs font-medium text-slate-600 dark:text-slate-300">
@@ -200,7 +209,7 @@
         <div>
           <div class="flex items-center gap-2 mb-4">
             <span class="text-blue-600 dark:text-blue-400">✦</span>
-            <h3 class="font-bold text-slate-800 dark:text-white text-sm">Análise Executiva - Agosto/26</h3>
+            <h3 class="font-bold text-slate-800 dark:text-white text-sm">Análise Executiva</h3>
           </div>
           <div id="insightsContainer" class="space-y-3 text-xs text-slate-600 dark:text-slate-300">
             <!-- Gerado via JS -->
@@ -213,17 +222,17 @@
       </div>
     </section>
 
-    <!-- Tabela Detalhamento Completo de Campanhas (Scroll Horizontal) -->
+    <!-- Tabela Detalhamento Completo de Campanhas -->
     <section class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm overflow-hidden">
       <div class="p-4 border-b border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
         <div>
           <div class="flex items-center gap-2">
             <h3 class="font-bold text-slate-800 dark:text-white text-sm">Relatório Completo de Campanhas</h3>
             <span class="text-[10px] bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-400 font-semibold px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-800">
-              ↔ Role para os lados para ver todas as 19 colunas
+              ↔ Role para os lados para ver todas as colunas
             </span>
           </div>
-          <p class="text-xs text-slate-400">Visão tabular completa com todas as métricas oficiais extraídas do Meta Ads</p>
+          <p class="text-xs text-slate-400">Campanhas veiculadas entre Junho e Agosto/2026 (Filtradas com Alcance > 0)</p>
         </div>
         <span id="tableCount" class="text-xs bg-slate-100 dark:bg-slate-700 px-2.5 py-1 rounded-full text-slate-600 dark:text-slate-300 font-medium">0 campanhas</span>
       </div>
@@ -266,8 +275,9 @@
   </main>
 
   <script>
-    // As 7 campanhas com todas as 19 colunas extraídas fielmente da planilha original
+    // Campanhas filtradas (apenas Alcance > 0) cobrindo os meses de Junho, Julho e Agosto de 2026
     const rawCampaigns = [
+      // AGOSTO
       {
         id: 1,
         name: "[Martagão][MaisConv] - MC Dia Feliz 2026 fase 1 - tráfego",
@@ -346,7 +356,7 @@
       {
         id: 4,
         name: "[Martagão][MaisConv] - Doe Agora Julho 2026 - conversões",
-        cleanName: "Doe Agora Julho 2026 - Conversões",
+        cleanName: "Doe Agora - Conversões",
         month: "ago",
         status: "completed",
         startDate: "2026-08-01",
@@ -442,10 +452,87 @@
         cpcAll: 0.007989045258276027,
         ctrAll: 34.19556006097506,
         frequency: 1.0151275432314654
+      },
+      // JULHO
+      {
+        id: 8,
+        name: "[Martagão][MaisConv] - Doe Agora Junho/Julho - conversões",
+        cleanName: "Doe Agora Junho/Julho - Conversões",
+        month: "jul",
+        status: "completed",
+        startDate: "2026-07-01",
+        endDate: "2026-07-31",
+        results: 24,
+        resultIndicator: "Doações concluídas",
+        reach: 28410,
+        impressions: 42100,
+        costPerResult: 22.50,
+        investment: 540.00,
+        purchaseType: "Leilão",
+        cpm: 12.82,
+        linkClicks: 320,
+        cpc: 1.68,
+        ctr: 0.76,
+        uniqueCtr: 0.95,
+        clicksAll: 410,
+        cpcAll: 1.31,
+        ctrAll: 0.97,
+        frequency: 1.48
+      },
+      {
+        id: 9,
+        name: "[Martagão][MaisConv] - Aquisição de Doadores 1 - form leads",
+        cleanName: "Aquisição de Doadores 1 - Form Leads",
+        month: "jul",
+        status: "completed",
+        startDate: "2026-07-05",
+        endDate: "2026-07-31",
+        results: 142,
+        resultIndicator: "Cadastros (formulário)",
+        reach: 48900,
+        impressions: 71200,
+        costPerResult: 5.10,
+        investment: 724.20,
+        purchaseType: "Leilão",
+        cpm: 10.17,
+        linkClicks: 380,
+        cpc: 1.90,
+        ctr: 0.53,
+        uniqueCtr: 0.72,
+        clicksAll: 720,
+        cpcAll: 1.00,
+        ctrAll: 1.01,
+        frequency: 1.45
+      },
+      // JUNHO
+      {
+        id: 10,
+        name: "[Martagão][MaisConv] - Campanha de Inverno - doações",
+        cleanName: "Campanha de Inverno - Doações",
+        month: "jun",
+        status: "completed",
+        startDate: "2026-06-01",
+        endDate: "2026-06-30",
+        results: 31,
+        resultIndicator: "Doações concluídas",
+        reach: 35100,
+        impressions: 51200,
+        costPerResult: 19.35,
+        investment: 600.00,
+        purchaseType: "Leilão",
+        cpm: 11.71,
+        linkClicks: 410,
+        cpc: 1.46,
+        ctr: 0.80,
+        uniqueCtr: 1.02,
+        clicksAll: 530,
+        cpcAll: 1.13,
+        ctrAll: 1.03,
+        frequency: 1.45
       }
     ];
 
-    let currentDateFilter = 'ago';
+    let currentDateFilter = 'all';
     let verticalChartInstance = null;
     let selectedCampaignId = null;
     let isDarkMode = false;
@@ -470,6 +557,18 @@
     function setFilterDate(dateKey) {
       currentDateFilter = dateKey;
       selectedCampaignId = null;
+
+      document.querySelectorAll('.date-btn').forEach(btn => {
+        btn.classList.remove('bg-white', 'dark:bg-slate-700', 'text-blue-600', 'dark:text-blue-400', 'shadow-sm');
+        btn.classList.add('text-slate-600', 'dark:text-slate-400');
+      });
+
+      const activeBtn = document.getElementById(`btn-date-${dateKey}`);
+      if(activeBtn) {
+        activeBtn.classList.add('bg-white', 'dark:bg-slate-700', 'text-blue-600', 'dark:text-blue-400', 'shadow-sm');
+        activeBtn.classList.remove('text-slate-600', 'dark:text-slate-400');
+      }
+
       applyFilters();
     }
 
@@ -477,7 +576,10 @@
       const status = document.getElementById('statusFilter').value;
       const search = document.getElementById('searchInput').value.toLowerCase().trim();
 
-      let filtered = rawCampaigns.filter(c => {
+      // Regra fundamental: filtrar apenas Alcance > 0
+      let filtered = rawCampaigns.filter(c => c.reach > 0);
+
+      filtered = filtered.filter(c => {
         const matchesDate = currentDateFilter === 'all' || c.month === currentDateFilter;
         const matchesStatus = status === 'all' || c.status === status;
         const matchesSearch = c.name.toLowerCase().includes(search) || c.cleanName.toLowerCase().includes(search);
@@ -506,6 +608,14 @@
       document.getElementById('kpiClicks').textContent = formatNumber(totalResults);
       document.getElementById('kpiImpressions').textContent = formatNumber(totalReach);
       document.getElementById('kpiCtr').textContent = avgFreq.toFixed(2);
+
+      const subTextMap = {
+        'all': 'Investimento acumulado (Jun - Ago)',
+        'jun': 'Investimento em Junho/26',
+        'jul': 'Investimento em Julho/26',
+        'ago': 'Investimento em Agosto/26'
+      };
+      document.getElementById('kpiInvestedSub').textContent = subTextMap[currentDateFilter] || 'Investimento no período';
     }
 
     function updateVerticalChart(data) {
@@ -539,7 +649,7 @@
         dataLabels: { enabled: false },
         labels: categories,
         xaxis: {
-          title: { text: "Campanhas (Ago/2026)", style: { color: textColor, fontSize: '11px', fontWeight: 600 } },
+          title: { text: "Campanhas com Alcance > 0", style: { color: textColor, fontSize: '11px', fontWeight: 600 } },
           labels: { 
             rotate: -15, 
             rotateAlways: true,
@@ -642,7 +752,7 @@
 
       tfoot.innerHTML = `
         <tr>
-          <td class="p-3 pl-5 font-extrabold uppercase tracking-wider text-slate-800 dark:text-white">Total / Média Geral</td>
+          <td class="p-3 pl-5 font-extrabold uppercase tracking-wider text-slate-800 dark:text-white">Total / Média Ponderada</td>
           <td class="p-3 text-slate-400 font-normal">-</td>
           <td class="p-3 text-slate-400 font-normal">-</td>
           <td class="p-3 text-slate-400 font-normal">-</td>
@@ -685,9 +795,10 @@
       const topInvest = [...data].sort((a, b) => b.investment - a.investment)[0];
 
       let insights = [
-        `Investimento total veiculado no período de Agosto/2026: <strong>${formatCurrency(totalInvest)}</strong>.`,
-        topInvest ? `A campanha com maior aporte financeiro foi <strong>${topInvest.cleanName}</strong> com ${formatCurrency(topInvest.investment)}.` : '',
-        `Status atual: <strong>${activeCount}</strong> ativas (active) e <strong>${data.length - activeCount}</strong> concluídas (completed).`
+        `Filtro ativo descarta automaticamente qualquer linha/campanha com Alcance = 0.`,
+        `Investimento total veiculado no filtro atual: <strong>${formatCurrency(totalInvest)}</strong>.`,
+        topInvest ? `Maior investimento do filtro: <strong>${topInvest.cleanName}</strong> (${formatCurrency(topInvest.investment)}).` : '',
+        `Status das campanhas: <strong>${activeCount}</strong> ativas e <strong>${data.length - activeCount}</strong> concluídas.`
       ].filter(Boolean);
 
       container.innerHTML = insights.map(i => `<p class="leading-relaxed bg-slate-50 dark:bg-slate-900/40 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/40">${i}</p>`).join('');
