@@ -43,18 +43,19 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
     .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+      width: 8px;
+      height: 8px;
     }
     .custom-scrollbar::-webkit-scrollbar-track {
-      background: transparent;
+      background: rgba(203, 213, 225, 0.2);
+      border-radius: 4px;
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
+      background: #94a3b8;
       border-radius: 4px;
     }
     .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #334155;
+      background: #475569;
     }
   </style>
 </head>
@@ -212,35 +213,51 @@
       </div>
     </section>
 
-    <!-- Tabela Detalhamento de Campanhas -->
+    <!-- Tabela Detalhamento Completo de Campanhas (Scroll Horizontal) -->
     <section class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm overflow-hidden">
       <div class="p-4 border-b border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
         <div>
-          <h3 class="font-bold text-slate-800 dark:text-white text-sm">Campanhas Veiculadas em Agosto/2026</h3>
-          <p class="text-xs text-slate-400">Dados exatamente alinhados com o relatório oficial do Meta</p>
+          <div class="flex items-center gap-2">
+            <h3 class="font-bold text-slate-800 dark:text-white text-sm">Relatório Completo de Campanhas</h3>
+            <span class="text-[10px] bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-400 font-semibold px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-800">
+              ↔ Role para os lados para ver todas as 19 colunas
+            </span>
+          </div>
+          <p class="text-xs text-slate-400">Visão tabular completa com todas as métricas oficiais extraídas do Meta Ads</p>
         </div>
         <span id="tableCount" class="text-xs bg-slate-100 dark:bg-slate-700 px-2.5 py-1 rounded-full text-slate-600 dark:text-slate-300 font-medium">0 campanhas</span>
       </div>
 
-      <div class="overflow-x-auto custom-scrollbar">
-        <table class="w-full text-left border-collapse text-xs">
+      <!-- Container Scrollável -->
+      <div class="overflow-x-auto custom-scrollbar w-full">
+        <table class="w-full text-left border-collapse text-xs min-w-max">
           <thead>
-            <tr class="bg-slate-50 dark:bg-slate-900/50 text-slate-400 font-semibold uppercase tracking-wider border-b border-slate-100 dark:border-slate-700/60">
-              <th class="p-3.5 pl-5">Nome da Campanha</th>
-              <th class="p-3.5">Veiculação</th>
-              <th class="p-3.5">Resultados</th>
-              <th class="p-3.5">Impressões</th>
-              <th class="p-3.5">Cliques no Link</th>
-              <th class="p-3.5">Alcance</th>
-              <th class="p-3.5">Frequência</th>
-              <th class="p-3.5">Custo/Resultado</th>
-              <th class="p-3.5 pr-5">Valor Gasto</th>
+            <tr class="bg-slate-50 dark:bg-slate-900/80 text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10 whitespace-nowrap">
+              <th class="p-3 pl-5">Nome da Campanha</th>
+              <th class="p-3">Veiculação</th>
+              <th class="p-3">Início das Veiculações</th>
+              <th class="p-3">Término das Veiculações</th>
+              <th class="p-3 text-right">Resultados</th>
+              <th class="p-3 font-bold">Indicador de Resultado</th>
+              <th class="p-3 text-right">Alcance</th>
+              <th class="p-3 text-right">Impressões</th>
+              <th class="p-3 text-right">Custo p/ Resultado</th>
+              <th class="p-3 text-right">Valor Gasto</th>
+              <th class="p-3">Tipo de Compra</th>
+              <th class="p-3 text-right">CPM</th>
+              <th class="p-3 text-right">Cliques no Link</th>
+              <th class="p-3 text-right">CPC (Custo p/ Clique)</th>
+              <th class="p-3 text-right">CTR (Taxa de Clique)</th>
+              <th class="p-3 text-right">CTR Único</th>
+              <th class="p-3 text-right">Cliques (Todos)</th>
+              <th class="p-3 text-right">CPC (Todos)</th>
+              <th class="p-3 pr-5 text-right">CTR (Todos)</th>
             </tr>
           </thead>
-          <tbody id="campaignTableBody" class="divide-y divide-slate-100 dark:divide-slate-700/40">
+          <tbody id="campaignTableBody" class="divide-y divide-slate-100 dark:divide-slate-700/40 whitespace-nowrap">
             <!-- Gerado via JS -->
           </tbody>
-          <tfoot id="campaignTableFoot" class="bg-slate-100/80 dark:bg-slate-900/80 font-bold border-t-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+          <tfoot id="campaignTableFoot" class="bg-slate-100/90 dark:bg-slate-900/90 font-bold border-t-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white whitespace-nowrap">
             <!-- Gerado via JS -->
           </tfoot>
         </table>
@@ -249,6 +266,7 @@
   </main>
 
   <script>
+    // As 7 campanhas com todas as 19 colunas extraídas fielmente da planilha original
     const rawCampaigns = [
       {
         id: 1,
@@ -256,14 +274,24 @@
         cleanName: "MC Dia Feliz 2026 Fase 1 - Tráfego",
         month: "ago",
         status: "completed",
-        objective: "evento",
+        startDate: "2026-08-01",
+        endDate: "2026-08-10",
         results: 1269,
-        impressions: 65080,
-        linkClicks: 1541,
+        resultIndicator: "Cliques no link",
         reach: 42846,
-        frequency: 1.518928,
-        costPerResult: 0.2977699,
-        investment: 377.87
+        impressions: 65080,
+        costPerResult: 0.2977698975571316,
+        investment: 377.87,
+        purchaseType: "Leilão",
+        cpm: 5.806238475722188,
+        linkClicks: 1541,
+        cpc: 0.24521090201168072,
+        ctr: 2.367854947756607,
+        uniqueCtr: 3.2301731736918265,
+        clicksAll: 2361,
+        cpcAll: 0.16004659042778483,
+        ctrAll: 3.627842655193608,
+        frequency: 1.51892825467955
       },
       {
         id: 2,
@@ -271,14 +299,24 @@
         cleanName: "Sabores - Engajamentos",
         month: "ago",
         status: "completed",
-        objective: "evento",
+        startDate: "2026-08-01",
+        endDate: "2026-08-05",
         results: 4290,
-        impressions: 4783,
-        linkClicks: 32,
+        resultIndicator: "Engajamentos com a publicação",
         reach: 2003,
-        frequency: 2.387918,
-        costPerResult: 0.02014685,
-        investment: 86.43
+        impressions: 4783,
+        costPerResult: 0.020146853146853146,
+        investment: 86.43,
+        purchaseType: "Leilão",
+        cpm: 18.068158061885844,
+        linkClicks: 32,
+        cpc: 2.7009375,
+        ctr: 0.669031988291867,
+        uniqueCtr: 1.4478282576135796,
+        clicksAll: 4328,
+        cpcAll: 0.01997,
+        ctrAll: 90.48714196111227,
+        frequency: 2.387918122815776
       },
       {
         id: 3,
@@ -286,14 +324,24 @@
         cleanName: "Institucional - Engajamentos",
         month: "ago",
         status: "completed",
-        objective: "evento",
+        startDate: "2026-08-01",
+        endDate: "2026-08-15",
         results: 13891,
-        impressions: 62804,
-        linkClicks: 147,
+        resultIndicator: "Engajamentos com a publicação",
         reach: 49520,
-        frequency: 1.268255,
-        costPerResult: 0.01007775,
-        investment: 139.99
+        impressions: 62804,
+        costPerResult: 0.010077748182276293,
+        investment: 139.99,
+        purchaseType: "Leilão",
+        cpm: 2.228998153001399,
+        linkClicks: 147,
+        cpc: 0.952312925170068,
+        ctr: 0.23406151843831604,
+        uniqueCtr: 0.28877221324717285,
+        clicksAll: 13994,
+        cpcAll: 0.010003572959840217,
+        ctrAll: 22.28202025348067,
+        frequency: 1.2682552504038772
       },
       {
         id: 4,
@@ -301,14 +349,24 @@
         cleanName: "Doe Agora Julho 2026 - Conversões",
         month: "ago",
         status: "completed",
-        objective: "doacao",
+        startDate: "2026-08-01",
+        endDate: "2026-08-08",
         results: 7,
-        impressions: 11537,
-        linkClicks: 104,
+        resultIndicator: "Doações concluídas",
         reach: 9224,
-        frequency: 1.250759,
+        impressions: 11537,
         costPerResult: 29.11,
-        investment: 203.77
+        investment: 203.77,
+        purchaseType: "Leilão",
+        cpm: 17.662303891826383,
+        linkClicks: 104,
+        cpc: 1.9593269230769232,
+        ctr: 0.9014475166854468,
+        uniqueCtr: 1.051604509973981,
+        clicksAll: 130,
+        cpcAll: 1.5674615384615386,
+        ctrAll: 1.1268093958568085,
+        frequency: 1.2507588898525586
       },
       {
         id: 5,
@@ -316,14 +374,24 @@
         cleanName: "Aquisição de Doadores 2 - Form Leads",
         month: "ago",
         status: "active",
-        objective: "doacao",
+        startDate: "2026-08-01",
+        endDate: "2026-08-31",
         results: 178,
-        impressions: 88852,
-        linkClicks: 412,
+        resultIndicator: "Cadastros (formulário)",
         reach: 56891,
-        frequency: 1.561794,
-        costPerResult: 4.72898876,
-        investment: 841.76
+        impressions: 88852,
+        costPerResult: 4.728988764044944,
+        investment: 841.76,
+        purchaseType: "Leilão",
+        cpm: 9.473731600864358,
+        linkClicks: 412,
+        cpc: 2.043106796116505,
+        ctr: 0.46369243235942915,
+        uniqueCtr: 0.6556397321193159,
+        clicksAll: 809,
+        cpcAll: 1.040494437577256,
+        ctrAll: 0.9105028586863548,
+        frequency: 1.5617936053154278
       },
       {
         id: 6,
@@ -331,14 +399,24 @@
         cleanName: "Corrida Colorida 2026 AGO - Conversões",
         month: "ago",
         status: "active",
-        objective: "evento",
+        startDate: "2026-08-10",
+        endDate: "2026-08-31",
         results: 18,
-        impressions: 23495,
-        linkClicks: 289,
+        resultIndicator: "Inscrições concluídas",
         reach: 10144,
-        frequency: 2.316147,
-        costPerResult: 15.13777778,
-        investment: 272.48
+        impressions: 23495,
+        costPerResult: 15.137777777777778,
+        investment: 272.48,
+        purchaseType: "Leilão",
+        cpm: 11.597361140668228,
+        linkClicks: 289,
+        cpc: 0.9428373702422146,
+        ctr: 1.2300489465843797,
+        uniqueCtr: 2.375788643533123,
+        clicksAll: 382,
+        cpcAll: 0.7132984293193717,
+        ctrAll: 1.6258778463502873,
+        frequency: 2.316147476340694
       },
       {
         id: 7,
@@ -346,14 +424,24 @@
         cleanName: "MC Dia Feliz 2026 Fase 2 - Engajamento",
         month: "ago",
         status: "completed",
-        objective: "evento",
+        startDate: "2026-08-11",
+        endDate: "2026-08-25",
         results: 24829,
-        impressions: 73144,
-        linkClicks: 215,
+        resultIndicator: "Engajamentos com a publicação",
         reach: 72054,
-        frequency: 1.015128,
-        costPerResult: 0.00804785,
-        investment: 199.82
+        impressions: 73144,
+        costPerResult: 0.008047847275363486,
+        investment: 199.82,
+        purchaseType: "Leilão",
+        cpm: 2.7318713701739032,
+        linkClicks: 215,
+        cpc: 0.9293953488372093,
+        ctr: 0.293940719676255,
+        uniqueCtr: 0.2914480806756044,
+        clicksAll: 25012,
+        cpcAll: 0.007989045258276027,
+        ctrAll: 34.19556006097506,
+        frequency: 1.0151275432314654
       }
     ];
 
@@ -364,6 +452,12 @@
 
     const formatCurrency = (val) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
     const formatNumber = (val) => new Intl.NumberFormat('pt-BR').format(val);
+    const formatPercent = (val) => (val || 0).toFixed(2) + '%';
+    const formatDate = (dateStr) => {
+      if(!dateStr) return '-';
+      const [year, month, day] = dateStr.split('-');
+      return `${day}/${month}/${year}`;
+    };
 
     document.getElementById('themeToggle').addEventListener('click', () => {
       isDarkMode = !isDarkMode;
@@ -484,7 +578,7 @@
       if (data.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="9" class="text-center py-8 text-slate-400">
+            <td colspan="19" class="text-center py-8 text-slate-400">
               Nenhuma campanha encontrada para os filtros selecionados.
             </td>
           </tr>`;
@@ -501,48 +595,72 @@
 
         return `
           <tr onclick="toggleSelectCampaign(${c.id})" class="cursor-pointer transition-colors ${isSelected ? 'bg-blue-50/80 dark:bg-blue-900/30' : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'}">
-            <td class="p-3.5 pl-5 font-semibold text-slate-800 dark:text-slate-200">
+            <td class="p-3 pl-5 font-semibold text-slate-800 dark:text-slate-200">
               ${c.cleanName}
               <span class="block text-[10px] text-slate-400 font-normal">${c.name}</span>
             </td>
-            <td class="p-3.5">
+            <td class="p-3">
               <span class="px-2 py-0.5 rounded text-[10px] font-bold ${statusBadgeClass}">
                 ${c.status.toUpperCase()}
               </span>
             </td>
-            <td class="p-3.5 font-bold text-emerald-600 dark:text-emerald-400">
-              ${formatNumber(c.results)}
-            </td>
-            <td class="p-3.5 text-slate-600 dark:text-slate-300 font-medium">${formatNumber(c.impressions)}</td>
-            <td class="p-3.5 text-slate-600 dark:text-slate-300 font-medium">${formatNumber(c.linkClicks)}</td>
-            <td class="p-3.5 text-slate-500 dark:text-slate-400">${formatNumber(c.reach)}</td>
-            <td class="p-3.5 text-slate-500 dark:text-slate-400">${c.frequency.toFixed(2)}</td>
-            <td class="p-3.5 text-slate-600 dark:text-slate-300 font-medium">${formatCurrency(c.costPerResult)}</td>
-            <td class="p-3.5 pr-5 font-bold text-slate-800 dark:text-slate-200">${formatCurrency(c.investment)}</td>
+            <td class="p-3 text-slate-600 dark:text-slate-400">${formatDate(c.startDate)}</td>
+            <td class="p-3 text-slate-600 dark:text-slate-400">${formatDate(c.endDate)}</td>
+            <td class="p-3 text-right font-bold text-emerald-600 dark:text-emerald-400">${formatNumber(c.results)}</td>
+            <td class="p-3 font-medium text-slate-700 dark:text-slate-300">${c.resultIndicator}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatNumber(c.reach)}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatNumber(c.impressions)}</td>
+            <td class="p-3 text-right font-medium text-slate-700 dark:text-slate-300">${formatCurrency(c.costPerResult)}</td>
+            <td class="p-3 text-right font-bold text-slate-900 dark:text-white">${formatCurrency(c.investment)}</td>
+            <td class="p-3 text-slate-500 dark:text-slate-400">${c.purchaseType}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatCurrency(c.cpm)}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatNumber(c.linkClicks)}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatCurrency(c.cpc)}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatPercent(c.ctr)}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatPercent(c.uniqueCtr)}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatNumber(c.clicksAll)}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatCurrency(c.cpcAll)}</td>
+            <td class="p-3 pr-5 text-right text-slate-600 dark:text-slate-300">${formatPercent(c.ctrAll)}</td>
           </tr>
         `;
       }).join('');
 
-      // Cálculo dos Totais das Colunas
+      // Totais e Médias Ponderadas para a tabela
       const sumResults = data.reduce((acc, c) => acc + c.results, 0);
-      const sumImpressions = data.reduce((acc, c) => acc + c.impressions, 0);
-      const sumLinkClicks = data.reduce((acc, c) => acc + c.linkClicks, 0);
       const sumReach = data.reduce((acc, c) => acc + c.reach, 0);
-      const avgFrequency = data.length > 0 ? (data.reduce((acc, c) => acc + c.frequency, 0) / data.length) : 0;
+      const sumImpressions = data.reduce((acc, c) => acc + c.impressions, 0);
       const sumInvestment = data.reduce((acc, c) => acc + c.investment, 0);
+      const sumLinkClicks = data.reduce((acc, c) => acc + c.linkClicks, 0);
+      const sumClicksAll = data.reduce((acc, c) => acc + c.clicksAll, 0);
+
       const avgCostPerResult = sumResults > 0 ? (sumInvestment / sumResults) : 0;
+      const avgCpm = sumImpressions > 0 ? ((sumInvestment / sumImpressions) * 1000) : 0;
+      const avgCpc = sumLinkClicks > 0 ? (sumInvestment / sumLinkClicks) : 0;
+      const avgCtr = sumImpressions > 0 ? ((sumLinkClicks / sumImpressions) * 100) : 0;
+      const avgCpcAll = sumClicksAll > 0 ? (sumInvestment / sumClicksAll) : 0;
+      const avgCtrAll = sumImpressions > 0 ? ((sumClicksAll / sumImpressions) * 100) : 0;
 
       tfoot.innerHTML = `
         <tr>
-          <td class="p-3.5 pl-5 font-extrabold uppercase tracking-wider text-slate-800 dark:text-white">Total / Média</td>
-          <td class="p-3.5 text-slate-400 font-normal">-</td>
-          <td class="p-3.5 font-extrabold text-emerald-600 dark:text-emerald-400">${formatNumber(sumResults)}</td>
-          <td class="p-3.5 font-extrabold text-slate-800 dark:text-slate-100">${formatNumber(sumImpressions)}</td>
-          <td class="p-3.5 font-extrabold text-slate-800 dark:text-slate-100">${formatNumber(sumLinkClicks)}</td>
-          <td class="p-3.5 font-extrabold text-slate-800 dark:text-slate-100">${formatNumber(sumReach)}</td>
-          <td class="p-3.5 font-extrabold text-slate-800 dark:text-slate-100">${avgFrequency.toFixed(2)}</td>
-          <td class="p-3.5 font-extrabold text-slate-800 dark:text-slate-100">${formatCurrency(avgCostPerResult)}</td>
-          <td class="p-3.5 pr-5 font-extrabold text-slate-800 dark:text-slate-100">${formatCurrency(sumInvestment)}</td>
+          <td class="p-3 pl-5 font-extrabold uppercase tracking-wider text-slate-800 dark:text-white">Total / Média Geral</td>
+          <td class="p-3 text-slate-400 font-normal">-</td>
+          <td class="p-3 text-slate-400 font-normal">-</td>
+          <td class="p-3 text-slate-400 font-normal">-</td>
+          <td class="p-3 text-right font-extrabold text-emerald-600 dark:text-emerald-400">${formatNumber(sumResults)}</td>
+          <td class="p-3 text-slate-400 font-normal">-</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatNumber(sumReach)}</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatNumber(sumImpressions)}</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatCurrency(avgCostPerResult)}</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatCurrency(sumInvestment)}</td>
+          <td class="p-3 text-slate-400 font-normal">-</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatCurrency(avgCpm)}</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatNumber(sumLinkClicks)}</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatCurrency(avgCpc)}</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatPercent(avgCtr)}</td>
+          <td class="p-3 text-slate-400 font-normal">-</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatNumber(sumClicksAll)}</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatCurrency(avgCpcAll)}</td>
+          <td class="p-3 pr-5 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatPercent(avgCtrAll)}</td>
         </tr>
       `;
     }
