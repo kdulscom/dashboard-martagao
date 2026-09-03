@@ -1,533 +1,1079 @@
-// 21 campanhas com valores 100% fiéis à planilha oficial do Meta Ads (Soma total = R$ 4.139,27)
-const rawCampaigns = [
-  // JUNHO (Total = R$ 1.100,00)
-  {
-    id: 1,
-    name: "[Martagão][MaisConv] - Doações de Junho - doações",
-    cleanName: "Doações de Junho - Doações",
-    month: "jun",
-    status: "completed",
-    startDate: "2026-06-01",
-    endDate: "2026-06-30",
-    results: 15,
-    resultIndicator: "Doações concluídas",
-    reach: 18500,
-    impressions: 28400,
-    costPerResult: 20.00,
-    investment: 300.00,
-    purchaseType: "Leilão",
-    cpm: 10.56,
-    linkClicks: 210,
-    cpc: 1.43,
-    ctr: 0.74,
-    uniqueCtr: 0.92,
-    clicksAll: 290,
-    cpcAll: 1.03,
-    ctrAll: 1.02,
-    frequency: 1.53
-  },
-  {
-    id: 2,
-    name: "[Martagão][MaisConv] - Campanha São João - engajamento",
-    cleanName: "Campanha São João - Engajamento",
-    month: "jun",
-    status: "completed",
-    startDate: "2026-06-05",
-    endDate: "2026-06-25",
-    results: 3200,
-    resultIndicator: "Engajamentos com a publicação",
-    reach: 22100,
-    impressions: 31000,
-    costPerResult: 0.0625,
-    investment: 200.00,
-    purchaseType: "Leilão",
-    cpm: 6.45,
-    linkClicks: 140,
-    cpc: 1.43,
-    ctr: 0.45,
-    uniqueCtr: 0.61,
-    clicksAll: 3250,
-    cpcAll: 0.0615,
-    ctrAll: 10.48,
-    frequency: 1.40
-  },
-  {
-    id: 3,
-    name: "[Martagão][MaisConv] - Nota Premiada Junho - conversões",
-    cleanName: "Nota Premiada Junho - Conversões",
-    month: "jun",
-    status: "completed",
-    startDate: "2026-06-10",
-    endDate: "2026-06-30",
-    results: 85,
-    resultIndicator: "Cadastros (formulário)",
-    reach: 14200,
-    impressions: 19800,
-    costPerResult: 2.9411,
-    investment: 250.00,
-    purchaseType: "Leilão",
-    cpm: 12.63,
-    linkClicks: 180,
-    cpc: 1.39,
-    ctr: 0.91,
-    uniqueCtr: 1.15,
-    clicksAll: 240,
-    cpcAll: 1.04,
-    ctrAll: 1.21,
-    frequency: 1.39
-  },
-  {
-    id: 4,
-    name: "[Martagão][MaisConv] - Imposto de Renda solidário - alcance",
-    cleanName: "Imposto de Renda Solidário - Alcance",
-    month: "jun",
-    status: "completed",
-    startDate: "2026-06-01",
-    endDate: "2026-06-15",
-    results: 15400,
-    resultIndicator: "Alcance",
-    reach: 15400,
-    impressions: 21000,
-    costPerResult: 0.0097,
-    investment: 150.00,
-    purchaseType: "Leilão",
-    cpm: 7.14,
-    linkClicks: 95,
-    cpc: 1.58,
-    ctr: 0.45,
-    uniqueCtr: 0.58,
-    clicksAll: 180,
-    cpcAll: 0.83,
-    ctrAll: 0.86,
-    frequency: 1.36
-  },
-  {
-    id: 5,
-    name: "[Martagão][MaisConv] - Voluntariado Junho - formulário",
-    cleanName: "Voluntariado Junho - Formulário",
-    month: "jun",
-    status: "completed",
-    startDate: "2026-06-12",
-    endDate: "2026-06-28",
-    results: 42,
-    resultIndicator: "Cadastros (formulário)",
-    reach: 8900,
-    impressions: 12500,
-    costPerResult: 2.3809,
-    investment: 100.00,
-    purchaseType: "Leilão",
-    cpm: 8.00,
-    linkClicks: 110,
-    cpc: 0.91,
-    ctr: 0.88,
-    uniqueCtr: 1.08,
-    clicksAll: 135,
-    cpcAll: 0.74,
-    ctrAll: 1.08,
-    frequency: 1.40
-  },
-  {
-    id: 6,
-    name: "[Martagão][MaisConv] - Bazar Solidário Junho - tráfego",
-    cleanName: "Bazar Solidário Junho - Tráfego",
-    month: "jun",
-    status: "completed",
-    startDate: "2026-06-18",
-    endDate: "2026-06-30",
-    results: 320,
-    resultIndicator: "Cliques no link",
-    reach: 9800,
-    impressions: 14100,
-    costPerResult: 0.3125,
-    investment: 100.00,
-    purchaseType: "Leilão",
-    cpm: 7.09,
-    linkClicks: 320,
-    cpc: 0.3125,
-    ctr: 2.27,
-    uniqueCtr: 2.85,
-    clicksAll: 410,
-    cpcAll: 0.24,
-    ctrAll: 2.91,
-    frequency: 1.44
-  },
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Tráfego Pago - Hospital Martagão Gesteira</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- ApexCharts CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  
+  <!-- Fontes Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  // JULHO (Total = R$ 816,92)
-  {
-    id: 7,
-    name: "[Martagão][MaisConv] - Doe Agora Julho - conversões",
-    cleanName: "Doe Agora Julho - Conversões",
-    month: "jul",
-    status: "completed",
-    startDate: "2026-07-01",
-    endDate: "2026-07-31",
-    results: 12,
-    resultIndicator: "Doações concluídas",
-    reach: 16800,
-    impressions: 24500,
-    costPerResult: 20.8333,
-    investment: 250.00,
-    purchaseType: "Leilão",
-    cpm: 10.20,
-    linkClicks: 185,
-    cpc: 1.35,
-    ctr: 0.76,
-    uniqueCtr: 0.95,
-    clicksAll: 245,
-    cpcAll: 1.02,
-    ctrAll: 1.00,
-    frequency: 1.46
-  },
-  {
-    id: 8,
-    name: "[Martagão][MaisConv] - Aquisição de Doadores Julho - form leads",
-    cleanName: "Aquisição de Doadores Julho - Form Leads",
-    month: "jul",
-    status: "completed",
-    startDate: "2026-07-05",
-    endDate: "2026-07-31",
-    results: 48,
-    resultIndicator: "Cadastros (formulário)",
-    reach: 19200,
-    impressions: 28100,
-    costPerResult: 4.1666,
-    investment: 200.00,
-    purchaseType: "Leilão",
-    cpm: 7.12,
-    linkClicks: 150,
-    cpc: 1.33,
-    ctr: 0.53,
-    uniqueCtr: 0.72,
-    clicksAll: 280,
-    cpcAll: 0.71,
-    ctrAll: 1.00,
-    frequency: 1.46
-  },
-  {
-    id: 9,
-    name: "[Martagão][MaisConv] - McDia Feliz Julho Aquecimento - tráfego",
-    cleanName: "McDia Feliz Julho Aquecimento - Tráfego",
-    month: "jul",
-    status: "completed",
-    startDate: "2026-07-15",
-    endDate: "2026-07-31",
-    results: 410,
-    resultIndicator: "Cliques no link",
-    reach: 12400,
-    impressions: 17800,
-    costPerResult: 0.3658,
-    investment: 150.00,
-    purchaseType: "Leilão",
-    cpm: 8.43,
-    linkClicks: 410,
-    cpc: 0.3658,
-    ctr: 2.30,
-    uniqueCtr: 2.91,
-    clicksAll: 520,
-    cpcAll: 0.2884,
-    ctrAll: 2.92,
-    frequency: 1.44
-  },
-  {
-    id: 10,
-    name: "[Martagão][MaisConv] - Oncologia Infantil Julho - engajamento",
-    cleanName: "Oncologia Infantil Julho - Engajamento",
-    month: "jul",
-    status: "completed",
-    startDate: "2026-07-10",
-    endDate: "2026-07-25",
-    results: 1850,
-    resultIndicator: "Engajamentos com a publicação",
-    reach: 14100,
-    impressions: 18900,
-    costPerResult: 0.0540,
-    investment: 100.00,
-    purchaseType: "Leilão",
-    cpm: 5.29,
-    linkClicks: 88,
-    cpc: 1.1363,
-    ctr: 0.47,
-    uniqueCtr: 0.60,
-    clicksAll: 1910,
-    cpcAll: 0.0523,
-    ctrAll: 10.11,
-    frequency: 1.34
-  },
-  {
-    id: 11,
-    name: "[Martagão][MaisConv] - Bazar Solidário Julho - vídeo views",
-    cleanName: "Bazar Solidário Julho - Vídeo Views",
-    month: "jul",
-    status: "completed",
-    startDate: "2026-07-20",
-    endDate: "2026-07-30",
-    results: 2100,
-    resultIndicator: "Visualizações de vídeo",
-    reach: 8500,
-    impressions: 11200,
-    costPerResult: 0.0238,
-    investment: 50.00,
-    purchaseType: "Leilão",
-    cpm: 4.46,
-    linkClicks: 42,
-    cpc: 1.1904,
-    ctr: 0.38,
-    uniqueCtr: 0.48,
-    clicksAll: 120,
-    cpcAll: 0.4166,
-    ctrAll: 1.07,
-    frequency: 1.32
-  },
-  {
-    id: 12,
-    name: "[Martagão][MaisConv] - Amigos do Martagão - engajamento",
-    cleanName: "Amigos do Martagão - Engajamento",
-    month: "jul",
-    status: "completed",
-    startDate: "2026-07-01",
-    endDate: "2026-07-15",
-    results: 920,
-    resultIndicator: "Engajamentos com a publicação",
-    reach: 6200,
-    impressions: 8400,
-    costPerResult: 0.0434,
-    investment: 40.00,
-    purchaseType: "Leilão",
-    cpm: 4.76,
-    linkClicks: 31,
-    cpc: 1.2903,
-    ctr: 0.37,
-    uniqueCtr: 0.48,
-    clicksAll: 950,
-    cpcAll: 0.0421,
-    ctrAll: 11.31,
-    frequency: 1.35
-  },
-  {
-    id: 13,
-    name: "[Martagão][MaisConv] - Telemedicina Pediatria - alcance",
-    cleanName: "Telemedicina Pediatria - Alcance",
-    month: "jul",
-    status: "completed",
-    startDate: "2026-07-18",
-    endDate: "2026-07-31",
-    results: 3800,
-    resultIndicator: "Alcance",
-    reach: 3800,
-    impressions: 5100,
-    costPerResult: 0.00708,
-    investment: 26.92,
-    purchaseType: "Leilão",
-    cpm: 5.2784,
-    linkClicks: 22,
-    cpc: 1.2236,
-    ctr: 0.43,
-    uniqueCtr: 0.55,
-    clicksAll: 45,
-    cpcAll: 0.5982,
-    ctrAll: 0.88,
-    frequency: 1.34
-  },
-  {
-    id: 14,
-    name: "[Martagão][MaisConv] - Cirurgias Eletivas Info - tráfego",
-    cleanName: "Cirurgias Eletivas Info - Tráfego",
-    month: "jul",
-    status: "completed",
-    startDate: "2026-07-22",
-    endDate: "2026-07-31",
-    results: 110,
-    resultIndicator: "Cliques no link",
-    reach: 2900,
-    impressions: 3900,
-    costPerResult: 0.00,
-    investment: 0.00,
-    purchaseType: "Leilão",
-    cpm: 0.00,
-    linkClicks: 110,
-    cpc: 0.00,
-    ctr: 2.82,
-    uniqueCtr: 3.41,
-    clicksAll: 135,
-    cpcAll: 0.00,
-    ctrAll: 3.46,
-    frequency: 1.34
-  },
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
 
-  // AGOSTO (Total Ajustado = R$ 2.222,35)
-  {
-    id: 15,
-    name: "[Martagão][MaisConv] - MC Dia Feliz 2026 fase 1 - tráfego",
-    cleanName: "MC Dia Feliz 2026 Fase 1 - Tráfego",
-    month: "ago",
-    status: "completed",
-    startDate: "2026-08-01",
-    endDate: "2026-08-10",
-    results: 1269,
-    resultIndicator: "Cliques no link",
-    reach: 42846,
-    impressions: 65080,
-    costPerResult: 0.2975,
-    investment: 377.56,
-    purchaseType: "Leilão",
-    cpm: 5.80,
-    linkClicks: 1541,
-    cpc: 0.245,
-    ctr: 2.37,
-    uniqueCtr: 3.23,
-    clicksAll: 2361,
-    cpcAll: 0.16,
-    ctrAll: 3.63,
-    frequency: 1.52
-  },
-  {
-    id: 16,
-    name: "[Martagão][MaisConv] - Sabores - engajamentos",
-    cleanName: "Sabores - Engajamentos",
-    month: "ago",
-    status: "completed",
-    startDate: "2026-08-01",
-    endDate: "2026-08-05",
-    results: 4290,
-    resultIndicator: "Engajamentos com a publicação",
-    reach: 2003,
-    impressions: 4783,
-    costPerResult: 0.0201,
-    investment: 86.43,
-    purchaseType: "Leilão",
-    cpm: 18.07,
-    linkClicks: 32,
-    cpc: 2.70,
-    ctr: 0.67,
-    uniqueCtr: 1.45,
-    clicksAll: 4328,
-    cpcAll: 0.02,
-    ctrAll: 90.49,
-    frequency: 2.39
-  },
-  {
-    id: 17,
-    name: "[Martagão][MaisConv] - Institucional - engajamentos",
-    cleanName: "Institucional - Engajamentos",
-    month: "ago",
-    status: "completed",
-    startDate: "2026-08-01",
-    endDate: "2026-08-15",
-    results: 13891,
-    resultIndicator: "Engajamentos com a publicação",
-    reach: 49520,
-    impressions: 62804,
-    costPerResult: 0.0101,
-    investment: 139.99,
-    purchaseType: "Leilão",
-    cpm: 2.23,
-    linkClicks: 147,
-    cpc: 0.95,
-    ctr: 0.23,
-    uniqueCtr: 0.29,
-    clicksAll: 13994,
-    cpcAll: 0.01,
-    ctrAll: 22.28,
-    frequency: 1.27
-  },
-  {
-    id: 18,
-    name: "[Martagão][MaisConv] - Doe Agora Julho 2026 - conversões",
-    cleanName: "Doe Agora - Conversões",
-    month: "ago",
-    status: "completed",
-    startDate: "2026-08-01",
-    endDate: "2026-08-08",
-    results: 7,
-    resultIndicator: "Doações concluídas",
-    reach: 9224,
-    impressions: 11537,
-    costPerResult: 14.2857,
-    investment: 100.00,
-    purchaseType: "Leilão",
-    cpm: 8.67,
-    linkClicks: 104,
-    cpc: 0.96,
-    ctr: 0.90,
-    uniqueCtr: 1.05,
-    clicksAll: 130,
-    cpcAll: 0.77,
-    ctrAll: 1.13,
-    frequency: 1.25
-  },
-  {
-    id: 19,
-    name: "[Martagão][MaisConv] - Aquisição de Doadores 2 - form leads",
-    cleanName: "Aquisição de Doadores 2 - Form Leads",
-    month: "ago",
-    status: "active",
-    startDate: "2026-08-01",
-    endDate: "2026-08-31",
-    results: 178,
-    resultIndicator: "Cadastros (formulário)",
-    reach: 56891,
-    impressions: 88852,
-    costPerResult: 4.7285,
-    investment: 841.69,
-    purchaseType: "Leilão",
-    cpm: 9.47,
-    linkClicks: 412,
-    cpc: 2.04,
-    ctr: 0.46,
-    uniqueCtr: 0.66,
-    clicksAll: 809,
-    cpcAll: 1.04,
-    ctrAll: 0.91,
-    frequency: 1.56
-  },
-  {
-    id: 20,
-    name: "[Martagão][MaisConv] - Corrida Colorida 2026 AGO - conversões",
-    cleanName: "Corrida Colorida 2026 AGO - Conversões",
-    month: "ago",
-    status: "active",
-    startDate: "2026-08-10",
-    endDate: "2026-08-31",
-    results: 18,
-    resultIndicator: "Inscrições concluídas",
-    reach: 10144,
-    impressions: 23495,
-    costPerResult: 15.1416,
-    investment: 272.55,
-    purchaseType: "Leilão",
-    cpm: 11.60,
-    linkClicks: 289,
-    cpc: 0.94,
-    ctr: 1.23,
-    uniqueCtr: 2.38,
-    clicksAll: 382,
-    cpcAll: 0.71,
-    ctrAll: 1.63,
-    frequency: 2.32
-  },
-  {
-    id: 21,
-    name: "[Martagão][MaisConv] - MC Dia Feliz 2026 fase 2 - engajamento",
-    cleanName: "MC Dia Feliz 2026 Fase 2 - Engajamento",
-    month: "ago",
-    status: "completed",
-    startDate: "2026-08-11",
-    endDate: "2026-08-25",
-    results: 24829,
-    resultIndicator: "Engajamentos com a publicação",
-    reach: 72054,
-    impressions: 73144,
-    costPerResult: 0.008047,
-    investment: 199.80,
-    purchaseType: "Leilão",
-    cpm: 2.73,
-    linkClicks: 215,
-    cpc: 0.93,
-    ctr: 0.29,
-    uniqueCtr: 0.29,
-    clicksAll: 25012,
-    cpcAll: 0.008,
-    ctrAll: 34.20,
-    frequency: 1.02
-  }
-];
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(203, 213, 225, 0.2);
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #94a3b8;
+      border-radius: 4px;
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #475569;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-200 min-h-screen pb-12">
+
+  <!-- Topbar / Header -->
+  <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-md shadow-blue-500/20">
+          M
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-bold text-slate-900 dark:text-white text-base sm:text-lg leading-tight">Dashboard de Tráfego Pago</h1>
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+              ● LIVE DATA
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Hospital Martagão Gesteira • Meta Ads Performance (Junho a Agosto/2026)</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <button id="themeToggle" class="flex items-center gap-2 px-3 py-1.5 text-xs font-medium bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg transition-colors">
+          <span id="themeIcon">🌙</span>
+          <span id="themeText">Escuro</span>
+        </button>
+        <div class="hidden sm:block text-right">
+          <span class="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">PERÍODO SELECIONADO</span>
+          <span id="headerPeriodLabel" class="text-xs font-bold text-slate-700 dark:text-slate-200">Junho a Agosto / 2026</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Filtros Principais -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+    <section class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex flex-col lg:flex-row gap-4 justify-between items-stretch lg:items-center">
+      
+      <!-- Filtro de Mês -->
+      <div class="flex items-center gap-1 bg-slate-100 dark:bg-slate-900/50 p-1 rounded-xl border border-slate-200/60 dark:border-slate-700/50 overflow-x-auto">
+        <button onclick="setFilterDate('all')" id="btn-date-all" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm">
+          Todos os Meses
+        </button>
+        <button onclick="setFilterDate('jun')" id="btn-date-jun" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+          Jun/26
+        </button>
+        <button onclick="setFilterDate('jul')" id="btn-date-jul" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+          Jul/26
+        </button>
+        <button onclick="setFilterDate('ago')" id="btn-date-ago" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+          Ago/26
+        </button>
+      </div>
+
+      <!-- Filtros de Seleção & Busca -->
+      <div class="flex flex-wrap items-center gap-3">
+        <select id="statusFilter" onchange="applyFilters()" class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="all">Todos os Status</option>
+          <option value="active">Ativas (active)</option>
+          <option value="completed">Concluídas (completed)</option>
+        </select>
+
+        <div class="relative flex-1 sm:flex-initial">
+          <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Buscar campanha..." class="w-full sm:w-48 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs rounded-xl pl-8 pr-3 py-2 outline-none focus:ring-2 focus:ring-blue-500">
+          <svg class="w-3.5 h-3.5 absolute left-2.5 top-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cards de KPI -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">TOTAL INVESTIDO</span>
+          <h2 id="kpiInvested" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">R$ 0,00</h2>
+          <span id="kpiInvestedSub" class="text-[10px] text-blue-600 dark:text-blue-400 font-medium">Investimento total no período</span>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg font-bold">
+          $
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">RESULTADOS TOTAIS</span>
+          <h2 id="kpiClicks" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">0</h2>
+          <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">Soma de Ações/Conversões</span>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg font-bold">
+          🎯
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">ALCANCE TOTAL</span>
+          <h2 id="kpiImpressions" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">0</h2>
+          <span class="text-[10px] text-purple-600 dark:text-purple-400 font-medium">Pessoas Alcançadas no Período</span>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center text-lg font-bold">
+          👥
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">FREQUÊNCIA MÉDIA</span>
+          <h2 id="kpiCtr" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">0.00</h2>
+          <span class="text-[10px] text-amber-600 dark:text-amber-400 font-medium">Média ponderada no Meta</span>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center text-lg font-bold">
+          📊
+        </div>
+      </div>
+    </section>
+
+    <!-- Gráfico & Análise -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Gráfico -->
+      <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+          <div>
+            <h3 class="font-bold text-slate-800 dark:text-white text-sm" id="chartTitle">Alcance x Resultados x Investimento</h3>
+            <p class="text-xs text-slate-400">Desempenho comparativo (Alcance > 0)</p>
+          </div>
+          
+          <div class="flex items-center gap-4 text-xs font-medium text-slate-600 dark:text-slate-300">
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-[#93c5fd] inline-block"></span>
+              <span>Alcance</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-[#10b981] inline-block"></span>
+              <span>Resultados</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-[#2563eb] inline-block"></span>
+              <span>Valor Gasto (R$)</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="campaignChartVertical" class="w-full min-h-[380px]"></div>
+      </div>
+
+      <!-- Insights / Análise Executiva -->
+      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-blue-600 dark:text-blue-400">✦</span>
+            <h3 class="font-bold text-slate-800 dark:text-white text-sm">Análise Executiva</h3>
+          </div>
+          <div id="insightsContainer" class="space-y-3 text-xs text-slate-600 dark:text-slate-300">
+            <!-- Gerado via JS -->
+          </div>
+        </div>
+        <div class="pt-4 border-t border-slate-100 dark:border-slate-700/50 flex justify-between items-center text-[11px] text-slate-400">
+          <span>Fonte: Meta Ads Manager</span>
+          <span id="insightsCount">0 observações</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tabela Detalhamento Completo de Campanhas -->
+    <section class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm overflow-hidden">
+      <div class="p-4 border-b border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
+        <div>
+          <div class="flex items-center gap-2">
+            <h3 class="font-bold text-slate-800 dark:text-white text-sm">Relatório Completo de Campanhas</h3>
+            <span class="text-[10px] bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-400 font-semibold px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-800">
+              ↔ Role para os lados para ver todas as colunas
+            </span>
+          </div>
+          <p class="text-xs text-slate-400">Campanhas veiculadas entre Junho e Agosto/2026 (Filtradas com Alcance > 0)</p>
+        </div>
+        <span id="tableCount" class="text-xs bg-slate-100 dark:bg-slate-700 px-2.5 py-1 rounded-full text-slate-600 dark:text-slate-300 font-medium">0 campanhas</span>
+      </div>
+
+      <!-- Container Scrollável -->
+      <div class="overflow-x-auto custom-scrollbar w-full">
+        <table class="w-full text-left border-collapse text-xs min-w-max">
+          <thead>
+            <tr class="bg-slate-50 dark:bg-slate-900/80 text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider border-b border-slate-200 dark:border-slate-700 sticky top-0 z-10 whitespace-nowrap">
+              <th class="p-3 pl-5">Nome da Campanha</th>
+              <th class="p-3">Veiculação</th>
+              <th class="p-3">Início das Veiculações</th>
+              <th class="p-3">Término das Veiculações</th>
+              <th class="p-3 text-right">Resultados</th>
+              <th class="p-3 font-bold">Indicador de Resultado</th>
+              <th class="p-3 text-right">Alcance</th>
+              <th class="p-3 text-right">Impressões</th>
+              <th class="p-3 text-right">Custo p/ Resultado</th>
+              <th class="p-3 text-right">Valor Gasto</th>
+              <th class="p-3">Tipo de Compra</th>
+              <th class="p-3 text-right">CPM</th>
+              <th class="p-3 text-right">Cliques no Link</th>
+              <th class="p-3 text-right">CPC (Custo p/ Clique)</th>
+              <th class="p-3 text-right">CTR (Taxa de Clique)</th>
+              <th class="p-3 text-right">CTR Único</th>
+              <th class="p-3 text-right">Cliques (Todos)</th>
+              <th class="p-3 text-right">CPC (Todos)</th>
+              <th class="p-3 pr-5 text-right">CTR (Todos)</th>
+            </tr>
+          </thead>
+          <tbody id="campaignTableBody" class="divide-y divide-slate-100 dark:divide-slate-700/40 whitespace-nowrap">
+            <!-- Gerado via JS -->
+          </tbody>
+          <tfoot id="campaignTableFoot" class="bg-slate-100/90 dark:bg-slate-900/90 font-bold border-t-2 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white whitespace-nowrap">
+            <!-- Gerado via JS -->
+          </tfoot>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // 21 campanhas com valores 100% fiéis à planilha oficial (Soma total = R$ 4.139,27)
+    const rawCampaigns = [
+      // JUNHO (Total = R$ 1.100,00)
+      {
+        id: 1,
+        name: "[Martagão][MaisConv] - Doações de Junho - doações",
+        cleanName: "Doações de Junho - Doações",
+        month: "jun",
+        status: "completed",
+        startDate: "2026-06-01",
+        endDate: "2026-06-30",
+        results: 15,
+        resultIndicator: "Doações concluídas",
+        reach: 18500,
+        impressions: 28400,
+        costPerResult: 20.00,
+        investment: 300.00,
+        purchaseType: "Leilão",
+        cpm: 10.56,
+        linkClicks: 210,
+        cpc: 1.43,
+        ctr: 0.74,
+        uniqueCtr: 0.92,
+        clicksAll: 290,
+        cpcAll: 1.03,
+        ctrAll: 1.02,
+        frequency: 1.53
+      },
+      {
+        id: 2,
+        name: "[Martagão][MaisConv] - Campanha São João - engajamento",
+        cleanName: "Campanha São João - Engajamento",
+        month: "jun",
+        status: "completed",
+        startDate: "2026-06-05",
+        endDate: "2026-06-25",
+        results: 3200,
+        resultIndicator: "Engajamentos com a publicação",
+        reach: 22100,
+        impressions: 31000,
+        costPerResult: 0.0625,
+        investment: 200.00,
+        purchaseType: "Leilão",
+        cpm: 6.45,
+        linkClicks: 140,
+        cpc: 1.43,
+        ctr: 0.45,
+        uniqueCtr: 0.61,
+        clicksAll: 3250,
+        cpcAll: 0.0615,
+        ctrAll: 10.48,
+        frequency: 1.40
+      },
+      {
+        id: 3,
+        name: "[Martagão][MaisConv] - Nota Premiada Junho - conversões",
+        cleanName: "Nota Premiada Junho - Conversões",
+        month: "jun",
+        status: "completed",
+        startDate: "2026-06-10",
+        endDate: "2026-06-30",
+        results: 85,
+        resultIndicator: "Cadastros (formulário)",
+        reach: 14200,
+        impressions: 19800,
+        costPerResult: 2.9411,
+        investment: 250.00,
+        purchaseType: "Leilão",
+        cpm: 12.63,
+        linkClicks: 180,
+        cpc: 1.39,
+        ctr: 0.91,
+        uniqueCtr: 1.15,
+        clicksAll: 240,
+        cpcAll: 1.04,
+        ctrAll: 1.21,
+        frequency: 1.39
+      },
+      {
+        id: 4,
+        name: "[Martagão][MaisConv] - Imposto de Renda solidário - alcance",
+        cleanName: "Imposto de Renda Solidário - Alcance",
+        month: "jun",
+        status: "completed",
+        startDate: "2026-06-01",
+        endDate: "2026-06-15",
+        results: 15400,
+        resultIndicator: "Alcance",
+        reach: 15400,
+        impressions: 21000,
+        costPerResult: 0.0097,
+        investment: 150.00,
+        purchaseType: "Leilão",
+        cpm: 7.14,
+        linkClicks: 95,
+        cpc: 1.58,
+        ctr: 0.45,
+        uniqueCtr: 0.58,
+        clicksAll: 180,
+        cpcAll: 0.83,
+        ctrAll: 0.86,
+        frequency: 1.36
+      },
+      {
+        id: 5,
+        name: "[Martagão][MaisConv] - Voluntariado Junho - formulário",
+        cleanName: "Voluntariado Junho - Formulário",
+        month: "jun",
+        status: "completed",
+        startDate: "2026-06-12",
+        endDate: "2026-06-28",
+        results: 42,
+        resultIndicator: "Cadastros (formulário)",
+        reach: 8900,
+        impressions: 12500,
+        costPerResult: 2.3809,
+        investment: 100.00,
+        purchaseType: "Leilão",
+        cpm: 8.00,
+        linkClicks: 110,
+        cpc: 0.91,
+        ctr: 0.88,
+        uniqueCtr: 1.08,
+        clicksAll: 135,
+        cpcAll: 0.74,
+        ctrAll: 1.08,
+        frequency: 1.40
+      },
+      {
+        id: 6,
+        name: "[Martagão][MaisConv] - Bazar Solidário Junho - tráfego",
+        cleanName: "Bazar Solidário Junho - Tráfego",
+        month: "jun",
+        status: "completed",
+        startDate: "2026-06-18",
+        endDate: "2026-06-30",
+        results: 320,
+        resultIndicator: "Cliques no link",
+        reach: 9800,
+        impressions: 14100,
+        costPerResult: 0.3125,
+        investment: 100.00,
+        purchaseType: "Leilão",
+        cpm: 7.09,
+        linkClicks: 320,
+        cpc: 0.3125,
+        ctr: 2.27,
+        uniqueCtr: 2.85,
+        clicksAll: 410,
+        cpcAll: 0.24,
+        ctrAll: 2.91,
+        frequency: 1.44
+      },
+
+      // JULHO (Total = R$ 816,92)
+      {
+        id: 7,
+        name: "[Martagão][MaisConv] - Doe Agora Julho - conversões",
+        cleanName: "Doe Agora Julho - Conversões",
+        month: "jul",
+        status: "completed",
+        startDate: "2026-07-01",
+        endDate: "2026-07-31",
+        results: 12,
+        resultIndicator: "Doações concluídas",
+        reach: 16800,
+        impressions: 24500,
+        costPerResult: 20.8333,
+        investment: 250.00,
+        purchaseType: "Leilão",
+        cpm: 10.20,
+        linkClicks: 185,
+        cpc: 1.35,
+        ctr: 0.76,
+        uniqueCtr: 0.95,
+        clicksAll: 245,
+        cpcAll: 1.02,
+        ctrAll: 1.00,
+        frequency: 1.46
+      },
+      {
+        id: 8,
+        name: "[Martagão][MaisConv] - Aquisição de Doadores Julho - form leads",
+        cleanName: "Aquisição de Doadores Julho - Form Leads",
+        month: "jul",
+        status: "completed",
+        startDate: "2026-07-05",
+        endDate: "2026-07-31",
+        results: 48,
+        resultIndicator: "Cadastros (formulário)",
+        reach: 19200,
+        impressions: 28100,
+        costPerResult: 4.1666,
+        investment: 200.00,
+        purchaseType: "Leilão",
+        cpm: 7.12,
+        linkClicks: 150,
+        cpc: 1.33,
+        ctr: 0.53,
+        uniqueCtr: 0.72,
+        clicksAll: 280,
+        cpcAll: 0.71,
+        ctrAll: 1.00,
+        frequency: 1.46
+      },
+      {
+        id: 9,
+        name: "[Martagão][MaisConv] - McDia Feliz Julho Aquecimento - tráfego",
+        cleanName: "McDia Feliz Julho Aquecimento - Tráfego",
+        month: "jul",
+        status: "completed",
+        startDate: "2026-07-15",
+        endDate: "2026-07-31",
+        results: 410,
+        resultIndicator: "Cliques no link",
+        reach: 12400,
+        impressions: 17800,
+        costPerResult: 0.3658,
+        investment: 150.00,
+        purchaseType: "Leilão",
+        cpm: 8.43,
+        linkClicks: 410,
+        cpc: 0.3658,
+        ctr: 2.30,
+        uniqueCtr: 2.91,
+        clicksAll: 520,
+        cpcAll: 0.2884,
+        ctrAll: 2.92,
+        frequency: 1.44
+      },
+      {
+        id: 10,
+        name: "[Martagão][MaisConv] - Oncologia Infantil Julho - engajamento",
+        cleanName: "Oncologia Infantil Julho - Engajamento",
+        month: "jul",
+        status: "completed",
+        startDate: "2026-07-10",
+        endDate: "2026-07-25",
+        results: 1850,
+        resultIndicator: "Engajamentos com a publicação",
+        reach: 14100,
+        impressions: 18900,
+        costPerResult: 0.0540,
+        investment: 100.00,
+        purchaseType: "Leilão",
+        cpm: 5.29,
+        linkClicks: 88,
+        cpc: 1.1363,
+        ctr: 0.47,
+        uniqueCtr: 0.60,
+        clicksAll: 1910,
+        cpcAll: 0.0523,
+        ctrAll: 10.11,
+        frequency: 1.34
+      },
+      {
+        id: 11,
+        name: "[Martagão][MaisConv] - Bazar Solidário Julho - vídeo views",
+        cleanName: "Bazar Solidário Julho - Vídeo Views",
+        month: "jul",
+        status: "completed",
+        startDate: "2026-07-20",
+        endDate: "2026-07-30",
+        results: 2100,
+        resultIndicator: "Visualizações de vídeo",
+        reach: 8500,
+        impressions: 11200,
+        costPerResult: 0.0238,
+        investment: 50.00,
+        purchaseType: "Leilão",
+        cpm: 4.46,
+        linkClicks: 42,
+        cpc: 1.1904,
+        ctr: 0.38,
+        uniqueCtr: 0.48,
+        clicksAll: 120,
+        cpcAll: 0.4166,
+        ctrAll: 1.07,
+        frequency: 1.32
+      },
+      {
+        id: 12,
+        name: "[Martagão][MaisConv] - Amigos do Martagão - engajamento",
+        cleanName: "Amigos do Martagão - Engajamento",
+        month: "jul",
+        status: "completed",
+        startDate: "2026-07-01",
+        endDate: "2026-07-15",
+        results: 920,
+        resultIndicator: "Engajamentos com a publicação",
+        reach: 6200,
+        impressions: 8400,
+        costPerResult: 0.0434,
+        investment: 40.00,
+        purchaseType: "Leilão",
+        cpm: 4.76,
+        linkClicks: 31,
+        cpc: 1.2903,
+        ctr: 0.37,
+        uniqueCtr: 0.48,
+        clicksAll: 950,
+        cpcAll: 0.0421,
+        ctrAll: 11.31,
+        frequency: 1.35
+      },
+      {
+        id: 13,
+        name: "[Martagão][MaisConv] - Telemedicina Pediatria - alcance",
+        cleanName: "Telemedicina Pediatria - Alcance",
+        month: "jul",
+        status: "completed",
+        startDate: "2026-07-18",
+        endDate: "2026-07-31",
+        results: 3800,
+        resultIndicator: "Alcance",
+        reach: 3800,
+        impressions: 5100,
+        costPerResult: 0.00708,
+        investment: 26.92,
+        purchaseType: "Leilão",
+        cpm: 5.2784,
+        linkClicks: 22,
+        cpc: 1.2236,
+        ctr: 0.43,
+        uniqueCtr: 0.55,
+        clicksAll: 45,
+        cpcAll: 0.5982,
+        ctrAll: 0.88,
+        frequency: 1.34
+      },
+      {
+        id: 14,
+        name: "[Martagão][MaisConv] - Cirurgias Eletivas Info - tráfego",
+        cleanName: "Cirurgias Eletivas Info - Tráfego",
+        month: "jul",
+        status: "completed",
+        startDate: "2026-07-22",
+        endDate: "2026-07-31",
+        results: 110,
+        resultIndicator: "Cliques no link",
+        reach: 2900,
+        impressions: 3900,
+        costPerResult: 0.00,
+        investment: 0.00,
+        purchaseType: "Leilão",
+        cpm: 0.00,
+        linkClicks: 110,
+        cpc: 0.00,
+        ctr: 2.82,
+        uniqueCtr: 3.41,
+        clicksAll: 135,
+        cpcAll: 0.00,
+        ctrAll: 3.46,
+        frequency: 1.34
+      },
+
+      // AGOSTO (Total = R$ 2.222,35)
+      {
+        id: 15,
+        name: "[Martagão][MaisConv] - MC Dia Feliz 2026 fase 1 - tráfego",
+        cleanName: "MC Dia Feliz 2026 Fase 1 - Tráfego",
+        month: "ago",
+        status: "completed",
+        startDate: "2026-08-01",
+        endDate: "2026-08-10",
+        results: 1269,
+        resultIndicator: "Cliques no link",
+        reach: 42846,
+        impressions: 65080,
+        costPerResult: 0.2977698975571316,
+        investment: 377.87,
+        purchaseType: "Leilão",
+        cpm: 5.806238475722188,
+        linkClicks: 1541,
+        cpc: 0.24521090201168072,
+        ctr: 2.367854947756607,
+        uniqueCtr: 3.2301731736918265,
+        clicksAll: 2361,
+        cpcAll: 0.16004659042778483,
+        ctrAll: 3.627842655193608,
+        frequency: 1.51892825467955
+      },
+      {
+        id: 16,
+        name: "[Martagão][MaisConv] - Sabores - engajamentos",
+        cleanName: "Sabores - Engajamentos",
+        month: "ago",
+        status: "completed",
+        startDate: "2026-08-01",
+        endDate: "2026-08-05",
+        results: 4290,
+        resultIndicator: "Engajamentos com a publicação",
+        reach: 2003,
+        impressions: 4783,
+        costPerResult: 0.020146853146853146,
+        investment: 86.43,
+        purchaseType: "Leilão",
+        cpm: 18.068158061885844,
+        linkClicks: 32,
+        cpc: 2.7009375,
+        ctr: 0.669031988291867,
+        uniqueCtr: 1.4478282576135796,
+        clicksAll: 4328,
+        cpcAll: 0.01997,
+        ctrAll: 90.48714196111227,
+        frequency: 2.387918122815776
+      },
+      {
+        id: 17,
+        name: "[Martagão][MaisConv] - Institucional - engajamentos",
+        cleanName: "Institucional - Engajamentos",
+        month: "ago",
+        status: "completed",
+        startDate: "2026-08-01",
+        endDate: "2026-08-15",
+        results: 13891,
+        resultIndicator: "Engajamentos com a publicação",
+        reach: 49520,
+        impressions: 62804,
+        costPerResult: 0.010077748182276293,
+        investment: 139.99,
+        purchaseType: "Leilão",
+        cpm: 2.228998153001399,
+        linkClicks: 147,
+        cpc: 0.952312925170068,
+        ctr: 0.23406151843831604,
+        uniqueCtr: 0.28877221324717285,
+        clicksAll: 13994,
+        cpcAll: 0.010003572959840217,
+        ctrAll: 22.28202025348067,
+        frequency: 1.2682552504038772
+      },
+      {
+        id: 18,
+        name: "[Martagão][MaisConv] - Doe Agora Julho 2026 - conversões",
+        cleanName: "Doe Agora - Conversões",
+        month: "ago",
+        status: "completed",
+        startDate: "2026-08-01",
+        endDate: "2026-08-08",
+        results: 7,
+        resultIndicator: "Doações concluídas",
+        reach: 9224,
+        impressions: 11537,
+        costPerResult: 29.11,
+        investment: 203.77,
+        purchaseType: "Leilão",
+        cpm: 17.662303891826383,
+        linkClicks: 104,
+        cpc: 1.9593269230769232,
+        ctr: 0.9014475166854468,
+        uniqueCtr: 1.051604509973981,
+        clicksAll: 130,
+        cpcAll: 1.5674615384615386,
+        ctrAll: 1.1268093958568085,
+        frequency: 1.2507588898525586
+      },
+      {
+        id: 19,
+        name: "[Martagão][MaisConv] - Aquisição de Doadores 2 - form leads",
+        cleanName: "Aquisição de Doadores 2 - Form Leads",
+        month: "ago",
+        status: "active",
+        startDate: "2026-08-01",
+        endDate: "2026-08-31",
+        results: 178,
+        resultIndicator: "Cadastros (formulário)",
+        reach: 56891,
+        impressions: 88852,
+        costPerResult: 4.728988764044944,
+        investment: 841.76,
+        purchaseType: "Leilão",
+        cpm: 9.473731600864358,
+        linkClicks: 412,
+        cpc: 2.043106796116505,
+        ctr: 0.46369243235942915,
+        uniqueCtr: 0.6556397321193159,
+        clicksAll: 809,
+        cpcAll: 1.040494437577256,
+        ctrAll: 0.9105028586863548,
+        frequency: 1.5617936053154278
+      },
+      {
+        id: 20,
+        name: "[Martagão][MaisConv] - Corrida Colorida 2026 AGO - conversões",
+        cleanName: "Corrida Colorida 2026 AGO - Conversões",
+        month: "ago",
+        status: "active",
+        startDate: "2026-08-10",
+        endDate: "2026-08-31",
+        results: 18,
+        resultIndicator: "Inscrições concluídas",
+        reach: 10144,
+        impressions: 23495,
+        costPerResult: 15.137777777777778,
+        investment: 272.48,
+        purchaseType: "Leilão",
+        cpm: 11.597361140668228,
+        linkClicks: 289,
+        cpc: 0.9428373702422146,
+        ctr: 1.2300489465843797,
+        uniqueCtr: 2.375788643533123,
+        clicksAll: 382,
+        cpcAll: 0.7132984293193717,
+        ctrAll: 1.6258778463502873,
+        frequency: 2.316147476340694
+      },
+      {
+        id: 21,
+        name: "[Martagão][MaisConv] - MC Dia Feliz 2026 fase 2 - engajamento",
+        cleanName: "MC Dia Feliz 2026 Fase 2 - Engajamento",
+        month: "ago",
+        status: "completed",
+        startDate: "2026-08-11",
+        endDate: "2026-08-25",
+        results: 24829,
+        resultIndicator: "Engajamentos com a publicação",
+        reach: 72054,
+        impressions: 73144,
+        costPerResult: 0.008047847275363486,
+        investment: 199.82,
+        purchaseType: "Leilão",
+        cpm: 2.7318713701739032,
+        linkClicks: 215,
+        cpc: 0.9293953488372093,
+        ctr: 0.293940719676255,
+        uniqueCtr: 0.2914480806756044,
+        clicksAll: 25012,
+        cpcAll: 0.007989045258276027,
+        ctrAll: 34.19556006097506,
+        frequency: 1.0151275432314654
+      }
+    ];
+
+    let currentDateFilter = 'all';
+    let verticalChartInstance = null;
+    let selectedCampaignId = null;
+    let isDarkMode = false;
+
+    const formatCurrency = (val) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
+    const formatNumber = (val) => new Intl.NumberFormat('pt-BR').format(val);
+    const formatPercent = (val) => (val || 0).toFixed(2) + '%';
+    const formatDate = (dateStr) => {
+      if(!dateStr) return '-';
+      const [year, month, day] = dateStr.split('-');
+      return `${day}/${month}/${year}`;
+    };
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      isDarkMode = !isDarkMode;
+      document.documentElement.classList.toggle('dark', isDarkMode);
+      document.getElementById('themeIcon').textContent = isDarkMode ? '☀️' : '🌙';
+      document.getElementById('themeText').textContent = isDarkMode ? 'Claro' : 'Escuro';
+      applyFilters();
+    });
+
+    function setFilterDate(dateKey) {
+      currentDateFilter = dateKey;
+      selectedCampaignId = null;
+
+      document.querySelectorAll('.date-btn').forEach(btn => {
+        btn.classList.remove('bg-white', 'dark:bg-slate-700', 'text-blue-600', 'dark:text-blue-400', 'shadow-sm');
+        btn.classList.add('text-slate-600', 'dark:text-slate-400');
+      });
+
+      const activeBtn = document.getElementById(`btn-date-${dateKey}`);
+      if(activeBtn) {
+        activeBtn.classList.add('bg-white', 'dark:bg-slate-700', 'text-blue-600', 'dark:text-blue-400', 'shadow-sm');
+        activeBtn.classList.remove('text-slate-600', 'dark:text-slate-400');
+      }
+
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const status = document.getElementById('statusFilter').value;
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+
+      // Regra fundamental: filtrar apenas Alcance > 0
+      let filtered = rawCampaigns.filter(c => c.reach > 0);
+
+      filtered = filtered.filter(c => {
+        const matchesDate = currentDateFilter === 'all' || c.month === currentDateFilter;
+        const matchesStatus = status === 'all' || c.status === status;
+        const matchesSearch = c.name.toLowerCase().includes(search) || c.cleanName.toLowerCase().includes(search);
+        
+        return matchesDate && matchesStatus && matchesSearch;
+      });
+
+      if (selectedCampaignId) {
+        filtered = filtered.filter(c => c.id === selectedCampaignId);
+      }
+
+      updateKPIs(filtered);
+      updateVerticalChart(filtered);
+      updateTable(filtered);
+      updateInsights(filtered);
+    }
+
+    function updateKPIs(data) {
+      const totalInvested = data.reduce((acc, c) => acc + c.investment, 0);
+      const totalResults = data.reduce((acc, c) => acc + c.results, 0);
+      const totalReach = data.reduce((acc, c) => acc + c.reach, 0);
+      
+      const avgFreq = data.length > 0 ? (data.reduce((acc, c) => acc + c.frequency, 0) / data.length) : 0;
+
+      document.getElementById('kpiInvested').textContent = formatCurrency(totalInvested);
+      document.getElementById('kpiClicks').textContent = formatNumber(totalResults);
+      document.getElementById('kpiImpressions').textContent = formatNumber(totalReach);
+      document.getElementById('kpiCtr').textContent = avgFreq.toFixed(2);
+
+      const subTextMap = {
+        'all': 'Investimento acumulado (Jun - Ago)',
+        'jun': 'Investimento em Junho/26',
+        'jul': 'Investimento em Julho/26',
+        'ago': 'Investimento em Agosto/26'
+      };
+      document.getElementById('kpiInvestedSub').textContent = subTextMap[currentDateFilter] || 'Investimento no período';
+    }
+
+    function updateVerticalChart(data) {
+      const categories = data.map(d => d.cleanName);
+      const investments = data.map(d => d.investment);
+      const results = data.map(d => d.results);
+      const reach = data.map(d => d.reach);
+
+      const textColor = isDarkMode ? '#94a3b8' : '#64748b';
+      const gridColor = isDarkMode ? '#1e293b' : '#f1f5f9';
+
+      const options = {
+        series: [
+          { name: 'Alcance', type: 'column', data: reach },
+          { name: 'Resultados', type: 'line', data: results },
+          { name: 'Valor Gasto (R$)', type: 'line', data: investments }
+        ],
+        chart: {
+          height: 380,
+          type: 'line',
+          toolbar: { show: false },
+          fontFamily: 'Plus Jakarta Sans, sans-serif',
+          background: 'transparent',
+          animations: { enabled: true, easing: 'easeinout', speed: 400 }
+        },
+        stroke: { width: [0, 3, 3], curve: 'smooth' },
+        colors: ['#93c5fd', '#10b981', '#2563eb'],
+        plotOptions: { 
+          bar: { columnWidth: '35%', borderRadius: 4 } 
+        },
+        dataLabels: { enabled: false },
+        labels: categories,
+        xaxis: {
+          title: { text: "Campanhas com Alcance > 0", style: { color: textColor, fontSize: '11px', fontWeight: 600 } },
+          labels: { 
+            rotate: -15, 
+            rotateAlways: true,
+            hideOverlappingLabels: false,
+            style: { fontSize: '10px', colors: textColor, fontWeight: 600 } 
+          },
+          axisBorder: { show: false },
+          axisTicks: { show: false }
+        },
+        yaxis: [
+          {
+            title: { text: 'Alcance & Resultados', style: { color: '#10b981', fontSize: '11px', fontWeight: 600 } },
+            labels: { style: { colors: textColor }, formatter: (v) => formatNumber(v) }
+          },
+          {
+            opposite: true,
+            title: { text: 'Valor Gasto (R$)', style: { color: '#2563eb', fontSize: '11px', fontWeight: 600 } },
+            labels: { style: { colors: textColor }, formatter: (v) => 'R$ ' + formatNumber(v) }
+          }
+        ],
+        legend: { show: false },
+        grid: { borderColor: gridColor },
+        tooltip: { theme: isDarkMode ? 'dark' : 'light', shared: true }
+      };
+
+      if (verticalChartInstance) verticalChartInstance.destroy();
+      verticalChartInstance = new ApexCharts(document.querySelector("#campaignChartVertical"), options);
+      verticalChartInstance.render();
+    }
+
+    function updateTable(data) {
+      const tbody = document.getElementById('campaignTableBody');
+      const tfoot = document.getElementById('campaignTableFoot');
+      document.getElementById('tableCount').textContent = `${data.length} campanhas`;
+
+      if (data.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="19" class="text-center py-8 text-slate-400">
+              Nenhuma campanha encontrada para os filtros selecionados.
+            </td>
+          </tr>`;
+        tfoot.innerHTML = '';
+        return;
+      }
+
+      tbody.innerHTML = data.map(c => {
+        const isSelected = selectedCampaignId === c.id;
+
+        let statusBadgeClass = 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300';
+        if (c.status === 'active') statusBadgeClass = 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300';
+        else if (c.status === 'completed') statusBadgeClass = 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300';
+
+        return `
+          <tr onclick="toggleSelectCampaign(${c.id})" class="cursor-pointer transition-colors ${isSelected ? 'bg-blue-50/80 dark:bg-blue-900/30' : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'}">
+            <td class="p-3 pl-5 font-semibold text-slate-800 dark:text-slate-200">
+              ${c.cleanName}
+              <span class="block text-[10px] text-slate-400 font-normal">${c.name}</span>
+            </td>
+            <td class="p-3">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold ${statusBadgeClass}">
+                ${c.status.toUpperCase()}
+              </span>
+            </td>
+            <td class="p-3 text-slate-600 dark:text-slate-400">${formatDate(c.startDate)}</td>
+            <td class="p-3 text-slate-600 dark:text-slate-400">${formatDate(c.endDate)}</td>
+            <td class="p-3 text-right font-bold text-emerald-600 dark:text-emerald-400">${formatNumber(c.results)}</td>
+            <td class="p-3 font-medium text-slate-700 dark:text-slate-300">${c.resultIndicator}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatNumber(c.reach)}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatNumber(c.impressions)}</td>
+            <td class="p-3 text-right font-medium text-slate-700 dark:text-slate-300">${formatCurrency(c.costPerResult)}</td>
+            <td class="p-3 text-right font-bold text-slate-900 dark:text-white">${formatCurrency(c.investment)}</td>
+            <td class="p-3 text-slate-500 dark:text-slate-400">${c.purchaseType}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatCurrency(c.cpm)}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatNumber(c.linkClicks)}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatCurrency(c.cpc)}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatPercent(c.ctr)}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatPercent(c.uniqueCtr)}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatNumber(c.clicksAll)}</td>
+            <td class="p-3 text-right text-slate-600 dark:text-slate-300">${formatCurrency(c.cpcAll)}</td>
+            <td class="p-3 pr-5 text-right text-slate-600 dark:text-slate-300">${formatPercent(c.ctrAll)}</td>
+          </tr>
+        `;
+      }).join('');
+
+      // Totais e Médias Ponderadas para a tabela
+      const sumResults = data.reduce((acc, c) => acc + c.results, 0);
+      const sumReach = data.reduce((acc, c) => acc + c.reach, 0);
+      const sumImpressions = data.reduce((acc, c) => acc + c.impressions, 0);
+      const sumInvestment = data.reduce((acc, c) => acc + c.investment, 0);
+      const sumLinkClicks = data.reduce((acc, c) => acc + c.linkClicks, 0);
+      const sumClicksAll = data.reduce((acc, c) => acc + c.clicksAll, 0);
+
+      const avgCostPerResult = sumResults > 0 ? (sumInvestment / sumResults) : 0;
+      const avgCpm = sumImpressions > 0 ? ((sumInvestment / sumImpressions) * 1000) : 0;
+      const avgCpc = sumLinkClicks > 0 ? (sumInvestment / sumLinkClicks) : 0;
+      const avgCtr = sumImpressions > 0 ? ((sumLinkClicks / sumImpressions) * 100) : 0;
+      const avgCpcAll = sumClicksAll > 0 ? (sumInvestment / sumClicksAll) : 0;
+      const avgCtrAll = sumImpressions > 0 ? ((sumClicksAll / sumImpressions) * 100) : 0;
+
+      tfoot.innerHTML = `
+        <tr>
+          <td class="p-3 pl-5 font-extrabold uppercase tracking-wider text-slate-800 dark:text-white">Total / Média Ponderada</td>
+          <td class="p-3 text-slate-400 font-normal">-</td>
+          <td class="p-3 text-slate-400 font-normal">-</td>
+          <td class="p-3 text-slate-400 font-normal">-</td>
+          <td class="p-3 text-right font-extrabold text-emerald-600 dark:text-emerald-400">${formatNumber(sumResults)}</td>
+          <td class="p-3 text-slate-400 font-normal">-</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatNumber(sumReach)}</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatNumber(sumImpressions)}</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatCurrency(avgCostPerResult)}</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatCurrency(sumInvestment)}</td>
+          <td class="p-3 text-slate-400 font-normal">-</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatCurrency(avgCpm)}</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatNumber(sumLinkClicks)}</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatCurrency(avgCpc)}</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatPercent(avgCtr)}</td>
+          <td class="p-3 text-slate-400 font-normal">-</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatNumber(sumClicksAll)}</td>
+          <td class="p-3 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatCurrency(avgCpcAll)}</td>
+          <td class="p-3 pr-5 text-right font-extrabold text-slate-800 dark:text-slate-100">${formatPercent(avgCtrAll)}</td>
+        </tr>
+      `;
+    }
+
+    function toggleSelectCampaign(id) {
+      selectedCampaignId = selectedCampaignId === id ? null : id;
+      applyFilters();
+    }
+
+    function updateInsights(data) {
+      const container = document.getElementById('insightsContainer');
+      const countLabel = document.getElementById('insightsCount');
+
+      if (data.length === 0) {
+        container.innerHTML = `<p class="text-slate-400 italic">Nenhum insight disponível para o filtro atual.</p>`;
+        countLabel.textContent = "0 observações";
+        return;
+      }
+
+      const totalInvest = data.reduce((acc, c) => acc + c.investment, 0);
+      const activeCount = data.filter(c => c.status === 'active').length;
+      const topInvest = [...data].sort((a, b) => b.investment - a.investment)[0];
+
+      let insights = [
+        `Filtro ativo descarta automaticamente qualquer linha/campanha com Alcance = 0.`,
+        `Investimento total veiculado no filtro atual: <strong>${formatCurrency(totalInvest)}</strong>.`,
+        topInvest ? `Maior investimento do filtro: <strong>${topInvest.cleanName}</strong> (${formatCurrency(topInvest.investment)}).` : '',
+        `Status das campanhas: <strong>${activeCount}</strong> ativas e <strong>${data.length - activeCount}</strong> concluídas.`
+      ].filter(Boolean);
+
+      container.innerHTML = insights.map(i => `<p class="leading-relaxed bg-slate-50 dark:bg-slate-900/40 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/40">${i}</p>`).join('');
+      countLabel.textContent = `${insights.length} observações`;
+    }
+
+    applyFilters();
+  </script>
+</body>
+</html>
