@@ -85,7 +85,7 @@
         </button>
         <div class="hidden sm:block text-right">
           <span class="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">PERÍODO</span>
-          <span id="headerPeriodLabel" class="text-xs font-bold text-slate-700 dark:text-slate-200">Todo Período</span>
+          <span id="headerPeriodLabel" class="text-xs font-bold text-slate-700 dark:text-slate-200">Ago/26</span>
         </div>
       </div>
     </div>
@@ -97,16 +97,7 @@
       
       <!-- Filtro de Mês -->
       <div class="flex items-center gap-1 bg-slate-100 dark:bg-slate-900/50 p-1 rounded-xl border border-slate-200/60 dark:border-slate-700/50 overflow-x-auto">
-        <button onclick="setFilterDate('all')" id="btn-date-all" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm">
-          Todo Período
-        </button>
-        <button onclick="setFilterDate('jun')" id="btn-date-jun" class="date-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
-          Jun/26
-        </button>
-        <button onclick="setFilterDate('jul')" id="btn-date-jul" class="date-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
-          Jul/26
-        </button>
-        <button onclick="setFilterDate('ago')" id="btn-date-ago" class="date-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
+        <button onclick="setFilterDate('ago')" id="btn-date-ago" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm">
           Ago/26
         </button>
       </div>
@@ -147,12 +138,12 @@
 
       <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
         <div>
-          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">LUCRO / ARRECADAÇÃO</span>
-          <h2 id="kpiRevenue" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">R$ 0,00</h2>
-          <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">Retorno em Doações</span>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">TOTAL CLIQUES</span>
+          <h2 id="kpiClicks" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">0</h2>
+          <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">Volume de Tráfego</span>
         </div>
         <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg font-bold">
-          📈
+          🖱️
         </div>
       </div>
 
@@ -182,11 +173,11 @@
     <!-- Gráfico & Análise -->
     <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       
-      <!-- Gráfico com Legenda HTML Customizada -->
+      <!-- Gráfico -->
       <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
           <div>
-            <h3 class="font-bold text-slate-800 dark:text-white text-sm" id="chartTitle">Impressões x Lucro x Investimentos por Campanha</h3>
+            <h3 class="font-bold text-slate-800 dark:text-white text-sm" id="chartTitle">Impressões x Cliques x Investimento por Campanha</h3>
             <p class="text-xs text-slate-400">Desempenho comparativo das métricas de mídia</p>
           </div>
           
@@ -197,7 +188,7 @@
             </div>
             <div class="flex items-center gap-1.5">
               <span class="w-3 h-3 rounded-full bg-[#10b981] inline-block"></span>
-              <span>Lucro (R$)</span>
+              <span>Cliques</span>
             </div>
             <div class="flex items-center gap-1.5">
               <span class="w-3 h-3 rounded-full bg-[#2563eb] inline-block"></span>
@@ -244,7 +235,7 @@
               <th class="p-3.5 pl-5">Nome da Campanha</th>
               <th class="p-3.5">Status</th>
               <th class="p-3.5">Impressões</th>
-              <th class="p-3.5">Lucro Gerado</th>
+              <th class="p-3.5">Cliques</th>
               <th class="p-3.5 pr-5">Investimento</th>
             </tr>
           </thead>
@@ -257,31 +248,21 @@
   </main>
 
   <script>
-    // Dados fiéis extraídos diretamente da planilha real
+    // Dados brutos de campanhas
     const rawCampaigns = [
-      { id: 1, name: "MC_Doacoes_Institucional_Ago26", cleanName: "Doações Institucional", month: "ago", status: "ativa", objective: "doacao", investment: 1250.00, impressions: 320000, revenue: 3850.00, clicks: 8200 },
-      { id: 2, name: "MC_Cadastros_Voluntarios_Ago26", cleanName: "Cadastros Voluntários", month: "ago", status: "ativa", objective: "cadastros", investment: 480.05, impressions: 140000, revenue: 1240.00, clicks: 3100 },
-      { id: 3, name: "MC_Doacoes_Cirurgias_Ago26", cleanName: "Doações Cirurgias Especiais", month: "ago", status: "ativa", objective: "doacao", investment: 980.00, impressions: 260000, revenue: 3120.00, clicks: 6400 },
-      { id: 4, name: "MC_Cadastros_Nutricao_Ago26", cleanName: "Apoio Nutrição Infantil", month: "ago", status: "ativa", objective: "cadastros", investment: 350.00, impressions: 110000, revenue: 890.00, clicks: 2300 },
-      
-      { id: 5, name: "MC_Doacoes_Urgentes_Jul26", cleanName: "Doações Urgência Oncologia", month: "jul", status: "pausada", objective: "doacao", investment: 1820.00, impressions: 450000, revenue: 5900.00, clicks: 11200 },
-      { id: 6, name: "MC_Cadastros_Eventos_Jul26", cleanName: "Inscrições Corrida Solidária", month: "jul", status: "pausada", objective: "cadastros", investment: 630.00, impressions: 180000, revenue: 1820.00, clicks: 4900 },
-      { id: 7, name: "MC_Doacoes_UTI_Jul26", cleanName: "Reforma Leitos UTI Pediátrica", month: "jul", status: "pausada", objective: "doacao", investment: 1410.00, impressions: 360000, revenue: 4250.00, clicks: 8700 },
-      { id: 8, name: "MC_Cadastros_Bazar_Jul26", cleanName: "Voluntários Bazar Beneficente", month: "jul", status: "pausada", objective: "cadastros", investment: 290.00, impressions: 95000, revenue: 610.00, clicks: 2100 },
-
-      { id: 9, name: "MC_Doacoes_Geral_Jun26", cleanName: "Apoio Hospitalar Contínuo", month: "jun", status: "pausada", objective: "doacao", investment: 1540.00, impressions: 390000, revenue: 4680.00, clicks: 9400 },
-      { id: 10, name: "MC_Cadastros_Parceiros_Jun26", cleanName: "Captação de Empresas Parceiras", month: "jun", status: "pausada", objective: "cadastros", investment: 890.00, impressions: 210000, revenue: 2210.00, clicks: 5200 },
-      { id: 11, name: "MC_Doacoes_Exames_Jun26", cleanName: "Fundo de Diagnóstico Precoce", month: "jun", status: "pausada", objective: "doacao", investment: 1120.00, impressions: 290000, revenue: 3400.00, clicks: 7100 },
-      { id: 12, name: "MC_Cadastros_Doadores_Jun26", cleanName: "Campanha Sangue Solidário", month: "jun", status: "pausada", objective: "cadastros", investment: 410.00, impressions: 125000, revenue: 980.00, clicks: 3300 },
-      { id: 13, name: "MC_Doacoes_Ambulatorio_Jun26", cleanName: "Manutenção Ambulatorial", month: "jun", status: "pausada", objective: "doacao", investment: 760.00, impressions: 205000, revenue: 2150.00, clicks: 4800 }
+      { id: 1, name: "MC_Doacoes_Institucional_Ago26", cleanName: "Doações Institucional", month: "ago", status: "ativa", objective: "doacao", reach: 210000, investment: 1250.00, impressions: 320000, clicks: 8200 },
+      { id: 2, name: "MC_Cadastros_Voluntarios_Ago26", cleanName: "Cadastros Voluntários", month: "ago", status: "ativa", objective: "cadastros", reach: 95000, investment: 480.05, impressions: 140000, clicks: 3100 },
+      { id: 3, name: "MC_Doacoes_Cirurgias_Ago26", cleanName: "Doações Cirurgias Especiais", month: "ago", status: "ativa", objective: "doacao", reach: 180000, investment: 980.00, impressions: 260000, clicks: 6400 },
+      { id: 4, name: "MC_Cadastros_Nutricao_Ago26", cleanName: "Apoio Nutrição Infantil", month: "ago", status: "ativa", objective: "cadastros", reach: 72000, investment: 350.00, impressions: 110000, clicks: 2300 },
+      // Exemplo de campanha zerada que será automaticamente ignorada pelo filtro
+      { id: 5, name: "MC_Teste_Inativa_Ago26", cleanName: "Campanha Sem Veiculação", month: "ago", status: "pausada", objective: "doacao", reach: 0, investment: 0, impressions: 0, clicks: 0 }
     ];
 
-    let currentDateFilter = 'all';
+    let currentDateFilter = 'ago';
     let verticalChartInstance = null;
     let selectedCampaignId = null;
     let isDarkMode = false;
 
-    // Formatação em Moeda Brasileira (R$)
     const formatCurrency = (val) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
     const formatNumber = (val) => new Intl.NumberFormat('pt-BR').format(val);
 
@@ -295,18 +276,6 @@
 
     function setFilterDate(dateKey) {
       currentDateFilter = dateKey;
-      
-      document.querySelectorAll('.date-btn').forEach(btn => {
-        btn.className = 'date-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all';
-      });
-      const activeBtn = document.getElementById(`btn-date-${dateKey}`);
-      if (activeBtn) {
-        activeBtn.className = 'date-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm transition-all';
-      }
-
-      const labels = { 'all': 'Todo Período', 'jun': 'Junho / 2026', 'jul': 'Julho / 2026', 'ago': 'Agosto / 2026' };
-      document.getElementById('headerPeriodLabel').textContent = labels[dateKey] || 'Todo Período';
-
       selectedCampaignId = null;
       applyFilters();
     }
@@ -316,12 +285,15 @@
       const status = document.getElementById('statusFilter').value;
       const search = document.getElementById('searchInput').value.toLowerCase().trim();
 
+      // Filtro para ignorar campanhas com valores zerados (Reach, Impressões, Cliques ou Investimento)
       let filtered = rawCampaigns.filter(c => {
+        const hasValidMetrics = (c.reach > 0) && (c.impressions > 0) && (c.clicks > 0) && (c.investment > 0);
         const matchesDate = currentDateFilter === 'all' || c.month === currentDateFilter;
         const matchesObj = objective === 'all' || c.objective === objective;
         const matchesStatus = status === 'all' || c.status === status;
         const matchesSearch = c.name.toLowerCase().includes(search) || c.cleanName.toLowerCase().includes(search);
-        return matchesDate && matchesObj && matchesStatus && matchesSearch;
+        
+        return hasValidMetrics && matchesDate && matchesObj && matchesStatus && matchesSearch;
       });
 
       if (selectedCampaignId) {
@@ -336,65 +308,22 @@
 
     function updateKPIs(data) {
       const totalInvested = data.reduce((acc, c) => acc + c.investment, 0);
-      const totalRevenue = data.reduce((acc, c) => acc + c.revenue, 0);
-      const totalImpressions = data.reduce((acc, c) => acc + c.impressions, 0);
       const totalClicks = data.reduce((acc, c) => acc + c.clicks, 0);
+      const totalImpressions = data.reduce((acc, c) => acc + c.impressions, 0);
 
       const ctr = totalImpressions > 0 ? ((totalClicks / totalImpressions) * 100) : 0;
 
       document.getElementById('kpiInvested').textContent = formatCurrency(totalInvested);
-      document.getElementById('kpiRevenue').textContent = formatCurrency(totalRevenue);
+      document.getElementById('kpiClicks').textContent = formatNumber(totalClicks);
       document.getElementById('kpiImpressions').textContent = formatNumber(totalImpressions);
       document.getElementById('kpiCtr').textContent = ctr.toFixed(2) + '%';
     }
 
-    function getDailyDataForMonth(monthFilter, filteredCampaigns) {
-      const daysInMonth = { 'jun': 30, 'jul': 31, 'ago': 31 };
-      const totalDays = daysInMonth[monthFilter] || 30;
-
-      let days = [];
-      let dailyInvestments = [];
-      let dailyRevenues = [];
-      let dailyImpressions = [];
-
-      const monthTotalInvest = filteredCampaigns.reduce((acc, c) => acc + c.investment, 0);
-      const monthTotalRev = filteredCampaigns.reduce((acc, c) => acc + c.revenue, 0);
-      const monthTotalImp = filteredCampaigns.reduce((acc, c) => acc + c.impressions, 0);
-
-      for (let i = 1; i <= totalDays; i++) {
-        days.push(`Dia ${i}`);
-        const dayFactor = (Math.sin(i) + 1.5) / totalDays; 
-        dailyInvestments.push(Number((monthTotalInvest * dayFactor / 2).toFixed(2)));
-        dailyRevenues.push(Number((monthTotalRev * dayFactor / 2).toFixed(2)));
-        dailyImpressions.push(Math.round(monthTotalImp * dayFactor / 2));
-      }
-
-      return { days, dailyInvestments, dailyRevenues, dailyImpressions };
-    }
-
     function updateVerticalChart(data) {
-      let categories = [];
-      let investments = [];
-      let revenues = [];
-      let impressions = [];
-      let xAxisTitle = "Campanhas";
-
-      if (currentDateFilter !== 'all') {
-        const dailyData = getDailyDataForMonth(currentDateFilter, data);
-        categories = dailyData.days;
-        investments = dailyData.dailyInvestments;
-        revenues = dailyData.dailyRevenues;
-        impressions = dailyData.dailyImpressions;
-        xAxisTitle = `Dias do Mês (${currentDateFilter.toUpperCase()})`;
-        document.getElementById('chartTitle').textContent = `Desempenho Diário (${currentDateFilter.toUpperCase()}/26)`;
-      } else {
-        categories = data.map(d => d.cleanName);
-        investments = data.map(d => d.investment);
-        revenues = data.map(d => d.revenue);
-        impressions = data.map(d => d.impressions);
-        xAxisTitle = "Campanhas";
-        document.getElementById('chartTitle').textContent = "Impressões x Lucro x Investimentos por Campanha";
-      }
+      const categories = data.map(d => d.cleanName);
+      const investments = data.map(d => d.investment);
+      const clicks = data.map(d => d.clicks);
+      const impressions = data.map(d => d.impressions);
 
       const textColor = isDarkMode ? '#94a3b8' : '#64748b';
       const gridColor = isDarkMode ? '#1e293b' : '#f1f5f9';
@@ -402,8 +331,8 @@
       const options = {
         series: [
           { name: 'Impressões', type: 'column', data: impressions },
-          { name: 'Investimento (R$)', type: 'line', data: investments },
-          { name: 'Lucro (R$)', type: 'line', data: revenues }
+          { name: 'Cliques', type: 'line', data: clicks },
+          { name: 'Investimento (R$)', type: 'line', data: investments }
         ],
         chart: {
           height: 380,
@@ -414,16 +343,16 @@
           animations: { enabled: true, easing: 'easeinout', speed: 400 }
         },
         stroke: { width: [0, 3, 3], curve: 'smooth' },
-        colors: ['#93c5fd', '#2563eb', '#10b981'],
+        colors: ['#93c5fd', '#10b981', '#2563eb'],
         plotOptions: { 
-          bar: { columnWidth: currentDateFilter !== 'all' ? '60%' : '35%', borderRadius: 4 } 
+          bar: { columnWidth: '35%', borderRadius: 4 } 
         },
         dataLabels: { enabled: false },
         labels: categories,
         xaxis: {
-          title: { text: xAxisTitle, style: { color: textColor, fontSize: '11px', fontWeight: 600 } },
+          title: { text: "Campanhas", style: { color: textColor, fontSize: '11px', fontWeight: 600 } },
           labels: { 
-            rotate: -35, 
+            rotate: -20, 
             rotateAlways: true,
             hideOverlappingLabels: false,
             style: { fontSize: '10px', colors: textColor, fontWeight: 600 } 
@@ -433,7 +362,7 @@
         },
         yaxis: [
           {
-            title: { text: 'Impressões & Lucro', style: { color: '#10b981', fontSize: '11px', fontWeight: 600 } },
+            title: { text: 'Impressões & Cliques', style: { color: '#10b981', fontSize: '11px', fontWeight: 600 } },
             labels: { style: { colors: textColor }, formatter: (v) => formatNumber(v) }
           },
           {
@@ -462,7 +391,7 @@
         tbody.innerHTML = `
           <tr>
             <td colspan="5" class="text-center py-8 text-slate-400">
-              Nenhuma campanha encontrada para os filtros selecionados.
+              Nenhuma campanha com dados ativos encontrada.
             </td>
           </tr>`;
         return;
@@ -483,7 +412,7 @@
               </span>
             </td>
             <td class="p-3.5 text-slate-500 dark:text-slate-400">${formatNumber(c.impressions)}</td>
-            <td class="p-3.5 font-bold text-emerald-600 dark:text-emerald-400">${formatCurrency(c.revenue)}</td>
+            <td class="p-3.5 font-bold text-emerald-600 dark:text-emerald-400">${formatNumber(c.clicks)}</td>
             <td class="p-3.5 pr-5 font-medium">${formatCurrency(c.investment)}</td>
           </tr>
         `;
@@ -506,13 +435,13 @@
       }
 
       const totalInvest = data.reduce((acc, c) => acc + c.investment, 0);
-      const totalRev = data.reduce((acc, c) => acc + c.revenue, 0);
-      const topCampaign = [...data].sort((a, b) => b.revenue - a.revenue)[0];
+      const totalClicks = data.reduce((acc, c) => acc + c.clicks, 0);
+      const topCampaign = [...data].sort((a, b) => b.clicks - a.clicks)[0];
 
       let insights = [
-        `As campanhas filtradas acumulam um lucro/arrecadação total de <strong>${formatCurrency(totalRev)}</strong> para um investimento de <strong>${formatCurrency(totalInvest)}</strong>.`,
-        topCampaign ? `A campanha de maior rentabilidade é <strong>${topCampaign.cleanName}</strong>, gerando ${formatCurrency(topCampaign.revenue)}.` : '',
-        currentDateFilter !== 'all' ? `O gráfico exibido detalha o fluxo diário referente ao mês de <strong>${currentDateFilter.toUpperCase()}/26</strong>.` : `Exibindo a consolidação geral de todo o período.`
+        `As campanhas ativas de Agosto acumulam <strong>${formatNumber(totalClicks)} cliques</strong> com investimento de <strong>${formatCurrency(totalInvest)}</strong>.`,
+        topCampaign ? `A campanha com maior volume é <strong>${topCampaign.cleanName}</strong> (${formatNumber(topCampaign.clicks)} cliques).` : '',
+        `Campanhas zeradas foram ignoradas do relatório.`
       ].filter(Boolean);
 
       container.innerHTML = insights.map(i => `<p class="leading-relaxed bg-slate-50 dark:bg-slate-900/40 p-2.5 rounded-lg border border-slate-100 dark:border-slate-700/40">${i}</p>`).join('');
