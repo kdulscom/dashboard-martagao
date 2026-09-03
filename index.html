@@ -56,24 +56,6 @@
     .dark .custom-scrollbar::-webkit-scrollbar-thumb {
       background: #334155;
     }
-
-    /* FORÇAR A LEGENDA EM LINHA ÚNICA (FLEXBOX) */
-    .apexcharts-legend {
-      display: flex !important;
-      flex-direction: row !important;
-      flex-wrap: nowrap !important;
-      justify-content: center !important;
-      align-items: center !important;
-      gap: 1.5rem !important;
-      top: 0px !important;
-      padding: 0 !important;
-    }
-    .apexcharts-legend-series {
-      display: inline-flex !important;
-      align-items: center !important;
-      margin: 0 !important;
-      white-space: nowrap !important;
-    }
   </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-200 min-h-screen pb-12">
@@ -152,8 +134,6 @@
 
     <!-- Cards de KPI -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      
-      <!-- Total Investido -->
       <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
         <div>
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">TOTAL INVESTIDO</span>
@@ -165,7 +145,6 @@
         </div>
       </div>
 
-      <!-- Lucro / Arrecadação -->
       <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
         <div>
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">LUCRO / ARRECADAÇÃO</span>
@@ -177,7 +156,6 @@
         </div>
       </div>
 
-      <!-- Total Impressões -->
       <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
         <div>
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">TOTAL IMPRESSÕES</span>
@@ -189,7 +167,6 @@
         </div>
       </div>
 
-      <!-- CTR Médio -->
       <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
         <div>
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">CTR MÉDIO</span>
@@ -205,14 +182,31 @@
     <!-- Gráfico & Análise -->
     <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       
-      <!-- Gráfico -->
+      <!-- Gráfico com Legenda HTML Customizada -->
       <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm">
-        <div class="flex items-center justify-between mb-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
           <div>
             <h3 class="font-bold text-slate-800 dark:text-white text-sm" id="chartTitle">Impressões x Lucro x Investimentos por Campanha</h3>
-            <p class="text-xs text-slate-400">Impressões (Barras) | Lucro (Linha Verde) | Investimento (Linha Azul)</p>
+            <p class="text-xs text-slate-400">Desempenho comparativo das métricas de mídia</p>
+          </div>
+          
+          <!-- LEGENDA HTML PERSONALIZADA (100% GARANTIDA SEM ENCAVALAR) -->
+          <div class="flex items-center gap-4 text-xs font-medium text-slate-600 dark:text-slate-300">
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-[#93c5fd] inline-block"></span>
+              <span>Impressões</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-[#10b981] inline-block"></span>
+              <span>Lucro (R$)</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-[#2563eb] inline-block"></span>
+              <span>Investimento (R$)</span>
+            </div>
           </div>
         </div>
+
         <div id="campaignChartVertical" class="w-full min-h-[380px]"></div>
       </div>
 
@@ -263,9 +257,7 @@
     </section>
   </main>
 
-  <!-- Lógica Principal da Aplicação -->
   <script>
-    // Base de dados completa com as 13 campanhas da planilha
     const rawCampaigns = [
       { id: 1, name: "MC_Doacoes_Institucional_Ago26", cleanName: "Doações Institucional", month: "ago", status: "ativa", objective: "doacao", investment: 12500.00, impressions: 320000, revenue: 38500.00, clicks: 8200 },
       { id: 2, name: "MC_Cadastros_Voluntarios_Ago26", cleanName: "Cadastros Voluntários", month: "ago", status: "ativa", objective: "cadastros", investment: 4800.50, impressions: 140000, revenue: 12400.00, clicks: 3100 },
@@ -289,11 +281,9 @@
     let selectedCampaignId = null;
     let isDarkMode = false;
 
-    // Utilitários de Formatação
     const formatCurrency = (val) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
     const formatNumber = (val) => new Intl.NumberFormat('pt-BR').format(val);
 
-    // Alternância de Tema Escuro
     document.getElementById('themeToggle').addEventListener('click', () => {
       isDarkMode = !isDarkMode;
       document.documentElement.classList.toggle('dark', isDarkMode);
@@ -302,11 +292,9 @@
       applyFilters();
     });
 
-    // Seleção de Mês
     function setFilterDate(dateKey) {
       currentDateFilter = dateKey;
       
-      // Atualizar estilos dos botões
       document.querySelectorAll('.date-btn').forEach(btn => {
         btn.className = 'date-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all';
       });
@@ -315,7 +303,6 @@
         activeBtn.className = 'date-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm transition-all';
       }
 
-      // Atualizar label do topo
       const labels = { 'all': 'Todo Período', 'jun': 'Junho / 2026', 'jul': 'Julho / 2026', 'ago': 'Agosto / 2026' };
       document.getElementById('headerPeriodLabel').textContent = labels[dateKey] || 'Todo Período';
 
@@ -323,7 +310,6 @@
       applyFilters();
     }
 
-    // Filtro e Renderização Principal
     function applyFilters() {
       const objective = document.getElementById('objectiveFilter').value;
       const status = document.getElementById('statusFilter').value;
@@ -347,7 +333,6 @@
       updateInsights(filtered);
     }
 
-    // Atualiza Cards de KPI
     function updateKPIs(data) {
       const totalInvested = data.reduce((acc, c) => acc + c.investment, 0);
       const totalRevenue = data.reduce((acc, c) => acc + c.revenue, 0);
@@ -362,7 +347,6 @@
       document.getElementById('kpiCtr').textContent = ctr.toFixed(2) + '%';
     }
 
-    // Lógica do Gráfico
     function getDailyDataForMonth(monthFilter, filteredCampaigns) {
       const daysInMonth = { 'jun': 30, 'jul': 31, 'ago': 31 };
       const totalDays = daysInMonth[monthFilter] || 30;
@@ -457,17 +441,9 @@
             labels: { style: { colors: textColor }, formatter: (v) => 'R$ ' + formatNumber(v) }
           }
         ],
-        legend: { 
-          position: 'top',
-          horizontalAlign: 'center',
-          floating: false,
-          fontSize: '12px',
-          width: undefined,
-          labels: { colors: textColor },
-          itemMargin: {
-            horizontal: 12,
-            vertical: 0
-          }
+        /* DESATIVADA A LEGENDA INTERNA DO APEXCHARTS */
+        legend: {
+          show: false
         },
         grid: { borderColor: gridColor },
         tooltip: { theme: isDarkMode ? 'dark' : 'light', shared: true }
@@ -478,7 +454,6 @@
       verticalChartInstance.render();
     }
 
-    // Renderiza a Tabela
     function updateTable(data) {
       const tbody = document.getElementById('campaignTableBody');
       document.getElementById('tableCount').textContent = `${data.length} campanhas`;
@@ -515,13 +490,11 @@
       }).join('');
     }
 
-    // Isolar campanha ao clicar na tabela
     function toggleSelectCampaign(id) {
       selectedCampaignId = selectedCampaignId === id ? null : id;
       applyFilters();
     }
 
-    // Insights Automáticos
     function updateInsights(data) {
       const container = document.getElementById('insightsContainer');
       const countLabel = document.getElementById('insightsCount');
@@ -546,7 +519,6 @@
       countLabel.textContent = `${insights.length} observações`;
     }
 
-    // Inicialização
     applyFilters();
   </script>
 </body>
