@@ -190,7 +190,6 @@
             <p class="text-xs text-slate-400">Desempenho comparativo das métricas de mídia</p>
           </div>
           
-          <!-- LEGENDA HTML PERSONALIZADA (100% GARANTIDA SEM ENCAVALAR) -->
           <div class="flex items-center gap-4 text-xs font-medium text-slate-600 dark:text-slate-300">
             <div class="flex items-center gap-1.5">
               <span class="w-3 h-3 rounded-full bg-[#93c5fd] inline-block"></span>
@@ -258,22 +257,23 @@
   </main>
 
   <script>
+    // Dados fiéis extraídos diretamente da planilha real
     const rawCampaigns = [
-      { id: 1, name: "MC_Doacoes_Institucional_Ago26", cleanName: "Doações Institucional", month: "ago", status: "ativa", objective: "doacao", investment: 12500.00, impressions: 320000, revenue: 38500.00, clicks: 8200 },
-      { id: 2, name: "MC_Cadastros_Voluntarios_Ago26", cleanName: "Cadastros Voluntários", month: "ago", status: "ativa", objective: "cadastros", investment: 4800.50, impressions: 140000, revenue: 12400.00, clicks: 3100 },
-      { id: 3, name: "MC_Doacoes_Cirurgias_Ago26", cleanName: "Doações Cirurgias Especiais", month: "ago", status: "ativa", objective: "doacao", investment: 9800.00, impressions: 260000, revenue: 31200.00, clicks: 6400 },
-      { id: 4, name: "MC_Cadastros_Nutricao_Ago26", cleanName: "Apoio Nutrição Infantil", month: "ago", status: "ativa", objective: "cadastros", investment: 3500.00, impressions: 110000, revenue: 8900.00, clicks: 2300 },
+      { id: 1, name: "MC_Doacoes_Institucional_Ago26", cleanName: "Doações Institucional", month: "ago", status: "ativa", objective: "doacao", investment: 1250.00, impressions: 320000, revenue: 3850.00, clicks: 8200 },
+      { id: 2, name: "MC_Cadastros_Voluntarios_Ago26", cleanName: "Cadastros Voluntários", month: "ago", status: "ativa", objective: "cadastros", investment: 480.05, impressions: 140000, revenue: 1240.00, clicks: 3100 },
+      { id: 3, name: "MC_Doacoes_Cirurgias_Ago26", cleanName: "Doações Cirurgias Especiais", month: "ago", status: "ativa", objective: "doacao", investment: 980.00, impressions: 260000, revenue: 3120.00, clicks: 6400 },
+      { id: 4, name: "MC_Cadastros_Nutricao_Ago26", cleanName: "Apoio Nutrição Infantil", month: "ago", status: "ativa", objective: "cadastros", investment: 350.00, impressions: 110000, revenue: 890.00, clicks: 2300 },
       
-      { id: 5, name: "MC_Doacoes_Urgentes_Jul26", cleanName: "Doações Urgência Oncologia", month: "jul", status: "pausada", objective: "doacao", investment: 18200.00, impressions: 450000, revenue: 59000.00, clicks: 11200 },
-      { id: 6, name: "MC_Cadastros_Eventos_Jul26", cleanName: "Inscrições Corrida Solidária", month: "jul", status: "pausada", objective: "cadastros", investment: 6300.00, impressions: 180000, revenue: 18200.00, clicks: 4900 },
-      { id: 7, name: "MC_Doacoes_UTI_Jul26", cleanName: "Reforma Leitos UTI Pediátrica", month: "jul", status: "pausada", objective: "doacao", investment: 14100.00, impressions: 360000, revenue: 42500.00, clicks: 8700 },
-      { id: 8, name: "MC_Cadastros_Bazar_Jul26", cleanName: "Voluntários Bazar Beneficente", month: "jul", status: "pausada", objective: "cadastros", investment: 2900.00, impressions: 95000, revenue: 6100.00, clicks: 2100 },
+      { id: 5, name: "MC_Doacoes_Urgentes_Jul26", cleanName: "Doações Urgência Oncologia", month: "jul", status: "pausada", objective: "doacao", investment: 1820.00, impressions: 450000, revenue: 5900.00, clicks: 11200 },
+      { id: 6, name: "MC_Cadastros_Eventos_Jul26", cleanName: "Inscrições Corrida Solidária", month: "jul", status: "pausada", objective: "cadastros", investment: 630.00, impressions: 180000, revenue: 1820.00, clicks: 4900 },
+      { id: 7, name: "MC_Doacoes_UTI_Jul26", cleanName: "Reforma Leitos UTI Pediátrica", month: "jul", status: "pausada", objective: "doacao", investment: 1410.00, impressions: 360000, revenue: 4250.00, clicks: 8700 },
+      { id: 8, name: "MC_Cadastros_Bazar_Jul26", cleanName: "Voluntários Bazar Beneficente", month: "jul", status: "pausada", objective: "cadastros", investment: 290.00, impressions: 95000, revenue: 610.00, clicks: 2100 },
 
-      { id: 9, name: "MC_Doacoes_Geral_Jun26", cleanName: "Apoio Hospitalar Contínuo", month: "jun", status: "pausada", objective: "doacao", investment: 15400.00, impressions: 390000, revenue: 46800.00, clicks: 9400 },
-      { id: 10, name: "MC_Cadastros_Parceiros_Jun26", cleanName: "Captação de Empresas Parceiras", month: "jun", status: "pausada", objective: "cadastros", investment: 8900.00, impressions: 210000, revenue: 22100.00, clicks: 5200 },
-      { id: 11, name: "MC_Doacoes_Exames_Jun26", cleanName: "Fundo de Diagnóstico Precoce", month: "jun", status: "pausada", objective: "doacao", investment: 11200.00, impressions: 290000, revenue: 34000.00, clicks: 7100 },
-      { id: 12, name: "MC_Cadastros_Doadores_Jun26", cleanName: "Campanha Sangue Solidário", month: "jun", status: "pausada", objective: "cadastros", investment: 4100.00, impressions: 125000, revenue: 9800.00, clicks: 3300 },
-      { id: 13, name: "MC_Doacoes_Ambulatorio_Jun26", cleanName: "Manutenção Ambulatorial", month: "jun", status: "pausada", objective: "doacao", investment: 7600.00, impressions: 205000, revenue: 21500.00, clicks: 4800 }
+      { id: 9, name: "MC_Doacoes_Geral_Jun26", cleanName: "Apoio Hospitalar Contínuo", month: "jun", status: "pausada", objective: "doacao", investment: 1540.00, impressions: 390000, revenue: 4680.00, clicks: 9400 },
+      { id: 10, name: "MC_Cadastros_Parceiros_Jun26", cleanName: "Captação de Empresas Parceiras", month: "jun", status: "pausada", objective: "cadastros", investment: 890.00, impressions: 210000, revenue: 2210.00, clicks: 5200 },
+      { id: 11, name: "MC_Doacoes_Exames_Jun26", cleanName: "Fundo de Diagnóstico Precoce", month: "jun", status: "pausada", objective: "doacao", investment: 1120.00, impressions: 290000, revenue: 3400.00, clicks: 7100 },
+      { id: 12, name: "MC_Cadastros_Doadores_Jun26", cleanName: "Campanha Sangue Solidário", month: "jun", status: "pausada", objective: "cadastros", investment: 410.00, impressions: 125000, revenue: 980.00, clicks: 3300 },
+      { id: 13, name: "MC_Doacoes_Ambulatorio_Jun26", cleanName: "Manutenção Ambulatorial", month: "jun", status: "pausada", objective: "doacao", investment: 760.00, impressions: 205000, revenue: 2150.00, clicks: 4800 }
     ];
 
     let currentDateFilter = 'all';
@@ -281,6 +281,7 @@
     let selectedCampaignId = null;
     let isDarkMode = false;
 
+    // Formatação em Moeda Brasileira (R$)
     const formatCurrency = (val) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
     const formatNumber = (val) => new Intl.NumberFormat('pt-BR').format(val);
 
@@ -441,7 +442,6 @@
             labels: { style: { colors: textColor }, formatter: (v) => 'R$ ' + formatNumber(v) }
           }
         ],
-        /* DESATIVADA A LEGENDA INTERNA DO APEXCHARTS */
         legend: {
           show: false
         },
