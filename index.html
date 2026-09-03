@@ -56,6 +56,24 @@
     .dark .custom-scrollbar::-webkit-scrollbar-thumb {
       background: #334155;
     }
+
+    /* FORÇAR A LEGENDA EM LINHA ÚNICA (FLEXBOX) */
+    .apexcharts-legend {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 1.5rem !important;
+      top: 0px !important;
+      padding: 0 !important;
+    }
+    .apexcharts-legend-series {
+      display: inline-flex !important;
+      align-items: center !important;
+      margin: 0 !important;
+      white-space: nowrap !important;
+    }
   </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-200 min-h-screen pb-12">
@@ -444,11 +462,11 @@
           horizontalAlign: 'center',
           floating: false,
           fontSize: '12px',
-          width: '100%',
+          width: undefined,
           labels: { colors: textColor },
           itemMargin: {
-            horizontal: 15,
-            vertical: 4
+            horizontal: 12,
+            vertical: 0
           }
         },
         grid: { borderColor: gridColor },
