@@ -139,7 +139,7 @@
       <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
         <div>
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">TOTAL INVESTIDO</span>
-          <h2 id="kpiInvested" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">R$ 0,00</h2>
+          <h2 id="kpiInvested" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">R$ 66.100,50</h2>
           <span class="text-[10px] text-blue-600 dark:text-blue-400 font-medium">100% da verba visível</span>
         </div>
         <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg font-bold">
@@ -147,11 +147,11 @@
         </div>
       </div>
 
-      <!-- Total Lucro / Arrecadação -->
+      <!-- Lucro / Arrecadação -->
       <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
         <div>
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">LUCRO / ARRECADAÇÃO</span>
-          <h2 id="kpiProfit" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">R$ 0,00</h2>
+          <h2 id="kpiRevenue" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">R$ 197.000,00</h2>
           <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">Retorno em Doações</span>
         </div>
         <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg font-bold">
@@ -163,11 +163,11 @@
       <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
         <div>
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">TOTAL IMPRESSÕES</span>
-          <h2 id="kpiImpressions" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">0</h2>
+          <h2 id="kpiImpressions" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">1.690.000</h2>
           <span class="text-[10px] text-purple-600 dark:text-purple-400 font-medium">Alcance de marca</span>
         </div>
         <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center text-lg font-bold">
-          👁️
+          👁
         </div>
       </div>
 
@@ -175,7 +175,7 @@
       <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
         <div>
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">CTR MÉDIO</span>
-          <h2 id="kpiCtr" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">0.00%</h2>
+          <h2 id="kpiCtr" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">2.49%</h2>
           <span class="text-[10px] text-amber-600 dark:text-amber-400 font-medium">Taxa de engajamento</span>
         </div>
         <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center text-lg font-bold">
@@ -195,7 +195,7 @@
             <p class="text-xs text-slate-400">Impressões (Barras) | Lucro (Linha Verde) | Investimento (Linha Azul)</p>
           </div>
         </div>
-        <div id="campaignChartVertical" class="w-full min-h-[350px]"></div>
+        <div id="campaignChartVertical" class="w-full min-h-[380px]"></div>
       </div>
 
       <!-- Insights / Análise Executiva -->
@@ -247,14 +247,14 @@
 
   <!-- Lógica Principal da Aplicação -->
   <script>
-    // Base de dados simulada das campanhas com atribuição de lucro
+    // Base de dados simulada das campanhas
     const rawCampaigns = [
-      { id: 1, name: "MC_Doacoes_Institucional_Ago26", cleanName: "Doações Institucional", month: "ago", status: "ativa", objective: "doacao", investment: 12500.00, impressions: 320000, clicks: 8200, profit: 38500.00 },
-      { id: 2, name: "MC_Cadastros_Voluntarios_Ago26", cleanName: "Cadastros Voluntários", month: "ago", status: "ativa", objective: "cadastros", investment: 4800.50, impressions: 140000, clicks: 3100, profit: 12400.00 },
-      { id: 3, name: "MC_Doacoes_Urgentes_Jul26", cleanName: "Doações Urgência Oncologia", month: "jul", status: "pausada", objective: "doacao", investment: 18200.00, impressions: 450000, clicks: 11200, profit: 59000.00 },
-      { id: 4, name: "MC_Cadastros_Eventos_Jul26", cleanName: "Inscrições Corrida Solidária", month: "jul", status: "pausada", objective: "cadastros", investment: 6300.00, impressions: 180000, clicks: 4900, profit: 18200.00 },
-      { id: 5, name: "MC_Doacoes_Geral_Jun26", cleanName: "Apoio Hospitalar Contínuo", month: "jun", status: "pausada", objective: "doacao", investment: 15400.00, impressions: 390000, clicks: 9400, profit: 46800.00 },
-      { id: 6, name: "MC_Cadastros_Parceiros_Jun26", cleanName: "Captação de Empresas Parceiras", month: "jun", status: "pausada", objective: "cadastros", investment: 8900.00, impressions: 210000, clicks: 5200, profit: 22100.00 }
+      { id: 1, name: "MC_Doacoes_Institucional_Ago26", cleanName: "Doações Institucional", month: "ago", status: "ativa", objective: "doacao", investment: 12500.00, impressions: 320000, revenue: 38500.00, clicks: 8200 },
+      { id: 2, name: "MC_Cadastros_Voluntarios_Ago26", cleanName: "Cadastros Voluntários", month: "ago", status: "ativa", objective: "cadastros", investment: 4800.50, impressions: 140000, revenue: 12400.00, clicks: 3100 },
+      { id: 3, name: "MC_Doacoes_Urgentes_Jul26", cleanName: "Doações Urgência Oncologia", month: "jul", status: "pausada", objective: "doacao", investment: 18200.00, impressions: 450000, revenue: 59000.00, clicks: 11200 },
+      { id: 4, name: "MC_Cadastros_Eventos_Jul26", cleanName: "Inscrições Corrida Solidária", month: "jul", status: "pausada", objective: "cadastros", investment: 6300.00, impressions: 180000, revenue: 18200.00, clicks: 4900 },
+      { id: 5, name: "MC_Doacoes_Geral_Jun26", cleanName: "Apoio Hospitalar Contínuo", month: "jun", status: "pausada", objective: "doacao", investment: 15400.00, impressions: 390000, revenue: 46800.00, clicks: 9400 },
+      { id: 6, name: "MC_Cadastros_Parceiros_Jun26", cleanName: "Captação de Empresas Parceiras", month: "jun", status: "pausada", objective: "cadastros", investment: 8900.00, impressions: 210000, revenue: 22100.00, clicks: 5200 }
     ];
 
     let currentDateFilter = 'all';
@@ -323,63 +323,63 @@
     // Atualiza Cards de KPI
     function updateKPIs(data) {
       const totalInvested = data.reduce((acc, c) => acc + c.investment, 0);
-      const totalProfit = data.reduce((acc, c) => acc + c.profit, 0);
+      const totalRevenue = data.reduce((acc, c) => acc + c.revenue, 0);
       const totalImpressions = data.reduce((acc, c) => acc + c.impressions, 0);
       const totalClicks = data.reduce((acc, c) => acc + c.clicks, 0);
 
       const ctr = totalImpressions > 0 ? ((totalClicks / totalImpressions) * 100) : 0;
 
       document.getElementById('kpiInvested').textContent = formatCurrency(totalInvested);
-      document.getElementById('kpiProfit').textContent = formatCurrency(totalProfit);
+      document.getElementById('kpiRevenue').textContent = formatCurrency(totalRevenue);
       document.getElementById('kpiImpressions').textContent = formatNumber(totalImpressions);
       document.getElementById('kpiCtr').textContent = ctr.toFixed(2) + '%';
     }
 
-    // Lógica do Gráfico por dias ou por campanhas
+    // Lógica do Gráfico
     function getDailyDataForMonth(monthFilter, filteredCampaigns) {
       const daysInMonth = { 'jun': 30, 'jul': 31, 'ago': 31 };
       const totalDays = daysInMonth[monthFilter] || 30;
 
       let days = [];
-      let dailyImpressions = [];
-      let dailyProfits = [];
       let dailyInvestments = [];
+      let dailyRevenues = [];
+      let dailyImpressions = [];
 
-      const monthTotalImp = filteredCampaigns.reduce((acc, c) => acc + c.impressions, 0);
-      const monthTotalProfit = filteredCampaigns.reduce((acc, c) => acc + c.profit, 0);
       const monthTotalInvest = filteredCampaigns.reduce((acc, c) => acc + c.investment, 0);
+      const monthTotalRev = filteredCampaigns.reduce((acc, c) => acc + c.revenue, 0);
+      const monthTotalImp = filteredCampaigns.reduce((acc, c) => acc + c.impressions, 0);
 
       for (let i = 1; i <= totalDays; i++) {
         days.push(`Dia ${i}`);
         const dayFactor = (Math.sin(i) + 1.5) / totalDays; 
-        dailyImpressions.push(Math.round(monthTotalImp * dayFactor / 2));
-        dailyProfits.push(Number((monthTotalProfit * dayFactor / 2).toFixed(2)));
         dailyInvestments.push(Number((monthTotalInvest * dayFactor / 2).toFixed(2)));
+        dailyRevenues.push(Number((monthTotalRev * dayFactor / 2).toFixed(2)));
+        dailyImpressions.push(Math.round(monthTotalImp * dayFactor / 2));
       }
 
-      return { days, dailyImpressions, dailyProfits, dailyInvestments };
+      return { days, dailyInvestments, dailyRevenues, dailyImpressions };
     }
 
     function updateVerticalChart(data) {
       let categories = [];
-      let impressions = [];
-      let profits = [];
       let investments = [];
+      let revenues = [];
+      let impressions = [];
       let xAxisTitle = "Campanhas";
 
       if (currentDateFilter !== 'all') {
         const dailyData = getDailyDataForMonth(currentDateFilter, data);
         categories = dailyData.days;
-        impressions = dailyData.dailyImpressions;
-        profits = dailyData.dailyProfits;
         investments = dailyData.dailyInvestments;
+        revenues = dailyData.dailyRevenues;
+        impressions = dailyData.dailyImpressions;
         xAxisTitle = `Dias do Mês (${currentDateFilter.toUpperCase()})`;
         document.getElementById('chartTitle').textContent = `Desempenho Diário (${currentDateFilter.toUpperCase()}/26)`;
       } else {
         categories = data.map(d => d.cleanName);
-        impressions = data.map(d => d.impressions);
-        profits = data.map(d => d.profit);
         investments = data.map(d => d.investment);
+        revenues = data.map(d => d.revenue);
+        impressions = data.map(d => d.impressions);
         xAxisTitle = "Campanhas";
         document.getElementById('chartTitle').textContent = "Impressões x Lucro x Investimentos por Campanha";
       }
@@ -390,11 +390,11 @@
       const options = {
         series: [
           { name: 'Impressões', type: 'column', data: impressions },
-          { name: 'Lucro (R$)', type: 'line', data: profits },
-          { name: 'Investimento (R$)', type: 'line', data: investments }
+          { name: 'Investimento (R$)', type: 'line', data: investments },
+          { name: 'Lucro (R$)', type: 'line', data: revenues }
         ],
         chart: {
-          height: 350,
+          height: 380,
           type: 'line',
           toolbar: { show: false },
           fontFamily: 'Plus Jakarta Sans, sans-serif',
@@ -402,17 +402,18 @@
           animations: { enabled: true, easing: 'easeinout', speed: 400 }
         },
         stroke: { width: [0, 3, 3], curve: 'smooth' },
-        colors: ['#93c5fd', '#10b981', '#2563eb'],
+        colors: ['#93c5fd', '#2563eb', '#10b981'],
         plotOptions: { 
-          bar: { columnWidth: currentDateFilter !== 'all' ? '60%' : '40%', borderRadius: 4 } 
+          bar: { columnWidth: currentDateFilter !== 'all' ? '60%' : '35%', borderRadius: 4 } 
         },
         dataLabels: { enabled: false },
         labels: categories,
         xaxis: {
           title: { text: xAxisTitle, style: { color: textColor, fontSize: '11px', fontWeight: 600 } },
           labels: { 
-            rotate: currentDateFilter !== 'all' ? 0 : -45, 
-            rotateAlways: currentDateFilter === 'all',
+            rotate: -35, 
+            rotateAlways: true,
+            hideOverlappingLabels: false,
             style: { fontSize: '10px', colors: textColor, fontWeight: 600 } 
           },
           axisBorder: { show: false },
@@ -426,20 +427,20 @@
           {
             opposite: true,
             title: { text: 'Investimento (R$)', style: { color: '#2563eb', fontSize: '11px', fontWeight: 600 } },
-            labels: { style: { colors: textColor }, formatter: (v) => 'R$ ' + v.toFixed(0) }
+            labels: { style: { colors: textColor }, formatter: (v) => 'R$ ' + formatNumber(v) }
           }
         ],
-        legend: { position: 'top', labels: { colors: textColor } },
+        legend: { 
+          position: 'top',
+          horizontalAlign: 'center',
+          labels: { colors: textColor },
+          itemMargin: {
+            horizontal: 10,
+            vertical: 5
+          }
+        },
         grid: { borderColor: gridColor },
-        tooltip: { 
-          theme: isDarkMode ? 'dark' : 'light', 
-          shared: true,
-          y: [
-            { formatter: (v) => formatNumber(v) + ' imp' },
-            { formatter: (v) => formatCurrency(v) },
-            { formatter: (v) => formatCurrency(v) }
-          ]
-        }
+        tooltip: { theme: isDarkMode ? 'dark' : 'light', shared: true }
       };
 
       if (verticalChartInstance) verticalChartInstance.destroy();
@@ -477,7 +478,7 @@
               </span>
             </td>
             <td class="p-3.5 text-slate-500 dark:text-slate-400">${formatNumber(c.impressions)}</td>
-            <td class="p-3.5 font-bold text-emerald-600 dark:text-emerald-400">${formatCurrency(c.profit)}</td>
+            <td class="p-3.5 font-bold text-emerald-600 dark:text-emerald-400">${formatCurrency(c.revenue)}</td>
             <td class="p-3.5 pr-5 font-medium">${formatCurrency(c.investment)}</td>
           </tr>
         `;
@@ -502,12 +503,12 @@
       }
 
       const totalInvest = data.reduce((acc, c) => acc + c.investment, 0);
-      const totalProfit = data.reduce((acc, c) => acc + c.profit, 0);
-      const topCampaign = [...data].sort((a, b) => b.profit - a.profit)[0];
+      const totalRev = data.reduce((acc, c) => acc + c.revenue, 0);
+      const topCampaign = [...data].sort((a, b) => b.revenue - a.revenue)[0];
 
       let insights = [
-        `As campanhas filtradas acumulam um lucro/arrecadação total de <strong>${formatCurrency(totalProfit)}</strong> para um investimento de <strong>${formatCurrency(totalInvest)}</strong>.`,
-        topCampaign ? `A campanha de maior rentabilidade é <strong>${topCampaign.cleanName}</strong>, gerando <strong>${formatCurrency(topCampaign.profit)}</strong>.` : '',
+        `As campanhas filtradas acumulam um lucro/arrecadação total de <strong>${formatCurrency(totalRev)}</strong> para um investimento de <strong>${formatCurrency(totalInvest)}</strong>.`,
+        topCampaign ? `A campanha de maior rentabilidade é <strong>${topCampaign.cleanName}</strong>, gerando ${formatCurrency(topCampaign.revenue)}.` : '',
         currentDateFilter !== 'all' ? `O gráfico exibido detalha o fluxo diário referente ao mês de <strong>${currentDateFilter.toUpperCase()}/26</strong>.` : `Exibindo a consolidação geral de todo o período.`
       ].filter(Boolean);
 
