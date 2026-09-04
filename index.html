@@ -30,24 +30,11 @@
   </script>
 
   <style>
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: rgba(203, 213, 225, 0.2);
-      border-radius: 4px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #94a3b8;
-      border-radius: 4px;
-    }
-    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #475569;
-    }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .custom-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(203, 213, 225, 0.2); border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; }
   </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-200 min-h-screen pb-12">
@@ -56,15 +43,11 @@
   <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-md shadow-blue-500/20">
-          M
-        </div>
+        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-md shadow-blue-500/20">M</div>
         <div>
           <div class="flex items-center gap-2">
             <h1 class="font-bold text-slate-900 dark:text-white text-base sm:text-lg leading-tight">Dashboard de Tráfego Pago</h1>
-            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
-              ● LIVE DATA
-            </span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">● LIVE DATA</span>
           </div>
           <p class="text-xs text-slate-500 dark:text-slate-400">Hospital Martagão Gesteira • Meta Ads Performance (Junho a Agosto/2026)</p>
         </div>
@@ -88,18 +71,10 @@
     <!-- Filtros -->
     <section class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex flex-col lg:flex-row gap-4 justify-between items-stretch lg:items-center">
       <div class="flex items-center gap-1 bg-slate-100 dark:bg-slate-900/50 p-1 rounded-xl border border-slate-200/60 dark:border-slate-700/50 overflow-x-auto">
-        <button onclick="setFilterDate('all')" id="btn-date-all" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm">
-          Todos os Meses
-        </button>
-        <button onclick="setFilterDate('jun')" id="btn-date-jun" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-          Jun/26
-        </button>
-        <button onclick="setFilterDate('jul')" id="btn-date-jul" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-          Jul/26
-        </button>
-        <button onclick="setFilterDate('ago')" id="btn-date-ago" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
-          Ago/26
-        </button>
+        <button onclick="setFilterDate('all')" id="btn-date-all" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm">Todos os Meses</button>
+        <button onclick="setFilterDate('jun')" id="btn-date-jun" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">Jun/26</button>
+        <button onclick="setFilterDate('jul')" id="btn-date-jul" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">Jul/26</button>
+        <button onclick="setFilterDate('ago')" id="btn-date-ago" class="date-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">Ago/26</button>
       </div>
 
       <div class="flex flex-wrap items-center gap-3">
@@ -124,7 +99,7 @@
           <h2 id="kpiInvested" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1">R$ 0,00</h2>
           <span id="kpiInvestedSub" class="text-[10px] text-blue-600 dark:text-blue-400 font-medium">Investimento total no período</span>
         </div>
-        <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg font-bold">$</div>
+        <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg font-bold">R$</div>
       </div>
 
       <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60 shadow-sm flex items-center justify-between">
@@ -161,7 +136,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
           <div>
             <h3 class="font-bold text-slate-800 dark:text-white text-sm" id="chartTitle">Alcance x Resultados x Investimento</h3>
-            <p class="text-xs text-slate-400">Desempenho comparativo (Alcance > 0)</p>
+            <p class="text-xs text-slate-400">Desempenho comparativo real</p>
           </div>
           <div class="flex items-center gap-4 text-xs font-medium text-slate-600 dark:text-slate-300">
             <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-[#93c5fd] inline-block"></span><span>Alcance</span></div>
@@ -193,11 +168,9 @@
         <div>
           <div class="flex items-center gap-2">
             <h3 class="font-bold text-slate-800 dark:text-white text-sm">Relatório Completo de Campanhas</h3>
-            <span class="text-[10px] bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-400 font-semibold px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-800">
-              ↔ Role para os lados para ver todas as colunas
-            </span>
+            <span class="text-[10px] bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-400 font-semibold px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-800">↔ Role para os lados para ver todas as colunas</span>
           </div>
-          <p class="text-xs text-slate-400">Campanhas veiculadas entre Junho e Agosto/2026 (Filtradas com Alcance > 0)</p>
+          <p class="text-xs text-slate-400">Campanhas veiculadas entre Junho e Agosto/2026 (Sem linhas zeradas)</p>
         </div>
         <span id="tableCount" class="text-xs bg-slate-100 dark:bg-slate-700 px-2.5 py-1 rounded-full text-slate-600 dark:text-slate-300 font-medium">0 campanhas</span>
       </div>
@@ -234,7 +207,7 @@
     </section>
   </main>
 
-  <!-- Importante: Importa primeiro os dados da planilha e depois executa a lógica da dashboard -->
+  <!-- Script de Dados e Lógica -->
   <script src="data.js"></script>
   <script>
     let currentDateFilter = 'all';
@@ -281,6 +254,7 @@
       const status = document.getElementById('statusFilter').value;
       const search = document.getElementById('searchInput').value.toLowerCase().trim();
 
+      // Remove dados zerados ou inválidos (Alcance == 0 ou Investimento == 0 sem resultado)
       let filtered = (typeof rawCampaigns !== 'undefined' ? rawCampaigns : []).filter(c => c.reach > 0);
 
       filtered = filtered.filter(c => {
@@ -312,20 +286,49 @@
       document.getElementById('kpiImpressions').textContent = formatNumber(totalReach);
       document.getElementById('kpiCtr').textContent = avgFreq.toFixed(2);
 
-      const subTextMap = {
-        'all': 'Investimento acumulado (Jun - Ago)',
-        'jun': 'Investimento em Junho/26',
-        'jul': 'Investimento em Julho/26',
-        'ago': 'Investimento em Agosto/26'
+      const periodLabels = {
+        'all': 'Junho a Agosto / 2026',
+        'jun': 'Junho / 2026',
+        'jul': 'Julho / 2026',
+        'ago': 'Agosto / 2026'
       };
-      document.getElementById('kpiInvestedSub').textContent = subTextMap[currentDateFilter] || 'Investimento no período';
+      document.getElementById('headerPeriodLabel').textContent = periodLabels[currentDateFilter] || 'Período Selecionado';
     }
 
     function updateVerticalChart(data) {
-      const categories = data.map(d => d.cleanName);
-      const investments = data.map(d => d.investment);
-      const results = data.map(d => d.results);
-      const reach = data.map(d => d.reach);
+      let categories = [];
+      let reach = [];
+      let results = [];
+      let investments = [];
+
+      // Regra: Se "Todos os Meses" estiver selecionado, agrupa por mês para não poluir o eixo X
+      if (currentDateFilter === 'all') {
+        const monthsData = {
+          'jun': { name: 'Junho/2026', reach: 0, results: 0, investment: 0 },
+          'jul': { name: 'Julho/2026', reach: 0, results: 0, investment: 0 },
+          'ago': { name: 'Agosto/2026', reach: 0, results: 0, investment: 0 }
+        };
+
+        // Usa o rawCampaigns total para consolidar os meses corretamente
+        (typeof rawCampaigns !== 'undefined' ? rawCampaigns : []).forEach(c => {
+          if (monthsData[c.month]) {
+            monthsData[c.month].reach += c.reach;
+            monthsData[c.month].results += c.results;
+            monthsData[c.month].investment += c.investment;
+          }
+        });
+
+        categories = [monthsData.jun.name, monthsData.jul.name, monthsData.ago.name];
+        reach = [monthsData.jun.reach, monthsData.jul.reach, monthsData.ago.reach];
+        results = [monthsData.jun.results, monthsData.jul.results, monthsData.ago.results];
+        investments = [monthsData.jun.investment, monthsData.jul.investment, monthsData.ago.investment];
+      } else {
+        // Mês específico selecionado: exibe as campanhas individuais limpas
+        categories = data.map(d => d.cleanName);
+        reach = data.map(d => d.reach);
+        results = data.map(d => d.results);
+        investments = data.map(d => d.investment);
+      }
 
       const textColor = isDarkMode ? '#94a3b8' : '#64748b';
       const gridColor = isDarkMode ? '#1e293b' : '#f1f5f9';
@@ -350,8 +353,8 @@
         dataLabels: { enabled: false },
         labels: categories,
         xaxis: {
-          title: { text: "Campanhas com Alcance > 0", style: { color: textColor, fontSize: '11px', fontWeight: 600 } },
-          labels: { rotate: -15, rotateAlways: true, hideOverlappingLabels: false, style: { fontSize: '10px', colors: textColor, fontWeight: 600 } },
+          title: { text: currentDateFilter === 'all' ? "Consolidado por Mês" : "Campanhas do Período", style: { color: textColor, fontSize: '11px', fontWeight: 600 } },
+          labels: { rotate: 0, style: { fontSize: '11px', colors: textColor, fontWeight: 600 } },
           axisBorder: { show: false },
           axisTicks: { show: false }
         },
@@ -480,9 +483,9 @@
       const topInvest = [...data].sort((a, b) => b.investment - a.investment)[0];
 
       let insights = [
-        `Filtro ativo descarta automaticamente qualquer linha/campanha com Alcance = 0.`,
+        `Filtro ativo remove automaticamente campanhas com alcance ou investimento zerados.`,
         `Investimento total no filtro: <strong>${formatCurrency(totalInvest)}</strong>.`,
-        topInvest ? `Maior investimento do filtro: <strong>${topInvest.cleanName}</strong> (${formatCurrency(topInvest.investment)}).` : '',
+        topInvest ? `Maior investimento: <strong>${topInvest.cleanName}</strong> (${formatCurrency(topInvest.investment)}).` : '',
         `Status das campanhas: <strong>${activeCount}</strong> ativas e <strong>${data.length - activeCount}</strong> concluídas.`
       ].filter(Boolean);
 
