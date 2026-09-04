@@ -1,4 +1,4 @@
-// 21 campanhas com valores 100% fiéis à planilha oficial do Meta Ads (Soma total = R$ 4.139,27)
+// 21 campanhas com valores e resultados 100% fiéis à planilha oficial do Meta Ads
 const rawCampaigns = [
   // JUNHO (Total = R$ 1.100,00)
   {
