@@ -254,7 +254,6 @@
       const status = document.getElementById('statusFilter').value;
       const search = document.getElementById('searchInput').value.toLowerCase().trim();
 
-      // Remove dados zerados ou inválidos (Alcance == 0 ou Investimento == 0 sem resultado)
       let filtered = (typeof rawCampaigns !== 'undefined' ? rawCampaigns : []).filter(c => c.reach > 0);
 
       filtered = filtered.filter(c => {
@@ -301,7 +300,6 @@
       let results = [];
       let investments = [];
 
-      // Regra: Se "Todos os Meses" estiver selecionado, agrupa por mês para não poluir o eixo X
       if (currentDateFilter === 'all') {
         const monthsData = {
           'jun': { name: 'Junho/2026', reach: 0, results: 0, investment: 0 },
@@ -309,7 +307,6 @@
           'ago': { name: 'Agosto/2026', reach: 0, results: 0, investment: 0 }
         };
 
-        // Usa o rawCampaigns total para consolidar os meses corretamente
         (typeof rawCampaigns !== 'undefined' ? rawCampaigns : []).forEach(c => {
           if (monthsData[c.month]) {
             monthsData[c.month].reach += c.reach;
@@ -323,7 +320,6 @@
         results = [monthsData.jun.results, monthsData.jul.results, monthsData.ago.results];
         investments = [monthsData.jun.investment, monthsData.jul.investment, monthsData.ago.investment];
       } else {
-        // Mês específico selecionado: exibe as campanhas individuais limpas
         categories = data.map(d => d.cleanName);
         reach = data.map(d => d.reach);
         results = data.map(d => d.results);
@@ -354,7 +350,7 @@
         labels: categories,
         xaxis: {
           title: { text: currentDateFilter === 'all' ? "Consolidado por Mês" : "Campanhas do Período", style: { color: textColor, fontSize: '11px', fontWeight: 600 } },
-          labels: { rotate: 0, style: { fontSize: '11px', colors: textColor, fontWeight: 600 } },
+          labels: { rotate: -35, style: { fontSize: '11px', colors: textColor, fontWeight: 600 } },
           axisBorder: { show: false },
           axisTicks: { show: false }
         },
