@@ -6,6 +6,7 @@
   <title>Dashboard de Tráfego Pago - Hospital Martagão Gesteira</title>
   
   <!-- Tailwind CSS -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   
   <!-- ApexCharts CDN -->
@@ -370,12 +371,11 @@
         tooltip: {
           theme: isDarkMode ? 'dark' : 'light',
           shared: true,
-          yaxis: {
-            formatter: function (val, { seriesIndex }) {
-              // Série 0 = Alcance (Número)
-              // Série 1 = Resultados (Número - CORRIGIDO!)
-              // Série 2 = Valor Gasto (Moeda)
-              if (seriesIndex === 0 || seriesIndex === 1) {
+          y: {
+            formatter: function (val, { seriesIndex, w }) {
+              const seriesName = w.globals.seriesNames[seriesIndex];
+              // Identificação exata pelo nome da série para prevenir qualquer erro de índice
+              if (seriesName === 'Alcance' || seriesName === 'Resultados') {
                 return formatNumber(val);
               } else {
                 return formatCurrency(val);
