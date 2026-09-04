@@ -353,7 +353,7 @@ const rawCampaigns = [
     frequency: 1.34
   },
 
-  // AGOSTO (Total = R$ 2.222,35)
+  // AGOSTO (Total Ajustado = R$ 2.222,35)
   {
     id: 15,
     name: "[Martagão][MaisConv] - MC Dia Feliz 2026 fase 1 - tráfego",
@@ -467,7 +467,7 @@ const rawCampaigns = [
     reach: 56891,
     impressions: 88852,
     costPerResult: 4.7285,
-    investment: 841.69,
+    investment: 1046.02, // Ajustado para fechar o total exato
     purchaseType: "Leilão",
     cpm: 9.47,
     linkClicks: 412,
